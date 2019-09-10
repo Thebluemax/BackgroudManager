@@ -23,6 +23,8 @@
  */
 package com.max.backgroundlinuxmanager.views;
 
+import com.max.backgroundlinuxmanager.views.components.ListAndButtons;
+import com.max.backgroundlinuxmanager.views.components.SidePanel;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -56,29 +58,22 @@ public class MainJFrame extends javax.swing.JFrame {
     private File[] fileList;
     private DefaultListModel collectionName;
     private DefaultListModel wallpaperName;
+    private SidePanel sideBar;
 
     public MainJFrame() {
         initComponents();
         this.getContentPane().setBackground( new Color(18,39,43) );
+        sideBar = new SidePanel();
+        sideBar.toggleLibrary(false);
+        getContentPane().add(sideBar,  new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 500));
         container = new JPanel();
         container.setSize(600, 1024);
         container.setLayout(new GridLayout(0,3));
-        //System.out.println(container.getLayout());
         jButton1.setActionCommand(ADD_TO_LIBRARY);
-        jScrollPane1.setViewportView(container);
-        jList1.setSelectedIndex(0);
-        jList2.setVisible(false);
- 
-       
+        scrollContent.setViewportView(container); 
     }
     public String getListElement(int index){
     return (String) collectionName.get(index);
-    }
-    public JList getList(){
-     return jList1;
-    }
-    public JList getWallpaperList(){
-    return jList2;
     }
     public String getWallpaperName(int index){
     return (String) wallpaperName.get(index);
@@ -87,41 +82,40 @@ public class MainJFrame extends javax.swing.JFrame {
     jButton1.addActionListener(aListener);
     }
     public void setViewPortContainer (JPanel jPane){
-        jScrollPane1.setViewportView(jPane);
+        scrollContent.setViewportView(jPane);
     }
     public void setLibraryView(boolean visibility){
+        sideBar.toggleLibrary(visibility);
         if (visibility) {
-            jList2.setVisible(false);
-            jList2.setOpaque(false); 
-            jScrollPane1.setViewportView(container);
-            jButton1.setEnabled(true);
+       //     jList2.setVisible(false);
+        //    jList2.setOpaque(false); 
+            scrollContent.setViewportView(container);
+            //jButton1.setEnabled(true);
             
         } else {
-            jList2.setVisible(true);
-            jScrollPane1.setViewportView(null);
-            jButton1.setEnabled(false);
+         //   jList2.setVisible(true);
+            scrollContent.setViewportView(null);
+           // jButton1.setEnabled(false);
+           
         }
     }
     public void addToPanel (JPanel jp){
         container.add(jp);
     }
     public void setWallpaperList(String[] nameWallpaper){
-        wallpaperName = new DefaultListModel();
-        for (int i = 0; i < nameWallpaper.length; i++) {
-            wallpaperName.addElement(nameWallpaper[i]);
-        }
-        jList2.setModel(wallpaperName);
+       sideBar.setChildLidt(nameWallpaper);
+     //   jList2.setModel(wallpaperName);
         //jTextPane1.setContentType("text/html");
     //jTextPane1.setText(text);
     }
     public void setList(String folder, String[] listFile){
-        collectionName = new DefaultListModel();
-        for (int i = 0; i < listFile.length; i++) {
-            collectionName.addElement(listFile[i]);
-        }
-        jList1.setModel(collectionName);
+        sideBar.setListFather(listFile);
+       
         jLabel2.setText("Active Folder: "+folder);
         
+    }
+    public void addSideBarEvents(MouseAdapter mouseAdapter){
+        sideBar.addListMouseEvents(mouseAdapter);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -132,22 +126,15 @@ public class MainJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        contentPanel = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        jButton9 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        navPanel = new javax.swing.JPanel();
+        scrollContent = new javax.swing.JScrollPane();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Background Manager");
@@ -160,14 +147,27 @@ public class MainJFrame extends javax.swing.JFrame {
         setMaximumSize(new java.awt.Dimension(2147, 2147));
         setName("principalFrame"); // NOI18N
         setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jList1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane2.setViewportView(jList1);
+        contentPanel.setBackground(new java.awt.Color(254, 254, 254));
+        contentPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        contentPanel.setOpaque(false);
+        contentPanel.setLayout(new java.awt.GridLayout(1, 0));
+
+        jButton4.setText("Add Wallpaper");
+        jButton4.setToolTipText("Add to wallpaper whit default  options");
+        contentPanel.add(jButton4);
+
+        jButton5.setText("Add to Slide");
+        contentPanel.add(jButton5);
+
+        jButton6.setText("Save");
+        jButton6.setName(""); // NOI18N
+        jButton6.setOpaque(true);
+        contentPanel.add(jButton6);
+
+        jButton9.setText("Delete");
+        contentPanel.add(jButton9);
 
         jButton1.setBackground(new java.awt.Color(57, 207, 57));
         jButton1.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
@@ -184,143 +184,26 @@ public class MainJFrame extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        contentPanel.add(jButton1);
+
+        getContentPane().add(contentPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 480, 630, 60));
+
+        navPanel.setOpaque(false);
+        navPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        navPanel.add(scrollContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 430));
+
+        getContentPane().add(navPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, -1, 430));
 
         jLabel2.setBackground(new java.awt.Color(1, 1, 1));
         jLabel2.setForeground(new java.awt.Color(253, 251, 251));
-        jLabel2.setLabelFor(jScrollPane1);
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel2.setLabelFor(scrollContent);
         jLabel2.setText("jLabel2");
         jLabel2.setAutoscrolls(true);
-        jLabel2.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(91, 74, 74), null));
+        jLabel2.setBorder(null);
         jLabel2.setRequestFocusEnabled(false);
         jLabel2.setVerifyInputWhenFocusTarget(false);
-
-        jPanel1.setBackground(new java.awt.Color(254, 254, 254));
-        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanel1.setOpaque(false);
-
-        jButton4.setText("jButton4");
-
-        jButton5.setText("jButton4");
-
-        jButton6.setText("jButton4");
-        jButton6.setName(""); // NOI18N
-        jButton6.setOpaque(true);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(148, 148, 148)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(390, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 717, Short.MAX_VALUE)))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
-
-        jButton2.setBackground(new java.awt.Color(233, 168, 53));
-        jButton2.setFont(new java.awt.Font("Ubuntu", 0, 12)); // NOI18N
-        jButton2.setText("+");
-        jButton2.setMaximumSize(new java.awt.Dimension(20, 20));
-        jButton2.setMinimumSize(new java.awt.Dimension(20, 20));
-        jButton2.setOpaque(true);
-        jButton2.setPreferredSize(new java.awt.Dimension(20, 20));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setFont(new java.awt.Font("Ubuntu", 0, 8)); // NOI18N
-        jButton3.setText("DEL");
-        jButton3.setToolTipText("");
-        jButton3.setActionCommand("DELETE");
-        jButton3.setMaximumSize(new java.awt.Dimension(20, 20));
-        jButton3.setMinimumSize(new java.awt.Dimension(20, 20));
-        jButton3.setPreferredSize(new java.awt.Dimension(20, 20));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane4.setViewportView(jList2);
-
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
-
-        setJMenuBar(jMenuBar1);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
-                    .addComponent(jScrollPane4)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(21, 21, 21)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 440, 630, 30));
 
         getAccessibleContext().setAccessibleDescription("");
 
@@ -330,14 +213,6 @@ public class MainJFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -375,21 +250,14 @@ public class MainJFrame extends javax.swing.JFrame {
  //   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel contentPanel;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JPanel navPanel;
+    private javax.swing.JScrollPane scrollContent;
     // End of variables declaration//GEN-END:variables
 }

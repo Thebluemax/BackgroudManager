@@ -23,7 +23,6 @@
  */
 package com.max.backgroundlinuxmanager.controllers.utils;
 
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -55,8 +54,7 @@ public class ImageManager {
         } catch (IOException ex) {
             Logger.getLogger(ImageManager.class.getName()).log(Level.SEVERE, null, ex);
         }catch(NullPointerException ex){
-            System.out.println(ex.getCause().getMessage());
-            
+            System.out.println(ex.getCause().getMessage());          
         }
         return new ImageIcon(thumb);
     }}

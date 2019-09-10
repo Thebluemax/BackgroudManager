@@ -23,15 +23,8 @@
  */
 package com.max.backgroundlinuxmanager;
 
-import com.max.backgroundlinuxmanager.utils.ManagerFiles;
 import com.max.backgroundlinuxmanager.controllers.BackgroundManager;
-import com.max.backgroundlinuxmanager.views.MainJFrame;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import java.awt.Color;
 
 /**
  *
@@ -47,22 +40,11 @@ public class Main {
         
         //Podría ser una app de consola
         if (args.length > 0) {
-            bgManager.consoleBatchProcess();
-            
+            bgManager.consoleBatchProcess();           
         } else {
-            //frame ;
-            // frame.setVisible(true);
             bgManager.initApp();
         }
-        
-        //  JFrame frame = new JFrame("Mi primera GUI");
-        //  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //   frame.setSize(500, 300);
-        JButton Boton  = new JButton("Presionar a tope");
-        JLabel dirPath = new JLabel(ManagerFiles.getUserFolder());
        
-     
-      
     }
     
 }

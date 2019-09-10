@@ -30,21 +30,21 @@ import com.max.backgroundlinuxmanager.controllers.utils.ImageManager;
  *
  * @author Maximiliano Fernández <thebluemax13 at gmail.com>
  */
-public class NewJPanel extends javax.swing.JPanel {
+public class ImageBlockPane extends javax.swing.JPanel {
 
     /**
      * Creates new form NewJPanel
      */
-    public NewJPanel() {
+    public ImageBlockPane() {
         initComponents();
-        jLabel1.setText("");
+        ImageHolder.setText("");
     }
     public void setIcon(File image) {
-        jLabel1.setIcon(ImageManager.resize(image, 120, 100));
-        jCheckBox1.setLabel(image.getName());
+        ImageHolder.setIcon(ImageManager.resize(image, 120, 100));
+        objectCheckbox.setLabel(image.getName());
     }
     public boolean isChecked (){
-    return jCheckBox1.isSelected();
+    return objectCheckbox.isSelected();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -55,41 +55,48 @@ public class NewJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        ImageHolder = new javax.swing.JLabel();
+        objectCheckbox = new javax.swing.JCheckBox();
+        erraseBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(46, 36, 57));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(254, 254, 254), 3));
 
-        jLabel1.setBackground(new java.awt.Color(35, 24, 12));
-        jLabel1.setIcon(new javax.swing.ImageIcon("/home/max/Imágenes/wallpapers/1458634375291.png")); // NOI18N
-        jLabel1.setText("jLabel1");
+        ImageHolder.setBackground(new java.awt.Color(35, 24, 12));
+        ImageHolder.setIcon(new javax.swing.ImageIcon("/home/max/Imágenes/wallpapers/1458634375291.png")); // NOI18N
+        ImageHolder.setText("jLabel1");
 
-        jCheckBox1.setText("jCheckBox1");
+        objectCheckbox.setText("jCheckBox1");
+
+        erraseBtn.setText("jButton1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, Short.MAX_VALUE)
+            .addComponent(ImageHolder, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jCheckBox1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(objectCheckbox)
+                .addGap(18, 18, 18)
+                .addComponent(erraseBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ImageHolder, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox1)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(objectCheckbox)
+                    .addComponent(erraseBtn))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel ImageHolder;
+    private javax.swing.JButton erraseBtn;
+    private javax.swing.JCheckBox objectCheckbox;
     // End of variables declaration//GEN-END:variables
 }

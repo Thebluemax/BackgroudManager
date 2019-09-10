@@ -11,6 +11,7 @@ import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
 import com.max.backgroundlinuxmanager.models.entities.Wallpapers;
 import com.max.backgroundlinuxmanager.utils.ManagerFiles;
 import com.max.backgroundlinuxmanager.views.*;
+import com.max.backgroundlinuxmanager.views.components.SidePanel;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,17 +33,18 @@ import javax.swing.*;
  *
  * @author max
  */
-public class BackgroundManager implements ActionListener{
+public class BackgroundManager implements ActionListener {
+
     private ConfigurationManager configManager;
     private MainJFrame frame;// = new MainJFrame();
-    private File [] resurces;
+    private File[] resurces;
     private List<File> resurceList;
     private List<String> filenameList;
     private List<File> wallpaperList;
     private Wallpapers wallpapers;
     private List<Wallpaper> wpaperList;
 
-    public void initApp () {
+    public void initApp() {
         frame = new MainJFrame();
         frame.setVisible(true);
         resurceList = new ArrayList();
@@ -54,148 +56,121 @@ public class BackgroundManager implements ActionListener{
         checkWallpapers();
         setListeners();
     }
-    private void setListeners(){
-    frame.getList().addMouseListener(new MouseAdapter() {
+
+    private void setListeners() {
+        frame.addSideBarEvents(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
-                JList list = (JList)evt.getSource();
-                int index = -1;
-                if (evt.getClickCount() == 2) {
-                    // Double-click detected
-                   index = list.locationToIndex(evt.getPoint());
-                   String t = frame.getListElement(index);
-                   switch(t){
-                       case "Libreria":
-                           frame.setLibraryView(true);
-                           break;
-                       default:
-                             frame.setLibraryView(false);
-                             buildWallpapers(t);
-                           break;
-                   }
-                } else if (evt.getClickCount() == 3) {
+                JList list = (JList) evt.getSource();
+                int index = list.getSelectedIndex();
+                if (list.getName().compareTo(SidePanel.CHILD) == 0) {
 
-                    // Triple-click detected
-                   index = list.locationToIndex(evt.getPoint());
+                } else {
+                    String element = (String) list.getModel().getElementAt(index);
+                    if (element.compareTo(SidePanel.LIBRARY_TAG) == 0) {
+                        
+                    } else {
+                        buildWallpapers(element);
+                    }              
                 }
-                if (index >=0) {
-                   //System.out.println(frame.getListElement(index));
-                   
-                }
-                
+          
             }
-        });
-        frame.getWallpaperList().addMouseListener(new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent evt) {
-             JList list = (JList)evt.getSource();
-                int index = -1;
-            //super.mouseClicked(e); //To change body of generated methods, choose Tools | Templates.
-            if (evt.getClickCount() == 2) {
-                    // Double-click detected
-                    
-                   index = list.locationToIndex(evt.getPoint());
-                   String t = frame.getWallpaperName(index);
-                  Wallpaper wp = wallpapers.getWallpapers().get(index);
-                  if (wp.getName().compareTo(t) == 0) {
-                      JpaneWallpaper jpw = new JpaneWallpaper(wp);
-                    frame.setViewPortContainer(jpw);
-                }
-                } else if (evt.getClickCount() == 3) {
-
-                    // Triple-click detected
-                 // index = list.locationToIndex(evt.getPoint());
-                }
-               // if (index >=0) {
-                   //System.out.println(frame.getListElement(index));
-                   
-               // }
-        }
-            
-        
         });
         frame.setListeners(this);
     }
-    public void consoleBatchProcess(){}
-    
-    private void buildWallpapers(String filename){
-        //System.out.println(ManagerFiles.getWallpapersFolder()+"/"+filename);
-        File wallpaperFIle = new File(ManagerFiles.getWallpapersFolder()+"/"+filename);
+
+    public void consoleBatchProcess() {
+    }
+
+    private void buildWallpapers(String filename) {
+        File wallpaperFIle = new File(ManagerFiles.getWallpapersFolder() + "/" + filename);
         XMLparse xmlParse = new XMLparse();
         try {
             wallpapers = xmlParse.unmarshallerWallpapers(new FileInputStream(wallpaperFIle));
         } catch (FileNotFoundException ex) {
             Logger.getLogger(BackgroundManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-       // System.out.println(wallpapers.getWallpapers().size()+"ggg");
-        wpaperList =  wallpapers.getWallpapers();
+        // System.out.println(wallpapers.getWallpapers().size()+"ggg");
+        wpaperList = wallpapers.getWallpapers();
         String[] jPaneContent = new String[wpaperList.size()];
-        for (int i = 0; i <wpaperList.size(); i++) {
-           jPaneContent[i] = wpaperList.get(i).getName();
-           
+        for (int i = 0; i < wpaperList.size(); i++) {
+            jPaneContent[i] = wpaperList.get(i).getName();
+
         }
         frame.setWallpaperList(jPaneContent);
+        frame.setLibraryView(true);
     }
-    public void saveFilesInBGFolder(File[] files){
+
+    public void saveFilesInBGFolder(File[] files) {
         for (int i = 0; i < files.length; i++) {
-            String pathNew = ManagerFiles.getBackgroundsPath() +"/"+ files[i].getName();
+            String pathNew = ManagerFiles.getBackgroundsPath() + "/" + files[i].getName();
             try {
                 ManagerFiles.copyFile(files[i], new File(pathNew));
             } catch (IOException ex) {
                 Logger.getLogger(BackgroundManager.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         }
     }
-    public void checkWallpapers(){
-    File folder = ManagerFiles.getWallpapersFolder();
-    resurceList.clear();
-        ManagerFiles.getFiles(folder, resurceList);
-        // File folder = new File (h);//ManagerProperties.getImageFolder();
-        filenameList.add("Libreria");
-        for (int i = 0; i < resurceList.size(); i++) {
-            filenameList.add(resurceList.get(i).getName());
-        }
-           if (folder.isDirectory()) {
-            frame.setList(folder.getPath(), filenameList.toArray(new String[filenameList.size()]));       
+
+    public void checkWallpapers() {
+        File folder = ManagerFiles.getWallpapersFolder();
+        resurceList.clear();
+        if (folder.isDirectory()) {
+            ManagerFiles.getFiles(folder, resurceList);
+            System.out.println(resurceList.size());
+            String[] filenames = new String[resurceList.size() + 1];
+            filenames[0] = "Libreria";
+            for (int i = 0; i < resurceList.size(); i++) {
+                filenames[i + 1] = resurceList.get(i).getName();
+            }
+            frame.setList(folder.getPath(), filenames);
         } else {
-           //frame.setList(folder.list());
-            System.out.println(folder.exists()+"--"+folder.getName()); 
+            System.out.println("Error no directorio");
         }
     }
-    public void checkBackgroundFolder(){
+
+    public void checkBackgroundFolder() {
         File folder = ManagerFiles.getBackgroundsFolder();
         ManagerFiles.getFiles(folder, resurceList);
-              
-           for (int i = 0; i < resurceList.size(); i++) {
+
+        for (int i = 0; i < resurceList.size(); i++) {
             String ext = resurceList.get(i).getName();
-            ext = ext.substring(ext.length()-3, ext.length());
+            ext = ext.substring(ext.length() - 3, ext.length());
             //System.out.println(ext);
             if (ext.compareTo("xml") != 0) {
-                NewJPanel p = new NewJPanel();
+                ImageBlockPane p = new ImageBlockPane();
                 p.setIcon(resurceList.get(i));
+                frame.addToPanel(p);
+            } else {
+                ImageBlockPane p = new ImageBlockPane();
+                // System.out.println(new File(".").getAbsolutePath());
+                p.setIcon(new File("src/assets/slide.png"));
                 frame.addToPanel(p);
             }
         }
     }
-    public void getConfig(){}
-    public void checkConfig(){
-     configManager = new ConfigurationManager();
+
+    public void getConfig() {
+    }
+
+    public void checkConfig() {
+        configManager = new ConfigurationManager();
     }
 
     @Override
     public void actionPerformed(ActionEvent ae) {
         System.out.println(ae.getActionCommand());
-                JFileChooser jFileChooser = new JFileChooser(ManagerFiles.getDefaultImagePath());
-                jFileChooser.setMultiSelectionEnabled(true);
-                jFileChooser.setApproveButtonText("Run Application");   
-                jFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                int chooseStatus = jFileChooser.showOpenDialog(frame);
-                if (chooseStatus == JFileChooser.APPROVE_OPTION) {
-                    System.out.println("ww");
-                    resurces  = jFileChooser.getSelectedFiles();
-                    saveFilesInBGFolder(resurces);
-                } else {
-                }
-                
+        JFileChooser jFileChooser = new JFileChooser(ManagerFiles.getDefaultImagePath());
+        jFileChooser.setMultiSelectionEnabled(true);
+        jFileChooser.setApproveButtonText("Run Application");
+        jFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int chooseStatus = jFileChooser.showOpenDialog(frame);
+        if (chooseStatus == JFileChooser.APPROVE_OPTION) {
+            System.out.println("ww");
+            resurces = jFileChooser.getSelectedFiles();
+            saveFilesInBGFolder(resurces);
+        } else {
+        }
+
     }
 }
