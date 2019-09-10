@@ -36,6 +36,7 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.plaf.ColorUIResource;
@@ -59,19 +60,30 @@ public class MainJFrame extends javax.swing.JFrame {
     private DefaultListModel collectionName;
     private DefaultListModel wallpaperName;
     private SidePanel sideBar;
+    
+    
 
     public MainJFrame() {
-        initComponents();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setBackground( new Color(18,39,43) );
-        sideBar = new SidePanel();
-        sideBar.toggleLibrary(false);
-        getContentPane().add(sideBar,  new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 500));
+
+        initComponents();
+        initSidebar();
+        
+        
         container = new JPanel();
         container.setSize(600, 1024);
         container.setLayout(new GridLayout(0,3));
         jButton1.setActionCommand(ADD_TO_LIBRARY);
         scrollContent.setViewportView(container); 
+        pack();
     }
+    private void initSidebar(){
+        sideBar = new SidePanel();
+        sideBar.setLibraryView(false);
+        getContentPane().add(sideBar,  new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, 480));
+    }
+    //?????
     public String getListElement(int index){
     return (String) collectionName.get(index);
     }
@@ -85,18 +97,11 @@ public class MainJFrame extends javax.swing.JFrame {
         scrollContent.setViewportView(jPane);
     }
     public void setLibraryView(boolean visibility){
-        sideBar.toggleLibrary(visibility);
-        if (visibility) {
-       //     jList2.setVisible(false);
-        //    jList2.setOpaque(false); 
-            scrollContent.setViewportView(container);
-            //jButton1.setEnabled(true);
-            
+        sideBar.setLibraryView(visibility);
+        if (visibility) { 
+            scrollContent.setViewportView(container);         
         } else {
-         //   jList2.setVisible(true);
-            scrollContent.setViewportView(null);
-           // jButton1.setEnabled(false);
-           
+            scrollContent.setViewportView(null);    
         }
     }
     public void addToPanel (JPanel jp){
@@ -133,24 +138,27 @@ public class MainJFrame extends javax.swing.JFrame {
         jButton9 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         navPanel = new javax.swing.JPanel();
-        scrollContent = new javax.swing.JScrollPane();
         jLabel2 = new javax.swing.JLabel();
+        scrollContent = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Background Manager");
-        setAlwaysOnTop(true);
         setBackground(new java.awt.Color(18, 39, 93));
-        setBounds(new java.awt.Rectangle(0, 0, 700, 500));
+        setBounds(new java.awt.Rectangle(0, 0, 750, 500));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setForeground(new java.awt.Color(0, 44, 124));
+        setForeground(new java.awt.Color(206, 223, 253));
         setLocation(new java.awt.Point(100, 100));
         setMaximumSize(new java.awt.Dimension(2147, 2147));
+        setMinimumSize(new java.awt.Dimension(750, 540));
         setName("principalFrame"); // NOI18N
+        setPreferredSize(new java.awt.Dimension(750, 540));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         contentPanel.setBackground(new java.awt.Color(254, 254, 254));
         contentPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        contentPanel.setMinimumSize(new java.awt.Dimension(410, 410));
+        contentPanel.setName(""); // NOI18N
         contentPanel.setOpaque(false);
         contentPanel.setLayout(new java.awt.GridLayout(1, 0));
 
@@ -186,13 +194,12 @@ public class MainJFrame extends javax.swing.JFrame {
         });
         contentPanel.add(jButton1);
 
-        getContentPane().add(contentPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 480, 630, 60));
+        getContentPane().add(contentPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 400, 630, 60));
+        contentPanel.getAccessibleContext().setAccessibleDescription("");
 
         navPanel.setOpaque(false);
         navPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        navPanel.add(scrollContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 430));
-
-        getContentPane().add(navPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, -1, 430));
+        getContentPane().add(navPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, 410, 400));
 
         jLabel2.setBackground(new java.awt.Color(1, 1, 1));
         jLabel2.setForeground(new java.awt.Color(253, 251, 251));
@@ -200,10 +207,14 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel2.setLabelFor(scrollContent);
         jLabel2.setText("jLabel2");
         jLabel2.setAutoscrolls(true);
-        jLabel2.setBorder(null);
         jLabel2.setRequestFocusEnabled(false);
         jLabel2.setVerifyInputWhenFocusTarget(false);
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 440, 630, 30));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 440, 730, 30));
+
+        scrollContent.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 19, 180)));
+        scrollContent.setToolTipText("");
+        scrollContent.setInheritsPopupMenu(true);
+        getContentPane().add(scrollContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 550, 430));
 
         getAccessibleContext().setAccessibleDescription("");
 
