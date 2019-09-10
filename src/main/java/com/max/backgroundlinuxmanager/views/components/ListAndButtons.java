@@ -88,6 +88,7 @@ public class ListAndButtons extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         listHolder = new javax.swing.JScrollPane();
         elementsList = new javax.swing.JList<>();
@@ -96,29 +97,31 @@ public class ListAndButtons extends javax.swing.JPanel {
         deleteBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(13, 39, 93));
-        setBorder(javax.swing.BorderFactory.createTitledBorder("www"));
+        setBorder(javax.swing.BorderFactory.createCompoundBorder());
         setForeground(new java.awt.Color(255, 255, 255));
         setToolTipText("");
         setMaximumSize(new java.awt.Dimension(327, 6557));
         setMinimumSize(new java.awt.Dimension(158, 276));
         setOpaque(false);
         setPreferredSize(new java.awt.Dimension(200, 250));
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.TRAILING, 0, 0);
+        flowLayout1.setAlignOnBaseline(true);
+        setLayout(flowLayout1);
+
+        listHolder.setAlignmentX(0.0F);
+        listHolder.setAlignmentY(0.0F);
 
         elementsList.setBackground(new java.awt.Color(194, 184, 184));
         elementsList.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        elementsList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         elementsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        elementsList.setToolTipText("");
         elementsList.setOpaque(false);
         listHolder.setViewportView(elementsList);
 
-        add(listHolder, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 17, 184, 160));
+        add(listHolder);
 
-        btnHolder.setLayout(new java.awt.GridLayout());
+        btnHolder.setOpaque(false);
+        btnHolder.setLayout(new java.awt.GridLayout(1, 2, 1, 1));
 
         addBtn.setBackground(new java.awt.Color(154, 214, 6));
         btnHolder.add(addBtn);
@@ -126,7 +129,7 @@ public class ListAndButtons extends javax.swing.JPanel {
         deleteBtn.setBackground(new java.awt.Color(248, 103, 77));
         btnHolder.add(deleteBtn);
 
-        add(btnHolder, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 181, 184, 50));
+        add(btnHolder);
     }// </editor-fold>//GEN-END:initComponents
 
 

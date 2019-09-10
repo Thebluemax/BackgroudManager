@@ -23,6 +23,7 @@
  */
 package com.max.backgroundlinuxmanager.views.components;
 
+import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 
 /**
@@ -43,11 +44,15 @@ public class SidePanel extends javax.swing.JPanel {
     private String[] wallpapersList;
     private String[] wallpaperName;
     public SidePanel() {
-        this.setOpaque(false);
+        this.setLayout(new GridLayout(2, 1));
+        this.setOpaque(true);
         initComponents();
         fatherList = new ListAndButtons();
-        fatherList.setSize(200, 300);
+        fatherList.setSize(250, 240);
+        
         childList = new ListAndButtons();
+        childList.setSize(250, 240);
+
        add(fatherList);
         add(childList);
     }
@@ -57,8 +62,9 @@ public class SidePanel extends javax.swing.JPanel {
     public void setChildLidt(String[] list) {
         childList.setList(list);
     }
-    public void toggleLibrary(boolean flag){
-        childList.setVisible(flag);
+    public void setLibraryView(boolean flag){
+        
+        childList.setVisible(flag?false:true);
         fatherList.deactivateDelete(flag);
     }
     public void addListMouseEvents(MouseAdapter mouseAdapter){

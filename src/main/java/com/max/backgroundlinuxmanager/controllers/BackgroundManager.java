@@ -62,14 +62,17 @@ public class BackgroundManager implements ActionListener {
             public void mouseClicked(MouseEvent evt) {
                 JList list = (JList) evt.getSource();
                 int index = list.getSelectedIndex();
+                String element = (String) list.getModel().getElementAt(index);
                 if (list.getName().compareTo(SidePanel.CHILD) == 0) {
-
+                    frame.setViewPortContainer(new JpaneWallpaper(wallpapers.getWallpapers().get(index)));
+                    
                 } else {
-                    String element = (String) list.getModel().getElementAt(index);
+                    System.out.println(element);
                     if (element.compareTo(SidePanel.LIBRARY_TAG) == 0) {
-                        
+                        frame.setLibraryView(true);
                     } else {
                         buildWallpapers(element);
+                        frame.setLibraryView(false);
                     }              
                 }
           
@@ -119,7 +122,7 @@ public class BackgroundManager implements ActionListener {
             ManagerFiles.getFiles(folder, resurceList);
             System.out.println(resurceList.size());
             String[] filenames = new String[resurceList.size() + 1];
-            filenames[0] = "Libreria";
+            filenames[0] = SidePanel.LIBRARY_TAG;
             for (int i = 0; i < resurceList.size(); i++) {
                 filenames[i + 1] = resurceList.get(i).getName();
             }

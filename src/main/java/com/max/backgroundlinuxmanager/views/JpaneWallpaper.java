@@ -42,6 +42,7 @@ public class JpaneWallpaper extends javax.swing.JPanel {
     public JpaneWallpaper(Wallpaper wp) {
         initComponents();
         jLabel6.setText(wp.getName());
+        
         jLabel5.setText(ManagerFiles.getUserFolder()+"/"+wp.getFilename());
         File f = new File(ManagerFiles.getUserFolder()+"/"+wp.getFilename());
         jLabel1.setIcon(ImageManager.resize(f, jLabel1.getWidth(), jLabel1.getHeight()));
