@@ -43,6 +43,9 @@ public class ImageBlockPane extends javax.swing.JPanel {
         ImageHolder.setIcon(ImageManager.resize(image, 120, 100));
         objectCheckbox.setLabel(image.getName());
     }
+    public void setLabel(String label){
+        objectCheckbox.setLabel(label);
+    }
     public boolean isChecked (){
     return objectCheckbox.isSelected();
     }
@@ -61,36 +64,19 @@ public class ImageBlockPane extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(46, 36, 57));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(254, 254, 254), 3));
+        setPreferredSize(new java.awt.Dimension(150, 150));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         ImageHolder.setBackground(new java.awt.Color(35, 24, 12));
-        ImageHolder.setIcon(new javax.swing.ImageIcon("/home/max/Imágenes/wallpapers/1458634375291.png")); // NOI18N
         ImageHolder.setText("jLabel1");
+        add(ImageHolder, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 3, 180, 120));
 
+        objectCheckbox.setFont(new java.awt.Font("Ubuntu", 0, 12)); // NOI18N
         objectCheckbox.setText("jCheckBox1");
+        add(objectCheckbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 110, 40));
 
         erraseBtn.setText("jButton1");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(ImageHolder, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(objectCheckbox)
-                .addGap(18, 18, 18)
-                .addComponent(erraseBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 15, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(ImageHolder, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(objectCheckbox)
-                    .addComponent(erraseBtn))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        add(erraseBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 40, 30));
     }// </editor-fold>//GEN-END:initComponents
 
 

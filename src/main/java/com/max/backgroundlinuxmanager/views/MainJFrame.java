@@ -25,6 +25,7 @@ package com.max.backgroundlinuxmanager.views;
 
 import com.max.backgroundlinuxmanager.views.components.ListAndButtons;
 import com.max.backgroundlinuxmanager.views.components.SidePanel;
+import com.max.backgroundlinuxmanager.views.components.NavComponent;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -60,6 +61,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private DefaultListModel collectionName;
     private DefaultListModel wallpaperName;
     private SidePanel sideBar;
+    private NavComponent navBar; 
     
     
 
@@ -70,34 +72,37 @@ public class MainJFrame extends javax.swing.JFrame {
         initComponents();
         initSidebar();
         
+        initNavBar();
+        
         
         container = new JPanel();
-        container.setSize(600, 1024);
+        container.setSize(510, 1024);
         container.setLayout(new GridLayout(0,3));
-        jButton1.setActionCommand(ADD_TO_LIBRARY);
+       // jButton1.setActionCommand(ADD_TO_LIBRARY);
         scrollContent.setViewportView(container); 
         pack();
     }
     private void initSidebar(){
         sideBar = new SidePanel();
-        sideBar.setLibraryView(false);
+        sideBar.setLibraryView(true);
         getContentPane().add(sideBar,  new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, 480));
     }
-    //?????
-    public String getListElement(int index){
-    return (String) collectionName.get(index);
+   private void initNavBar(){
+        navBar = new NavComponent();
+        navBar.setVisibility(true);
+        getContentPane().add(navBar,  new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 430, 500, 45));
     }
-    public String getWallpaperName(int index){
-    return (String) wallpaperName.get(index);
-    } 
+    
+    
     public void setListeners(ActionListener aListener) {
-    jButton1.addActionListener(aListener);
+    navBar.addActionListener(aListener);
     }
     public void setViewPortContainer (JPanel jPane){
         scrollContent.setViewportView(jPane);
     }
     public void setLibraryView(boolean visibility){
         sideBar.setLibraryView(visibility);
+        navBar.setVisibility(visibility);
         if (visibility) { 
             scrollContent.setViewportView(container);         
         } else {
@@ -131,13 +136,6 @@ public class MainJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        contentPanel = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        navPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         scrollContent = new javax.swing.JScrollPane();
 
@@ -155,52 +153,6 @@ public class MainJFrame extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        contentPanel.setBackground(new java.awt.Color(254, 254, 254));
-        contentPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        contentPanel.setMinimumSize(new java.awt.Dimension(410, 410));
-        contentPanel.setName(""); // NOI18N
-        contentPanel.setOpaque(false);
-        contentPanel.setLayout(new java.awt.GridLayout(1, 0));
-
-        jButton4.setText("Add Wallpaper");
-        jButton4.setToolTipText("Add to wallpaper whit default  options");
-        contentPanel.add(jButton4);
-
-        jButton5.setText("Add to Slide");
-        contentPanel.add(jButton5);
-
-        jButton6.setText("Save");
-        jButton6.setName(""); // NOI18N
-        jButton6.setOpaque(true);
-        contentPanel.add(jButton6);
-
-        jButton9.setText("Delete");
-        contentPanel.add(jButton9);
-
-        jButton1.setBackground(new java.awt.Color(57, 207, 57));
-        jButton1.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        jButton1.setText("Load to Library");
-        jButton1.setToolTipText("");
-        jButton1.setActionCommand("load_to_library");
-        jButton1.setAlignmentY(0.0F);
-        jButton1.setAutoscrolls(true);
-        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton1.setBorderPainted(false);
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        contentPanel.add(jButton1);
-
-        getContentPane().add(contentPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 400, 630, 60));
-        contentPanel.getAccessibleContext().setAccessibleDescription("");
-
-        navPanel.setOpaque(false);
-        navPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(navPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, 410, 400));
-
         jLabel2.setBackground(new java.awt.Color(1, 1, 1));
         jLabel2.setForeground(new java.awt.Color(253, 251, 251));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -209,21 +161,17 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel2.setAutoscrolls(true);
         jLabel2.setRequestFocusEnabled(false);
         jLabel2.setVerifyInputWhenFocusTarget(false);
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 440, 730, 30));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 390, 730, 30));
 
         scrollContent.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 19, 180)));
         scrollContent.setToolTipText("");
         scrollContent.setInheritsPopupMenu(true);
-        getContentPane().add(scrollContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 550, 430));
+        getContentPane().add(scrollContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 550, 380));
 
         getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -261,14 +209,7 @@ public class MainJFrame extends javax.swing.JFrame {
  //   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel contentPanel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel navPanel;
     private javax.swing.JScrollPane scrollContent;
     // End of variables declaration//GEN-END:variables
 }

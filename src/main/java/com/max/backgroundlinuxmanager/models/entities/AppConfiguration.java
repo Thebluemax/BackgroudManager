@@ -37,7 +37,9 @@ public class AppConfiguration {
     public static int DEFAULT_TRANSITION_DURATION = 300;
     public static int DEFAULT_INTERVAL_CHANGE = 2795;
    // public static String ConfigFile = "config.xml";
-    private String[] shaderList  = {"solid","solid"};
+    public static String[] OPTIONS_WALLPAPER = {"none", "wallpaper", "centered",
+                                                "scaled", "stretched", "zoom", "spanned"};
+    public static String[] SHADER_TYPE  = {"solid","solid"};
     private int defaulTransitionDuration;
     private int defaultIntervalChange;
     private String shaderDefault;

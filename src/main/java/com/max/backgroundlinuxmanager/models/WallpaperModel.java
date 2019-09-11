@@ -21,41 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.max.backgroundlinuxmanager.controllers.utils;
-
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
+package com.max.backgroundlinuxmanager.models;
 
 /**
  *
  * @author Maximiliano Fernández <thebluemax13 at gmail.com>
  */
-public class ImageManager {
-
-    public ImageManager() {
-    }
+public class WallpaperModel {
     
-   
-    public static ImageIcon resize(File InputFile, int scaledWidth, int scaledHeight)
-            {
-        // reads input image
-        File inputFile = InputFile;
-        BufferedImage inputImage = null;
-        Image thumb = null;
-        try {
-            inputImage = ImageIO.read(inputFile);
-            thumb = inputImage.getScaledInstance(scaledWidth,scaledHeight,Image.SCALE_SMOOTH);
-        } catch (IOException ex) {
-            Logger.getLogger(ImageManager.class.getName()).log(Level.SEVERE, null, ex);
-        }catch(NullPointerException ex){
-            System.out.println(ex.getCause().getMessage());          
-        }
-        return new ImageIcon(thumb);
-    }}
-
+}

@@ -64,7 +64,7 @@ public class BackgroundManager implements ActionListener {
                 int index = list.getSelectedIndex();
                 String element = (String) list.getModel().getElementAt(index);
                 if (list.getName().compareTo(SidePanel.CHILD) == 0) {
-                    frame.setViewPortContainer(new JpaneWallpaper(wallpapers.getWallpapers().get(index)));
+                    frame.setViewPortContainer(new WallpaperPanel(wallpapers.getWallpapers().get(index)));
                     
                 } else {
                     System.out.println(element);
@@ -74,8 +74,7 @@ public class BackgroundManager implements ActionListener {
                         buildWallpapers(element);
                         frame.setLibraryView(false);
                     }              
-                }
-          
+                }         
             }
         });
         frame.setListeners(this);
@@ -114,7 +113,9 @@ public class BackgroundManager implements ActionListener {
 
         }
     }
-
+    /**
+     * Obteniendo los archivos xml con las colecciones de wallpapers
+     */
     public void checkWallpapers() {
         File folder = ManagerFiles.getWallpapersFolder();
         resurceList.clear();
@@ -134,20 +135,22 @@ public class BackgroundManager implements ActionListener {
 
     public void checkBackgroundFolder() {
         File folder = ManagerFiles.getBackgroundsFolder();
+        resurceList.clear();
         ManagerFiles.getFiles(folder, resurceList);
 
         for (int i = 0; i < resurceList.size(); i++) {
             String ext = resurceList.get(i).getName();
             ext = ext.substring(ext.length() - 3, ext.length());
-            //System.out.println(ext);
+           //System.out.println(ext);
             if (ext.compareTo("xml") != 0) {
                 ImageBlockPane p = new ImageBlockPane();
                 p.setIcon(resurceList.get(i));
                 frame.addToPanel(p);
             } else {
                 ImageBlockPane p = new ImageBlockPane();
-                // System.out.println(new File(".").getAbsolutePath());
+                
                 p.setIcon(new File("src/assets/slide.png"));
+                p.setLabel(resurceList.get(i).getName());
                 frame.addToPanel(p);
             }
         }

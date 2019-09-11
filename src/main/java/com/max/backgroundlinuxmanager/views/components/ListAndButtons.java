@@ -77,6 +77,9 @@ public class ListAndButtons extends javax.swing.JPanel {
     public JList<String> getList(){
     return elementsList;
     }
+    public String getListElement(int index){
+    return (String) stringList.get(index);
+    }
     public void addListMouseEvents(MouseAdapter mouseAdapter) {
         elementsList.addMouseListener(mouseAdapter);
     }
