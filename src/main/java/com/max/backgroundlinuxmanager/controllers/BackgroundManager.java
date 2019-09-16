@@ -7,6 +7,7 @@ package com.max.backgroundlinuxmanager.controllers;
 
 import com.max.backgroundlinuxmanager.models.ConfigurationManager;
 import com.max.backgroundlinuxmanager.models.XMLparse;
+import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
 import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
 import com.max.backgroundlinuxmanager.models.entities.Wallpapers;
 import com.max.backgroundlinuxmanager.utils.ManagerFiles;
@@ -43,6 +44,8 @@ public class BackgroundManager implements ActionListener {
     private List<File> wallpaperList;
     private Wallpapers wallpapers;
     private List<Wallpaper> wpaperList;
+    private File wallpaperFIle;
+    private Wallpaper activeWallpaper;
 
     public void initApp() {
         frame = new MainJFrame();
@@ -52,8 +55,9 @@ public class BackgroundManager implements ActionListener {
         wallpaperList = new ArrayList();
 
         checkConfig();
-        checkBackgroundFolder();
+        
         checkWallpapers();
+        checkBackgroundFolder();
         setListeners();
     }
 
@@ -64,8 +68,9 @@ public class BackgroundManager implements ActionListener {
                 int index = list.getSelectedIndex();
                 String element = (String) list.getModel().getElementAt(index);
                 if (list.getName().compareTo(SidePanel.CHILD) == 0) {
+                    System.out.println(wallpapers.getWallpapers().get(index).getFilename()+"ee");
                     frame.setViewPortContainer(new WallpaperPanel(wallpapers.getWallpapers().get(index)));
-                    
+                    activeWallpaper = wallpapers.getWallpapers().get(index);
                 } else {
                     System.out.println(element);
                     if (element.compareTo(SidePanel.LIBRARY_TAG) == 0) {
@@ -73,8 +78,8 @@ public class BackgroundManager implements ActionListener {
                     } else {
                         buildWallpapers(element);
                         frame.setLibraryView(false);
-                    }              
-                }         
+                    }
+                }
             }
         });
         frame.setListeners(this);
@@ -84,12 +89,16 @@ public class BackgroundManager implements ActionListener {
     }
 
     private void buildWallpapers(String filename) {
-        File wallpaperFIle = new File(ManagerFiles.getWallpapersFolder() + "/" + filename);
+        if (wallpapers == null) {
+            
+        
+        wallpaperFIle = new File(ManagerFiles.getWallpapersFolder() + "/" + filename);
         XMLparse xmlParse = new XMLparse();
         try {
             wallpapers = xmlParse.unmarshallerWallpapers(new FileInputStream(wallpaperFIle));
         } catch (FileNotFoundException ex) {
             Logger.getLogger(BackgroundManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
         }
         // System.out.println(wallpapers.getWallpapers().size()+"ggg");
         wpaperList = wallpapers.getWallpapers();
@@ -113,6 +122,7 @@ public class BackgroundManager implements ActionListener {
 
         }
     }
+
     /**
      * Obteniendo los archivos xml con las colecciones de wallpapers
      */
@@ -141,14 +151,13 @@ public class BackgroundManager implements ActionListener {
         for (int i = 0; i < resurceList.size(); i++) {
             String ext = resurceList.get(i).getName();
             ext = ext.substring(ext.length() - 3, ext.length());
-           //System.out.println(ext);
+            //System.out.println(ext);
             if (ext.compareTo("xml") != 0) {
                 ImageBlockPane p = new ImageBlockPane();
                 p.setIcon(resurceList.get(i));
                 frame.addToPanel(p);
             } else {
                 ImageBlockPane p = new ImageBlockPane();
-                
                 p.setIcon(new File("src/assets/slide.png"));
                 p.setLabel(resurceList.get(i).getName());
                 frame.addToPanel(p);
@@ -166,16 +175,51 @@ public class BackgroundManager implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae) {
         System.out.println(ae.getActionCommand());
-        JFileChooser jFileChooser = new JFileChooser(ManagerFiles.getDefaultImagePath());
-        jFileChooser.setMultiSelectionEnabled(true);
-        jFileChooser.setApproveButtonText("Run Application");
-        jFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        int chooseStatus = jFileChooser.showOpenDialog(frame);
-        if (chooseStatus == JFileChooser.APPROVE_OPTION) {
-            System.out.println("ww");
-            resurces = jFileChooser.getSelectedFiles();
-            saveFilesInBGFolder(resurces);
-        } else {
+        switch (ae.getActionCommand()) {
+            case "ADD_LIBRARY":
+                JFileChooser jFileChooser = new JFileChooser(ManagerFiles.getDefaultImagePath());
+                jFileChooser.setMultiSelectionEnabled(true);
+                jFileChooser.setApproveButtonText("Add to Library");
+                jFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                int chooseStatus = jFileChooser.showOpenDialog(frame);
+                if (chooseStatus == JFileChooser.APPROVE_OPTION) {
+                    // System.out.println("ww");
+                    resurces = jFileChooser.getSelectedFiles();
+                    saveFilesInBGFolder(resurces);
+                } else {
+                }
+                break;
+            case "NEW_WALLP":
+                
+                String selected = frame.getSelected();
+                        System.out.println(selected+"t");
+
+                Wallpaper newWallpaper = new Wallpaper();
+                newWallpaper.setFilename(ManagerFiles.FolderToObject()+selected);
+                        System.out.println(ManagerFiles.getBackgroundsPath()+"/"+selected);
+
+                newWallpaper.setName(selected);
+                newWallpaper.setOptions(AppConfiguration.DEFAULT_OPTION);
+                newWallpaper.setPcolor(AppConfiguration.DEFAULT_COLOR);
+                newWallpaper.setScolor(AppConfiguration.DEFAULT_COLOR);
+                newWallpaper.setShaderType(AppConfiguration.DEFAULT_SHADER_TYPE);
+                wallpapers.add(newWallpaper);
+                
+                break;
+            case "SAVE":
+                XMLparse xmlParse = new XMLparse();
+                xmlParse.saveXML(wallpaperFIle, XMLparse.BACKGROUNDS, wallpapers);
+                break;
+            case "DELETE":
+                int dialegButton = JOptionPane.YES_NO_OPTION;
+                
+                JOptionPane.showConfirmDialog(null, "quiere borrar la entrada:"+activeWallpaper.getName(), "Eliminar Entrada", dialegButton);
+                if(dialegButton == JOptionPane.YES_OPTION){
+                wpaperList.remove(activeWallpaper);
+                activeWallpaper = null;
+                }
+                break;
+
         }
 
     }
