@@ -52,6 +52,10 @@ public class ManagerFiles {
     public static String getUserFolder () {
         return System.getProperty("user.home");
     }
+    public static String FolderToObject  (){
+        String s = LOCAL_SHARED.substring(1, LOCAL_SHARED.length());
+        return s+BACKGROUNDS_FOLDER+"/";
+    }
    
     public static String getDefaultImagePath() {
         String path = "";

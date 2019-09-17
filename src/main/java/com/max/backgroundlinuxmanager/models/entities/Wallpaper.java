@@ -132,5 +132,4 @@ public class Wallpaper {
     public void setShaderType(String shaderType) {
         this.shader_type = shaderType;
     }
-    
 }

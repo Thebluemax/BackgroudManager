@@ -23,6 +23,7 @@
  */
 package com.max.backgroundlinuxmanager.views.components;
 
+import com.max.backgroundlinuxmanager.utils.IconFontManager;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -43,7 +44,6 @@ public class ListAndButtons extends javax.swing.JPanel {
      * Creates new form ListAndButtons
      */
     public ListAndButtons() {
-        IconFontSwing.register(FontAwesome.getIconFont());
         initComponents();
         prepareButtons();
     }
@@ -66,11 +66,11 @@ public class ListAndButtons extends javax.swing.JPanel {
     deleteBtn.setEnabled(flag);
     }
     private void prepareButtons(){
-        Icon icon = IconFontSwing.buildIcon(FontAwesome.PLUS_CIRCLE, 40, Color.WHITE);
+        Icon icon = IconFontManager.createIcon(FontAwesome.PLUS_CIRCLE, 32, Color.WHITE);
     addBtn.setText("");
         addBtn.setIcon(icon);
         deleteBtn.setText("");
-                icon = IconFontSwing.buildIcon(FontAwesome.ERASER, 40, Color.WHITE);
+                icon = IconFontManager.createIcon(FontAwesome.ERASER, 32, Color.RED);
     deleteBtn.setIcon(icon);
     
     }

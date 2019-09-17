@@ -21,41 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.max.backgroundlinuxmanager.utils;
+package com.max.backgroundlinuxmanager.models.entities;
 
-import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author Maximiliano Fernández <thebluemax13 at gmail.com>
  */
-public class ColorManager {
+public class SlideBackground extends Wallpaper{
+    private int transitionDuration;
+    private Map<String, Integer> startTime;
+private List<FrameBackground> frames;
+    public SlideBackground() {
+        super();
+        transitionDuration = AppConfiguration.DEFAULT_TRANSITION_DURATION;
+        frames = new ArrayList<>();
+    }
+    public void setStartTime(Map<String, Integer> timestamp){
+        startTime = timestamp;
+    }
+   
     
-    public static Color getColor(String color) {
-        int red = 255;
-        int green = 255;
-        int blue = 255;
-        
-        if (color.length() == 7) {
-            red = Integer.parseInt(color.substring(1, 3), 16);
-            green = Integer.parseInt(color.substring(3, 5), 16);
-            blue = Integer.parseInt(color.substring(5, 7), 16);
-        }
-        System.out.println(color+" "+red+"-"+green+"-"+blue+"/"+color.substring(1, 3));
-    return new Color(red, green, blue);
     
-    }
-    public static String getColorHexa(Color color) {
-        String hexadecimal= "#";
-        hexadecimal += evaluateString(Integer.toHexString(color.getRed()));
-        hexadecimal += evaluateString(Integer.toHexString(color.getGreen()));
-        hexadecimal += evaluateString(Integer.toHexString(color.getBlue()));
-        return hexadecimal;
-    }
-    private static String evaluateString(String s){
-         if (s.length()==1) {
-             s = "0"+s;        
-        }
-        return s;
-    }
-    }
+}

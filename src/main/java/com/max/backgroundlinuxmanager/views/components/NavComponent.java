@@ -37,6 +37,8 @@ public class NavComponent extends JPanel {
 
     private String[] labelList = {"Add Library", "New Wallpaper", "New Slide",
         "Save", "Delete"};
+    private String[] bottonRef = {"ADD_LIBRARY", "NEW_WALLP", "NEW_SLIDE",
+        "SAVE", "DELETE"};
     private List<JButton> buttonList;
 
     public NavComponent() {
@@ -58,6 +60,7 @@ public class NavComponent extends JPanel {
     private void setButtons() {
         for (int i = 0; i < labelList.length; i++) {
             JButton b = new JButton(labelList[i]);
+            b.setActionCommand(bottonRef[i]);
             buttonList.add(b);
             add(b);
         }

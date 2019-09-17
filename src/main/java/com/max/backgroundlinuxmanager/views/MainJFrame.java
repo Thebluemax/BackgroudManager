@@ -23,6 +23,7 @@
  */
 package com.max.backgroundlinuxmanager.views;
 
+import com.max.backgroundlinuxmanager.views.components.ImageBlockPane;
 import com.max.backgroundlinuxmanager.views.components.ListAndButtons;
 import com.max.backgroundlinuxmanager.views.components.SidePanel;
 import com.max.backgroundlinuxmanager.views.components.NavComponent;
@@ -33,6 +34,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -40,7 +42,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 import javax.swing.plaf.ColorUIResource;
+import mdlaf.MaterialLookAndFeel;
+import mdlaf.themes.MaterialDarkTheme;
+import mdlaf.themes.MaterialLiteTheme;
 
 
 /**
@@ -62,23 +68,22 @@ public class MainJFrame extends javax.swing.JFrame {
     private DefaultListModel wallpaperName;
     private SidePanel sideBar;
     private NavComponent navBar; 
+    private List<ImageBlockPane>  imageList ;
     
     
 
     public MainJFrame() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setBackground( new Color(18,39,43) );
-
+        imageList = new ArrayList<>();
         initComponents();
-        initSidebar();
-        
+        initSidebar();  
         initNavBar();
         
         
         container = new JPanel();
         container.setSize(510, 1024);
         container.setLayout(new GridLayout(0,3));
-       // jButton1.setActionCommand(ADD_TO_LIBRARY);
         scrollContent.setViewportView(container); 
         pack();
     }
@@ -110,13 +115,21 @@ public class MainJFrame extends javax.swing.JFrame {
         }
     }
     public void addToPanel (JPanel jp){
+        imageList.add((ImageBlockPane)jp);
         container.add(jp);
+    }
+    public String getSelected(){
+        String r="";
+        for (int i = 0; i < imageList.size(); i++) {
+            if (imageList.get(i).isChecked()) {
+             r =    imageList.get(i).getFilename();
+            }
+        }
+    return r;
     }
     public void setWallpaperList(String[] nameWallpaper){
        sideBar.setChildLidt(nameWallpaper);
-     //   jList2.setModel(wallpaperName);
-        //jTextPane1.setContentType("text/html");
-    //jTextPane1.setText(text);
+     
     }
     public void setList(String folder, String[] listFile){
         sideBar.setListFather(listFile);
@@ -127,6 +140,7 @@ public class MainJFrame extends javax.swing.JFrame {
     public void addSideBarEvents(MouseAdapter mouseAdapter){
         sideBar.addListMouseEvents(mouseAdapter);
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

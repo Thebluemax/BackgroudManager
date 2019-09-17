@@ -102,7 +102,7 @@ public class XMLparse {
         }
         return config;
     }
-   public int saveXML(String path, int type, Object objecto){
+   public int saveXML(File xml, int type, Object objecto){
    int status = 0;
        Marshaller marshaller;
         System.out.println("Guardando Comanda");
@@ -113,10 +113,10 @@ public class XMLparse {
             marshaller = jaxbContest.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             if (type == CONFIG) {
-               marshaller.marshal((AppConfiguration)objecto, new File(path));
+              // marshaller.marshal((AppConfiguration)objecto, xml);
 
             } else {
-               marshaller.marshal((Wallpapers)objecto, new File(path));
+               marshaller.marshal((Wallpapers)objecto, xml);
 
             }
 

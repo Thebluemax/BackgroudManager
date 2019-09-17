@@ -21,10 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.max.backgroundlinuxmanager.views;
+package com.max.backgroundlinuxmanager.views.components;
 
 import java.io.File;
 import com.max.backgroundlinuxmanager.controllers.utils.ImageManager;
+import com.max.backgroundlinuxmanager.utils.IconFontManager;
+import java.awt.Color;
+import jiconfont.icons.font_awesome.FontAwesome;
 
 /**
  *
@@ -35,19 +38,28 @@ public class ImageBlockPane extends javax.swing.JPanel {
     /**
      * Creates new form NewJPanel
      */
+    private String filename;
     public ImageBlockPane() {
         initComponents();
         ImageHolder.setText("");
+        erraseBtn.setText("");
+        erraseBtn.setIcon(IconFontManager.createIcon(FontAwesome.TRASH, 12, Color.BLACK));
     }
     public void setIcon(File image) {
+       // ImageHolder.impl_processCSS(true);
+        System.out.println(ImageHolder.getPreferredSize().width);
         ImageHolder.setIcon(ImageManager.resize(image, 120, 100));
         objectCheckbox.setLabel(image.getName());
+        filename = image.getName();
     }
     public void setLabel(String label){
         objectCheckbox.setLabel(label);
     }
     public boolean isChecked (){
     return objectCheckbox.isSelected();
+    }
+    public String getFilename() {
+    return filename;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -65,18 +77,18 @@ public class ImageBlockPane extends javax.swing.JPanel {
         setBackground(new java.awt.Color(46, 36, 57));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(254, 254, 254), 3));
         setPreferredSize(new java.awt.Dimension(150, 150));
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setLayout(new java.awt.BorderLayout());
 
         ImageHolder.setBackground(new java.awt.Color(35, 24, 12));
         ImageHolder.setText("jLabel1");
-        add(ImageHolder, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 3, 180, 120));
+        add(ImageHolder, java.awt.BorderLayout.CENTER);
 
         objectCheckbox.setFont(new java.awt.Font("Ubuntu", 0, 12)); // NOI18N
         objectCheckbox.setText("jCheckBox1");
-        add(objectCheckbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 110, 40));
+        add(objectCheckbox, java.awt.BorderLayout.PAGE_START);
 
         erraseBtn.setText("jButton1");
-        add(erraseBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 40, 30));
+        add(erraseBtn, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
 
 

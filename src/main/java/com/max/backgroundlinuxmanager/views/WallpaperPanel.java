@@ -23,13 +23,24 @@
  */
 package com.max.backgroundlinuxmanager.views;
 
+import com.max.backgroundlinuxmanager.controllers.events.WallpaperButtonAdapter;
 import com.max.backgroundlinuxmanager.controllers.utils.ImageManager;
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
 import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
+import com.max.backgroundlinuxmanager.utils.ColorManager;
 import com.max.backgroundlinuxmanager.utils.ManagerFiles;
+import java.awt.Color;
+import java.awt.Rectangle;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ContainerAdapter;
+import java.awt.event.ContainerListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import javax.swing.ComboBoxModel;
+import javax.swing.JColorChooser;
 import javax.swing.JList;
+import javax.swing.plaf.basic.BasicSliderUI;
 
 /**
  *
@@ -41,6 +52,8 @@ public class WallpaperPanel extends javax.swing.JPanel {
      * Creates new form JpaneWallpaper
      */
     private Wallpaper wp;
+    public static final String PCOLOR = "pcolor";
+    public static final String SCOLOR = "scolor";
    
     public WallpaperPanel(Wallpaper wp) {
         this.wp = wp; 
@@ -50,10 +63,24 @@ public class WallpaperPanel extends javax.swing.JPanel {
         pathLabel.setText(ManagerFiles.getUserFolder()+"/"+wp.getFilename());
         File f = new File(ManagerFiles.getUserFolder()+"/"+wp.getFilename());
         imageHolder.setText("");
-        imageHolder.setBounds(0, 0, 410,400);
+        imageHolder.setBounds(0, 0, 300,150);
+       // controlPanel.setBounds(new Rectangle(300, 200));
         imageHolder.setIcon(ImageManager.resize(f, imageHolder.getWidth(), imageHolder.getHeight()));
         comboBuild();
-        
+        pcolor.setBackground(ColorManager.getColor(wp.getPcolor()));
+        pcolor.setOpaque(true);
+        pcolor.setName(PCOLOR);
+        pcolor.setText(wp.getPcolor());
+        scolor.setBackground(ColorManager.getColor(wp.getScolor()));
+        scolor.setText(wp.getScolor());
+        scolor.setName(SCOLOR);
+        scolor.setOpaque(true);
+        this.setBackground(ColorManager.getColor("#ff45ed"));
+        System.out.println(this.getSize().height);
+        WallpaperButtonAdapter adapter = new WallpaperButtonAdapter(wp);
+        pcolor.addMouseListener(adapter);
+        scolor.addMouseListener(adapter);
+      //  pcolor.add
     }
     private void comboBuild() {
         
@@ -63,6 +90,9 @@ public class WallpaperPanel extends javax.swing.JPanel {
         }
         optionCombobox.setSelectedItem(wp.getOptions());
     }
+    private Wallpaper getWallpaper(){
+    return  wp;
+    };
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -71,40 +101,61 @@ public class WallpaperPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        imageHolder = new javax.swing.JLabel();
-        optionCombobox = new javax.swing.JComboBox<>();
-        optionLabel = new javax.swing.JLabel();
-        pcolor = new javax.swing.JLabel();
-        scolor = new javax.swing.JLabel();
-        pathLabel = new javax.swing.JLabel();
-        shaderCombobox = new javax.swing.JComboBox<>();
         nameLabel = new javax.swing.JLabel();
+        imageHolder = new javax.swing.JLabel();
+        controlPanel = new javax.swing.JPanel();
+        optionLabel = new javax.swing.JLabel();
+        optionCombobox = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
+        shaderCombobox = new javax.swing.JComboBox<>();
+        pcolor = new javax.swing.JLabel();
+        pathLabel = new javax.swing.JLabel();
+        scolor = new javax.swing.JLabel();
 
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setMaximumSize(new java.awt.Dimension(800, 500));
+        setName(""); // NOI18N
+        setPreferredSize(new java.awt.Dimension(400, 400));
+        setLayout(new java.awt.GridBagLayout());
+
+        nameLabel.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        nameLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        nameLabel.setLabelFor(imageHolder);
+        nameLabel.setText("jLabel6");
+        nameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        nameLabel.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_START;
+        add(nameLabel, gridBagConstraints);
 
         imageHolder.setText("jLabel1");
-        add(imageHolder, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 340, 160));
+        imageHolder.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
+        add(imageHolder, gridBagConstraints);
+
+        controlPanel.setLayout(new java.awt.GridLayout(4, 2, 5, 0));
+
+        optionLabel.setText("Options");
+        controlPanel.add(optionLabel);
 
         optionCombobox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 optionComboboxActionPerformed(evt);
             }
         });
-        add(optionCombobox, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 90, -1));
+        controlPanel.add(optionCombobox);
 
-        optionLabel.setText("Options");
-        add(optionLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 100, -1));
-
-        pcolor.setText("jLabel3");
-        add(pcolor, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, -1, 31));
-
-        scolor.setText("jLabel4");
-        add(scolor, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, 170, -1));
-
-        pathLabel.setText("jLabel5");
-        add(pathLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, -1, -1));
+        jLabel1.setText("Type Shader");
+        controlPanel.add(jLabel1);
 
         shaderCombobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         shaderCombobox.addActionListener(new java.awt.event.ActionListener() {
@@ -112,14 +163,25 @@ public class WallpaperPanel extends javax.swing.JPanel {
                 shaderComboboxActionPerformed(evt);
             }
         });
-        add(shaderCombobox, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 100, -1));
+        controlPanel.add(shaderCombobox);
 
-        nameLabel.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        nameLabel.setText("jLabel6");
-        add(nameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 4, 360, 30));
+        pcolor.setText("jLabel3");
+        controlPanel.add(pcolor);
 
-        jLabel1.setText("Type Shader");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 230, -1, -1));
+        pathLabel.setText("jLabel5");
+        controlPanel.add(pathLabel);
+
+        scolor.setText("jLabel4");
+        controlPanel.add(scolor);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 9;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.weighty = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(5, 9, 5, 9);
+        add(controlPanel, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void optionComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionComboboxActionPerformed
@@ -132,6 +194,7 @@ public class WallpaperPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel controlPanel;
     private javax.swing.JLabel imageHolder;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel nameLabel;

@@ -23,39 +23,19 @@
  */
 package com.max.backgroundlinuxmanager.utils;
 
-import java.awt.Color;
-
 /**
  *
  * @author Maximiliano Fernández <thebluemax13 at gmail.com>
  */
-public class ColorManager {
+import java.awt.Color;
+import javax.swing.Icon;
+import jiconfont.icons.font_awesome.FontAwesome;
+import jiconfont.swing.IconFontSwing;
+
+public class IconFontManager {
+    public static Icon createIcon(FontAwesome font,int size, Color color){
+    IconFontSwing.register(FontAwesome.getIconFont());
+    return IconFontSwing.buildIcon(font,size, color);
+    }
     
-    public static Color getColor(String color) {
-        int red = 255;
-        int green = 255;
-        int blue = 255;
-        
-        if (color.length() == 7) {
-            red = Integer.parseInt(color.substring(1, 3), 16);
-            green = Integer.parseInt(color.substring(3, 5), 16);
-            blue = Integer.parseInt(color.substring(5, 7), 16);
-        }
-        System.out.println(color+" "+red+"-"+green+"-"+blue+"/"+color.substring(1, 3));
-    return new Color(red, green, blue);
-    
-    }
-    public static String getColorHexa(Color color) {
-        String hexadecimal= "#";
-        hexadecimal += evaluateString(Integer.toHexString(color.getRed()));
-        hexadecimal += evaluateString(Integer.toHexString(color.getGreen()));
-        hexadecimal += evaluateString(Integer.toHexString(color.getBlue()));
-        return hexadecimal;
-    }
-    private static String evaluateString(String s){
-         if (s.length()==1) {
-             s = "0"+s;        
-        }
-        return s;
-    }
-    }
+}

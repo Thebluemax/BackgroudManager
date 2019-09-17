@@ -62,7 +62,7 @@ public class ConfigurationManager {
             folderConfig.mkdir();
             appConfig = new AppConfiguration();
             XMLparse xmlParse = new XMLparse();
-            xmlParse.saveXML(ManagerFiles.configurationFolderPath()+File.separator+AppConfiguration.CONFIG_FILE, XMLparse.CONFIG, appConfig);
+            xmlParse.saveXML(new File(ManagerFiles.configurationFolderPath()+File.separator+AppConfiguration.CONFIG_FILE), XMLparse.CONFIG, appConfig);
         }
     }
     

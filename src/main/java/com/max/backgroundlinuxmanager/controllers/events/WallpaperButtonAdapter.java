@@ -21,21 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.max.backgroundlinuxmanager.models;
+package com.max.backgroundlinuxmanager.controllers.events;
 
 import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
-import com.max.backgroundlinuxmanager.models.entities.Wallpapers;
-import java.util.List;
+import com.max.backgroundlinuxmanager.utils.ColorManager;
+import com.max.backgroundlinuxmanager.views.WallpaperPanel;
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JColorChooser;
 
 /**
  *
  * @author Maximiliano Fernández <thebluemax13 at gmail.com>
  */
-public class WallpaperModel {
-    private Wallpapers activeWallpapers;
-    private List<Wallpaper> wallpapersList;
+public class WallpaperButtonAdapter extends MouseAdapter{
+    private Wallpaper wp;
+    public WallpaperButtonAdapter(Wallpaper wp) {
+        super();
+        this.wp = wp;
+    }
 
-    public WallpaperModel() {
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        super.mouseClicked(e);
+        Color color = JColorChooser.showDialog(null,"Escoge el color", Color.yellow);
+               
+                javax.swing.JLabel jl =(javax.swing.JLabel)e.getSource();
+                jl.setBackground(color);
+                System.out.println(color.toString());
+                jl.setText(ColorManager.getColorHexa(color));
+                switch(jl.getName()){
+                    case WallpaperPanel.PCOLOR:
+                        wp.setPcolor(ColorManager.getColorHexa(color));
+                        break;
+                        case WallpaperPanel.SCOLOR:
+                        wp.setScolor(ColorManager.getColorHexa(color));
+                        break;
+                }
+                
+               
     }
     
     

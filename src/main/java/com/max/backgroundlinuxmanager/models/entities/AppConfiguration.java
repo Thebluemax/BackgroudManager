@@ -32,14 +32,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name= "AppConfiguration")
 public class AppConfiguration {
     public static String CONFIG_FILE = "config.xml";
-    public static String SHADER_DEFAULT_TYPE = "solid";
+    public static String DEFAULT_SHADER_TYPE = "solid";
+    public static String DEFAULT_OPTION = "zoom";    
     public static String DEFAULT_COLOR = "#000000";
     public static int DEFAULT_TRANSITION_DURATION = 300;
     public static int DEFAULT_INTERVAL_CHANGE = 2795;
    // public static String ConfigFile = "config.xml";
     public static String[] OPTIONS_WALLPAPER = {"none", "wallpaper", "centered",
                                                 "scaled", "stretched", "zoom", "spanned"};
-    public static String[] SHADER_TYPE  = {"solid","solid"};
+    public static String[] SHADER_TYPE  = {"solid","shaders"};
     private int defaulTransitionDuration;
     private int defaultIntervalChange;
     private String shaderDefault;
@@ -48,7 +49,7 @@ public class AppConfiguration {
     public AppConfiguration() {
         defaulTransitionDuration = DEFAULT_TRANSITION_DURATION;
         defaultIntervalChange = DEFAULT_INTERVAL_CHANGE;
-        shaderDefault = SHADER_DEFAULT_TYPE;
+        shaderDefault = DEFAULT_SHADER_TYPE;
         colorDefault = DEFAULT_COLOR;
     }
 
@@ -56,14 +57,14 @@ public class AppConfiguration {
      * @return the shaderList
      */
     public String[] getShaderList() {
-        return shaderList;
+        return null;// shaderList;
     }
 
     /**
      * @param shaderList the shaderList to set
      */
     public void setShaderList(String[] shaderList) {
-        this.shaderList = shaderList;
+       // this.shaderList = shaderList;
     }
 
     /**

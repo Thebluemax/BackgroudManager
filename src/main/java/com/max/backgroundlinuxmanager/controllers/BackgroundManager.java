@@ -5,9 +5,12 @@
  */
 package com.max.backgroundlinuxmanager.controllers;
 
+import com.max.backgroundlinuxmanager.views.components.ImageBlockPane;
 import com.max.backgroundlinuxmanager.models.ConfigurationManager;
+import com.max.backgroundlinuxmanager.models.XMLDOMBackground;
 import com.max.backgroundlinuxmanager.models.XMLparse;
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
+import com.max.backgroundlinuxmanager.models.entities.SlideBackground;
 import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
 import com.max.backgroundlinuxmanager.models.entities.Wallpapers;
 import com.max.backgroundlinuxmanager.utils.ManagerFiles;
@@ -46,6 +49,7 @@ public class BackgroundManager implements ActionListener {
     private List<Wallpaper> wpaperList;
     private File wallpaperFIle;
     private Wallpaper activeWallpaper;
+    private XMLDOMBackground slideModel;
 
     public void initApp() {
         frame = new MainJFrame();
@@ -68,8 +72,14 @@ public class BackgroundManager implements ActionListener {
                 int index = list.getSelectedIndex();
                 String element = (String) list.getModel().getElementAt(index);
                 if (list.getName().compareTo(SidePanel.CHILD) == 0) {
-                    System.out.println(wallpapers.getWallpapers().get(index).getFilename()+"ee");
-                    frame.setViewPortContainer(new WallpaperPanel(wallpapers.getWallpapers().get(index)));
+                    String filename = wallpapers.getWallpapers().get(index).getFilename();
+                    if (isSlide(filename)) {
+                        File f = new File(ManagerFiles.getUserFolder()+"/"+wallpapers.getWallpapers().get(index).getFilename());
+                       slideModel = new XMLDOMBackground(f);
+
+                    } else {
+                        frame.setViewPortContainer(new WallpaperPanel(wallpapers.getWallpapers().get(index)));
+                    }
                     activeWallpaper = wallpapers.getWallpapers().get(index);
                 } else {
                     System.out.println(element);
@@ -103,6 +113,7 @@ public class BackgroundManager implements ActionListener {
         // System.out.println(wallpapers.getWallpapers().size()+"ggg");
         wpaperList = wallpapers.getWallpapers();
         String[] jPaneContent = new String[wpaperList.size()];
+       // discoverSlide();
         for (int i = 0; i < wpaperList.size(); i++) {
             jPaneContent[i] = wpaperList.get(i).getName();
 
@@ -142,7 +153,12 @@ public class BackgroundManager implements ActionListener {
             System.out.println("Error no directorio");
         }
     }
-
+    private boolean isSlide(String filename){
+        
+        String name = filename;
+        name = name.substring(name.length()-3, name.length());
+        return (name.compareTo("xml") == 0);
+    }
     public void checkBackgroundFolder() {
         File folder = ManagerFiles.getBackgroundsFolder();
         resurceList.clear();
@@ -152,7 +168,7 @@ public class BackgroundManager implements ActionListener {
             String ext = resurceList.get(i).getName();
             ext = ext.substring(ext.length() - 3, ext.length());
             //System.out.println(ext);
-            if (ext.compareTo("xml") != 0) {
+            if (!isSlide(resurceList.get(i).getName())) {
                 ImageBlockPane p = new ImageBlockPane();
                 p.setIcon(resurceList.get(i));
                 frame.addToPanel(p);
@@ -160,13 +176,12 @@ public class BackgroundManager implements ActionListener {
                 ImageBlockPane p = new ImageBlockPane();
                 p.setIcon(new File("src/assets/slide.png"));
                 p.setLabel(resurceList.get(i).getName());
+               // XMLDOMBackground db = new XMLDOMBackground(resurceList.get(i));
                 frame.addToPanel(p);
             }
         }
     }
 
-    public void getConfig() {
-    }
 
     public void checkConfig() {
         configManager = new ConfigurationManager();

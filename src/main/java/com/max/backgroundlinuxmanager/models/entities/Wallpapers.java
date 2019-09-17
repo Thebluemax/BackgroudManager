@@ -29,12 +29,14 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author Maximiliano Fernández <thebluemax13 at gmail.com>
  */
-@XmlRootElement(name= "wallpapers")
+@XmlRootElement(name = "wallpapers")
 public class Wallpapers {
+
     private List<Wallpaper> wallpapers;
 
     /**
@@ -42,20 +44,22 @@ public class Wallpapers {
      */
     //@XmlElementWrapper(name = "Wallpaper")
     @XmlElement(name = "wallpaper")
-   
+
     public List<Wallpaper> getWallpapers() {
         return wallpapers;
     }
- public void add(Wallpaper wallpaper){
-     if (this.wallpapers == null) {
-         wallpapers = new ArrayList<Wallpaper>();
-     }
-     this.wallpapers.add(wallpaper);
- }
+
+    public void add(Wallpaper wallpaper) {
+        if (this.wallpapers == null) {
+            wallpapers = new ArrayList<Wallpaper>();
+        }
+        this.wallpapers.add(wallpaper);
+    }
+
     /**
      * @param wallpapers the wallpapers to set
      */
     public void setWallpapers(List<Wallpaper> wallpapers) {
         this.wallpapers = wallpapers;
     }
- }
+}
