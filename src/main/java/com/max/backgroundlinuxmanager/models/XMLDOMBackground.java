@@ -23,6 +23,7 @@
  */
 package com.max.backgroundlinuxmanager.models;
 
+import com.max.backgroundlinuxmanager.models.entities.FrameBackground;
 import com.max.backgroundlinuxmanager.models.entities.SlideBackground;
 import java.io.File;
 import java.io.IOException;
@@ -43,9 +44,10 @@ import org.jdom.input.SAXBuilder;
  */
 public class XMLDOMBackground {
     private Document xmlDocument;
+    private static final String ROOT_TAG = "background";
     private static final String STATIC_TAG = "static";
     private static final String TRANSITION_TAG = "transition";
-    private static final String DURATION_TAG = "static";
+    private static final String DURATION_TAG = "duration";
     private static final String FILE_TAG = "file";
     private static final String FROM_TAG = "from";
     private static final String TO_TAG = "to";
@@ -54,13 +56,17 @@ public class XMLDOMBackground {
     private SlideBackground slideBackground;
     private Element root;
 
-
+    /**
+     *
+     * @param xmlFile
+     */
     public XMLDOMBackground(File xmlFile ) {
         try {
             SAXBuilder builder = new SAXBuilder();
             xmlDocument = builder.build(xmlFile);
            root  = xmlDocument.getRootElement();
             slideBackground = new SlideBackground();
+            slideBackground.setName(xmlFile.getName());
             setTime();
             poblateList();
         } catch (JDOMException ex) {
@@ -75,18 +81,97 @@ public class XMLDOMBackground {
         Map<String, Integer> tempMap = new HashMap<>();
         for (int i = 0; i < tempList.size(); i++) {
             Element get = tempList.get(i);
-            tempMap.put(get.getName(), Integer.getInteger(get.getText()));
-            
+            tempMap.put(get.getName(), Integer.parseInt(get.getValue()));
         }
         slideBackground.setStartTime(tempMap);
     }
     private void poblateList(){
     List<Element> staticItem = root.getChildren(STATIC_TAG);
-     System.out.println(staticItem.size());
         for (int i = 0; i < staticItem.size(); i++) {
-            System.out.println(staticItem.get(i).getChild(FILE_TAG).getText());
+            FrameBackground frameTmp = new FrameBackground();
+            frameTmp.setFilePath(staticItem.get(i).getChild(FILE_TAG).getText());
+            if (i == staticItem.size()-1) {
+                    frameTmp.setPathTo(staticItem.get(0).getChild(FILE_TAG).getText());
+                } else {
+                frameTmp.setPathTo(staticItem.get(i+1).getChild(FILE_TAG).getText());
+                }
+
+           slideBackground.addFrame(frameTmp);
+           slideBackground.setImageduration((int) Float.parseFloat(staticItem.get(i).getChild(DURATION_TAG).getText()));
         }
+        List<Element> transitionItem = root.getChildren(TRANSITION_TAG);
+        slideBackground.setTransition((int) Float.parseFloat(transitionItem.get(1).getChild(DURATION_TAG).getValue()));
     }
+
+    /**
+     *
+     * @return
+     */
+    public SlideBackground getSlideBackground(){
+   return slideBackground;
+   }
+
+    /**
+     *
+     * @return
+     */
+    public List<FrameBackground> getFrameList(){
+       return slideBackground.getFrames();
+   }
    
-    
+   public Document buildXml(String newXml, SlideBackground slideModel ){
+       Document slide = new Document();
+            SAXBuilder builder = new SAXBuilder();
+            
+            
+            root = new Element(ROOT_TAG);
+            
+            slide.addContent(root);
+            Element timeElement = new Element(START_TIME_TAG);
+            root.addContent(timeElement);
+            for (Map.Entry<String, Integer> entry :  slideModel.getTime().entrySet()) {
+                Element tmpElement = new Element(entry.getKey());
+                tmpElement.setText(String.valueOf(entry.getValue()));
+                timeElement.addContent(tmpElement);
+           
+       }
+            String durationString = String.valueOf(slideModel.getImageDuration());
+            String transitionDuration = String.valueOf(slideModel.getTransitionDuration());
+            List<FrameBackground> list = slideModel.getFrames();
+            String firstFile = "";
+            for (int i = 0; i < list.size(); i++) {
+            if(i == 0){
+             firstFile = list.get(i).getFilePath();
+            }
+            
+            Element staticTag = new Element(STATIC_TAG);
+            Element durationStatic = new Element(DURATION_TAG);
+            durationStatic.setText(durationString);
+            
+            staticTag.addContent(durationStatic);
+            Element fileTag = new Element(FILE_TAG);
+            fileTag.setText(list.get(i).getFilePath());
+            root.addContent(staticTag);
+            
+            Element transition = new Element(TRANSITION_TAG);
+            Element durationTransition = new Element(DURATION_TAG);
+            durationStatic.setText(transitionDuration);
+            transition.addContent(durationTransition);
+            Element fromTag = new Element(FROM_TAG);
+            fromTag.setText(list.get(i).getFilePath());
+            transition.addContent(fromTag);
+            Element toTag = new Element(TO_TAG);
+            if(i + 1 > list.size()){
+                toTag.setText(list.get(i+1).getFilePath());
+            }else{
+                toTag.setText(firstFile);
+            }
+            transition.addContent(toTag);
+            root.addContent(transition);
+           
+       }
+       
+       return slide;
+
+   } 
 }

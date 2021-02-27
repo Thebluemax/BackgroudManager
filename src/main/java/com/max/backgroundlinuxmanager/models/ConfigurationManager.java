@@ -40,7 +40,9 @@ public class ConfigurationManager {
     private File configFile;
     private AppConfiguration appConfig;
     
-
+    /**
+     *
+     */
     public ConfigurationManager() {
         if(configFileExist()){
             

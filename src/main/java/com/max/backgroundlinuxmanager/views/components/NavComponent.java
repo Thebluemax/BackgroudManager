@@ -41,16 +41,19 @@ public class NavComponent extends JPanel {
         "SAVE", "DELETE"};
     private List<JButton> buttonList;
 
+    /**
+     *
+     */
     public NavComponent() {
         setBackground(new java.awt.Color(13, 39, 93));
         setBorder(javax.swing.BorderFactory.createCompoundBorder());
         setForeground(new java.awt.Color(255, 255, 255));
         setToolTipText("");
-        setMaximumSize(new java.awt.Dimension(2002, 200));
-        setMinimumSize(new java.awt.Dimension(300, 30));
+        setMaximumSize(new java.awt.Dimension(750, 100));
+        setMinimumSize(new java.awt.Dimension(450, 30));
         setOpaque(false);
-        setPreferredSize(new java.awt.Dimension(410, 50));
-        java.awt.GridLayout flowLayout1 = new java.awt.GridLayout(1, 0);
+        setPreferredSize(new java.awt.Dimension(450, 50));
+        java.awt.GridLayout flowLayout1 = new java.awt.GridLayout(5, 1);
         setLayout(flowLayout1);
         buttonList = new ArrayList<>();
         setButtons();
@@ -66,6 +69,10 @@ public class NavComponent extends JPanel {
         }
     }
 
+    /**
+     *
+     * @param flag
+     */
     public void setVisibility(boolean flag) {
 
         for (int i = 0; i < buttonList.size(); i++) {
@@ -78,6 +85,10 @@ public class NavComponent extends JPanel {
         }
     }
 
+    /**
+     *
+     * @param actionListener
+     */
     public void addActionListener(ActionListener actionListener) {
         for (int i = 0; i < buttonList.size(); i++) {
             buttonList.get(i).addActionListener(actionListener);

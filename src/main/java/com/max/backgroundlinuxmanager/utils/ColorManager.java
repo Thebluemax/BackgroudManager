@@ -30,32 +30,52 @@ import java.awt.Color;
  * @author Maximiliano Fernández <thebluemax13 at gmail.com>
  */
 public class ColorManager {
-    
+
+    /**
+     * Get a color object from a hexa color definition
+     *
+     * @param color string The color en a hexa format #ffffff
+     * @return Color object color
+     */
     public static Color getColor(String color) {
         int red = 255;
         int green = 255;
         int blue = 255;
-        
+
         if (color.length() == 7) {
             red = Integer.parseInt(color.substring(1, 3), 16);
             green = Integer.parseInt(color.substring(3, 5), 16);
             blue = Integer.parseInt(color.substring(5, 7), 16);
         }
-        System.out.println(color+" "+red+"-"+green+"-"+blue+"/"+color.substring(1, 3));
-    return new Color(red, green, blue);
-    
+        //System.out.println(color+" "+red+"-"+green+"-"+blue+"/"+color.substring(1, 3));
+        return new Color(red, green, blue);
     }
+
+    /**
+     * retun a hedecimal color from a Java Object Color Instance
+     *
+     * @param color
+     * @return
+     */
     public static String getColorHexa(Color color) {
-        String hexadecimal= "#";
+        String hexadecimal = "#";
         hexadecimal += evaluateString(Integer.toHexString(color.getRed()));
         hexadecimal += evaluateString(Integer.toHexString(color.getGreen()));
         hexadecimal += evaluateString(Integer.toHexString(color.getBlue()));
         return hexadecimal;
     }
-    private static String evaluateString(String s){
-         if (s.length()==1) {
-             s = "0"+s;        
+
+    /**
+     * add a 0 to the lowers number values ej a => 0a;
+     *
+     * @param s string
+     * @return
+     */
+    private static String evaluateString(String s) {
+        if (s.length() == 1) {
+            s = "0" + s;
         }
         return s;
     }
-    }
+
+}

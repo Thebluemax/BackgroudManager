@@ -49,6 +49,10 @@ public class Wallpapers {
         return wallpapers;
     }
 
+    /**
+     *
+     * @param wallpaper
+     */
     public void add(Wallpaper wallpaper) {
         if (this.wallpapers == null) {
             wallpapers = new ArrayList<Wallpaper>();

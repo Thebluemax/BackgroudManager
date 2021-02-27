@@ -38,12 +38,25 @@ import javax.swing.ImageIcon;
  */
 public class ImageManager {
 
+    /**
+     *
+     */
     public ImageManager() {
     }
     
-   
+    /**
+     *
+     * @param InputFile
+     * @param scaledWidth
+     * @param scaledHeight
+     * @return
+     */
     public static ImageIcon resize(File InputFile, int scaledWidth, int scaledHeight)
             {
+                if (scaledHeight == 0 || scaledWidth == 0) {
+                    scaledHeight = 100;
+                    scaledWidth =150;
+                }
         // reads input image
         File inputFile = InputFile;
         BufferedImage inputImage = null;
@@ -53,8 +66,11 @@ public class ImageManager {
             thumb = inputImage.getScaledInstance(scaledWidth,scaledHeight,Image.SCALE_SMOOTH);
         } catch (IOException ex) {
             Logger.getLogger(ImageManager.class.getName()).log(Level.SEVERE, null, ex);
+            thumb = inputImage.getScaledInstance(scaledWidth,scaledHeight,Image.SCALE_SMOOTH);
         }catch(NullPointerException ex){
             System.out.println(ex.getCause().getMessage());          
+        }catch(IllegalArgumentException ilEx){
+            
         }
         return new ImageIcon(thumb);
     }}

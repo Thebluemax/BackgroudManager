@@ -24,7 +24,7 @@
 package com.max.backgroundlinuxmanager;
 
 import com.max.backgroundlinuxmanager.controllers.BackgroundManager;
-import java.awt.Color;
+import com.max.backgroundlinuxmanager.exceptions.BackgroundException;
 
 /**
  *
@@ -36,15 +36,15 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        BackgroundManager bgManager = new BackgroundManager();
         
         //Podría ser una app de consola
-        if (args.length > 0) {
+        
+             BackgroundManager bgManager = new BackgroundManager();
+            if (args.length > 0) {
             bgManager.consoleBatchProcess();           
         } else {
             bgManager.initApp();
         }
-       
     }
     
 }

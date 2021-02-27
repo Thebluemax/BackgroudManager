@@ -32,10 +32,22 @@ import javax.swing.Icon;
 import jiconfont.icons.font_awesome.FontAwesome;
 import jiconfont.swing.IconFontSwing;
 
+/**
+ *
+ * @author max
+ */
 public class IconFontManager {
-    public static Icon createIcon(FontAwesome font,int size, Color color){
-    IconFontSwing.register(FontAwesome.getIconFont());
-    return IconFontSwing.buildIcon(font,size, color);
+
+    /**
+     *
+     * @param font
+     * @param size
+     * @param color
+     * @return
+     */
+    public static Icon createIcon(FontAwesome font, int size, Color color) {
+        IconFontSwing.register(FontAwesome.getIconFont());
+        return IconFontSwing.buildIcon(font, size, color);
     }
-    
+
 }

@@ -35,6 +35,11 @@ import java.util.logging.Logger;
  */
 public class XMLInputStream {
     private FileInputStream fileStream;
+
+    /**
+     *
+     * @param path
+     */
     public XMLInputStream(String path) {
         try {
             fileStream = new FileInputStream(path);

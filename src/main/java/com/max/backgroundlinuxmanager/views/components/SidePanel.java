@@ -23,6 +23,7 @@
  */
 package com.max.backgroundlinuxmanager.views.components;
 
+import com.max.backgroundlinuxmanager.views.components.AppColors.AppColors;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 
@@ -43,36 +44,43 @@ public class SidePanel extends javax.swing.JPanel {
     private ListAndButtons childList;
     private String[] wallpapersList;
     private String[] wallpaperName;
+
     public SidePanel() {
-        this.setLayout(new GridLayout(2, 1));
+        this.setLayout(new GridLayout(0, 6));
+        setBackground(new AppColors().generalColor());
         this.setOpaque(true);
         initComponents();
         fatherList = new ListAndButtons();
-        fatherList.setSize(250, 240);
-        
-        childList = new ListAndButtons();
-        childList.setSize(250, 240);
+        fatherList.setSize(175, 350);
 
-       add(fatherList);
+        childList = new ListAndButtons();
+        childList.setSize(175, 350);
+
+        add(fatherList);
         add(childList);
     }
+
     public void setListFather(String[] list) {
-    fatherList.setList(list);
+        fatherList.setList(list);
     }
+
     public void setChildLidt(String[] list) {
         childList.setList(list);
     }
-    public void setLibraryView(boolean flag){
-        
-        childList.setVisible(flag?false:true);
+
+    public void setLibraryView(boolean flag) {
+
+        childList.setVisible(flag ? false : true);
         fatherList.deactivateDelete(flag);
     }
-    public void addListMouseEvents(MouseAdapter mouseAdapter){
+
+    public void addListMouseEvents(MouseAdapter mouseAdapter) {
         fatherList.getList().setName(FATHER);
         childList.getList().setName(CHILD);
-    fatherList.addListMouseEvents(mouseAdapter);
-    childList.addListMouseEvents(mouseAdapter);
+        fatherList.addListMouseEvents(mouseAdapter);
+        childList.addListMouseEvents(mouseAdapter);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -81,6 +89,11 @@ public class SidePanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
+        setMaximumSize(new java.awt.Dimension(200, 600));
+        setMinimumSize(new java.awt.Dimension(140, 400));
+        setPreferredSize(new java.awt.Dimension(180, 600));
+        setLayout(new java.awt.GridLayout(2, 1));
     }// </editor-fold>//GEN-END:initComponents
 
 

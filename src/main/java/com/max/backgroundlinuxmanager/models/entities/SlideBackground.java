@@ -32,18 +32,76 @@ import java.util.Map;
  * @author Maximiliano Fernández <thebluemax13 at gmail.com>
  */
 public class SlideBackground extends Wallpaper{
+
+   
+    private String name;
     private int transitionDuration;
+    private int imageDuration;
     private Map<String, Integer> startTime;
 private List<FrameBackground> frames;
+
+    /**
+     *
+     */
     public SlideBackground() {
         super();
         transitionDuration = AppConfiguration.DEFAULT_TRANSITION_DURATION;
         frames = new ArrayList<>();
     }
+
+    /**
+     *
+     * @param timestamp
+     */
     public void setStartTime(Map<String, Integer> timestamp){
         startTime = timestamp;
     }
-   
+    public void setTransition(int duration){
+    transitionDuration = duration;
+    }
+    
+    public int getTransitionDuration(){
+        return transitionDuration;
+    }
+    
+     public void setImageduration(int duration){
+    imageDuration = duration;
+    }
+    
+    public int getImageDuration(){
+        return imageDuration;
+    }
+    /**
+     *
+     * @param fBG
+     */
+    public void addFrame(FrameBackground fBG) {
+   frames.add(fBG);
+   }
+ /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+    /**
+     *
+     * @return
+     */
+    public List<FrameBackground> getFrames(){
+   return frames;
+   } 
+    
+    public Map<String, Integer> getTime(){
+        return startTime;
+    }
     
     
 }

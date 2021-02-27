@@ -41,11 +41,21 @@ import javax.xml.bind.Unmarshaller;
  */
 public class XMLparse {
 
+    /**
+     *
+     */
     public static int CONFIG = 1;
+
+    /**
+     *
+     */
     public static int BACKGROUNDS = 0;
     
     private JAXBContext jaxbContest;
 
+    /**
+     *
+     */
     public XMLparse() {
     }
   /**
@@ -102,7 +112,15 @@ public class XMLparse {
         }
         return config;
     }
-   public int saveXML(File xml, int type, Object objecto){
+
+    /**
+     *
+     * @param xml
+     * @param type
+     * @param objecto
+     * @return
+     */
+    public int saveXML(File xml, int type, Object objecto){
    int status = 0;
        Marshaller marshaller;
         System.out.println("Guardando Comanda");
@@ -131,5 +149,6 @@ public class XMLparse {
 
         return status;
    }
+    
 
 }

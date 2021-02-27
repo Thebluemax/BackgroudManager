@@ -31,21 +31,61 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name= "AppConfiguration")
 public class AppConfiguration {
+
+    /**
+     *
+     */
     public static String CONFIG_FILE = "config.xml";
+
+    /**
+     *
+     */
     public static String DEFAULT_SHADER_TYPE = "solid";
+
+    /**
+     *
+     */
     public static String DEFAULT_OPTION = "zoom";    
+
+    /**
+     *
+     */
     public static String DEFAULT_COLOR = "#000000";
+
+    /**
+     *
+     */
     public static int DEFAULT_TRANSITION_DURATION = 300;
+
+    /**
+     *
+     */
     public static int DEFAULT_INTERVAL_CHANGE = 2795;
    // public static String ConfigFile = "config.xml";
+
+    /**
+     *
+     */
     public static String[] OPTIONS_WALLPAPER = {"none", "wallpaper", "centered",
                                                 "scaled", "stretched", "zoom", "spanned"};
-    public static String[] SHADER_TYPE  = {"solid","shaders"};
+
+    /**
+     * schemas/org.gnome.desktop.background.lockdialog.gschema.xml.in
+     */
+    public static String[] SHADER_TYPE  = {"solid","horizontal","vertical"};
+
+    /**
+     *
+     */
+    public  static int[] YEAR = {2016, 2017,2018,2019,2020};
     private int defaulTransitionDuration;
     private int defaultIntervalChange;
     private String shaderDefault;
     private String colorDefault;
     
+    /**
+     *
+     */
     public AppConfiguration() {
         defaulTransitionDuration = DEFAULT_TRANSITION_DURATION;
         defaultIntervalChange = DEFAULT_INTERVAL_CHANGE;

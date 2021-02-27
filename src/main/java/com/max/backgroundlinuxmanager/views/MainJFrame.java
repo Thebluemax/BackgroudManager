@@ -23,31 +23,19 @@
  */
 package com.max.backgroundlinuxmanager.views;
 
+import com.max.backgroundlinuxmanager.views.components.AppColors.AppColors;
 import com.max.backgroundlinuxmanager.views.components.ImageBlockPane;
-import com.max.backgroundlinuxmanager.views.components.ListAndButtons;
 import com.max.backgroundlinuxmanager.views.components.SidePanel;
 import com.max.backgroundlinuxmanager.views.components.NavComponent;
-import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.plaf.ColorUIResource;
-import mdlaf.MaterialLookAndFeel;
-import mdlaf.themes.MaterialDarkTheme;
-import mdlaf.themes.MaterialLiteTheme;
-
 
 /**
  *
@@ -67,57 +55,95 @@ public class MainJFrame extends javax.swing.JFrame {
     private DefaultListModel collectionName;
     private DefaultListModel wallpaperName;
     private SidePanel sideBar;
-    private NavComponent navBar; 
+    private NavComponent toolBar; 
     private List<ImageBlockPane>  imageList ;
     
     
-
+/**
+ *  contructor 
+ */
     public MainJFrame() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.getContentPane().setBackground( new Color(18,39,43) );
+        this.getContentPane().setBackground( new AppColors().generalColor() );
         imageList = new ArrayList<>();
         initComponents();
         initSidebar();  
-        initNavBar();
-        
-        
+        initNavBar();  
+   
         container = new JPanel();
         container.setSize(510, 1024);
-        container.setLayout(new GridLayout(0,3));
-        scrollContent.setViewportView(container); 
+        container.setLayout(new GridLayout(0,5));
+        container.setBackground(new AppColors().generalColor());
+        scrollContent.setViewportView(container);
+        scrollContent.setBackground(new AppColors().generalColor());
         pack();
     }
+    /**
+     * Inicio de la barra lateral 
+     */
     private void initSidebar(){
         sideBar = new SidePanel();
         sideBar.setLibraryView(true);
-        getContentPane().add(sideBar,  new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, 480));
+        getContentPane().add(sideBar,  new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 5, 180, 250));
     }
+    /**
+     * Inicio de la barra de herramientas
+     */
    private void initNavBar(){
-        navBar = new NavComponent();
-        navBar.setVisibility(true);
-        getContentPane().add(navBar,  new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 430, 500, 45));
+        toolBar = new NavComponent();
+        toolBar.setVisibility(true);
+        getContentPane().add(toolBar,  new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 250, 150, 200));
     }
     
-    
+    /**
+     * setear os listeners
+     * 
+     * @param aListener 
+     */
     public void setListeners(ActionListener aListener) {
-    navBar.addActionListener(aListener);
+        toolBar.addActionListener(aListener);
     }
+    /**
+     * 
+     * Agregar un nuevo contenedor de miniaturas al viewport
+     * @param jPane Contenedor con las miniaturas
+     */
     public void setViewPortContainer (JPanel jPane){
+        scrollContent.setViewportView(null);
         scrollContent.setViewportView(jPane);
     }
+    /**
+     * 
+     * @param visibility 
+     */
     public void setLibraryView(boolean visibility){
         sideBar.setLibraryView(visibility);
-        navBar.setVisibility(visibility);
-        if (visibility) { 
-            scrollContent.setViewportView(container);         
+        toolBar.setVisibility(visibility);
+        if (visibility) {
+            setViewPortContainer(container);         
         } else {
-            scrollContent.setViewportView(null);    
+                scrollContent.setViewportView(null);
         }
     }
+    /**
+     * Agrega un objeto minuatura al contenedor
+     * @param jp 
+     */
     public void addToPanel (JPanel jp){
         imageList.add((ImageBlockPane)jp);
         container.add(jp);
     }
+    
+    public void remove(ImageBlockPane pane){
+        imageList.remove(pane);
+        container.remove(pane);
+        this.pack();
+    
+    }
+    /**
+     * return the path from the seledted item 
+     * @return 
+     */
     public String getSelected(){
         String r="";
         for (int i = 0; i < imageList.size(); i++) {
@@ -127,10 +153,19 @@ public class MainJFrame extends javax.swing.JFrame {
         }
     return r;
     }
+    public List<ImageBlockPane> getAllImgeBlock(){
+        return imageList;
+    }
+    /**
+     * agrega un nuevo elemento a la lista secundaria 
+     * 
+     * @param nameWallpaper 
+     */
     public void setWallpaperList(String[] nameWallpaper){
        sideBar.setChildLidt(nameWallpaper);
      
     }
+    
     public void setList(String folder, String[] listFile){
         sideBar.setListFather(listFile);
        
@@ -156,15 +191,14 @@ public class MainJFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Background Manager");
         setBackground(new java.awt.Color(18, 39, 93));
-        setBounds(new java.awt.Rectangle(0, 0, 750, 500));
+        setBounds(new java.awt.Rectangle(0, 0, 800, 500));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setForeground(new java.awt.Color(206, 223, 253));
         setLocation(new java.awt.Point(100, 100));
-        setMaximumSize(new java.awt.Dimension(2147, 2147));
-        setMinimumSize(new java.awt.Dimension(750, 540));
+        setMaximumSize(new java.awt.Dimension(1200, 1000));
+        setMinimumSize(new java.awt.Dimension(900, 600));
         setName("principalFrame"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(750, 540));
-        setResizable(false);
+        setPreferredSize(new java.awt.Dimension(950, 600));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setBackground(new java.awt.Color(1, 1, 1));
@@ -175,12 +209,17 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel2.setAutoscrolls(true);
         jLabel2.setRequestFocusEnabled(false);
         jLabel2.setVerifyInputWhenFocusTarget(false);
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 390, 730, 30));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 510, 700, 50));
 
-        scrollContent.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 19, 180)));
+        scrollContent.setBorder(null);
+        scrollContent.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollContent.setToolTipText("");
-        scrollContent.setInheritsPopupMenu(true);
-        getContentPane().add(scrollContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 550, 380));
+        scrollContent.setViewportBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        scrollContent.setAutoscrolls(true);
+        scrollContent.setMaximumSize(new java.awt.Dimension(1000, 800));
+        scrollContent.setMinimumSize(new java.awt.Dimension(600, 400));
+        scrollContent.setPreferredSize(new java.awt.Dimension(760, 500));
+        getContentPane().add(scrollContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 5, 750, 500));
 
         getAccessibleContext().setAccessibleDescription("");
 

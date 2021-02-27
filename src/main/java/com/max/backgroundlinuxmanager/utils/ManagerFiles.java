@@ -43,20 +43,48 @@ import java.util.logging.Logger;
  * @author Maximiliano Fernández <thebluemax13 at gmail.com>
  */
 public class ManagerFiles {
+
+    /**
+     *
+     */
     public static String WALLPAPER_FOLDER = "gnome-background-properties/";
+
+    /**
+     *
+     */
     public static String BACKGROUNDS_FOLDER = "backgrounds";
+
+    /**
+     *
+     */
     public static String LOCAL_SHARED= "/.local/share/";
+
+    /**
+     *
+     */
     public static String CONFIGURATION_FOLDER = "background-manager";
 
-
+    /**
+     *
+     * @return
+     */
     public static String getUserFolder () {
         return System.getProperty("user.home");
     }
+    
+    /**
+     *
+     * @return
+     */
     public static String FolderToObject  (){
         String s = LOCAL_SHARED.substring(1, LOCAL_SHARED.length());
         return s+BACKGROUNDS_FOLDER+"/";
     }
-   
+   /**
+    * Get the path of the default Picture folder defined in the System configuration
+    * 
+    * @return path strig the path. 
+    */
     public static String getDefaultImagePath() {
         String path = "";
         try {
@@ -86,6 +114,11 @@ public class ManagerFiles {
         }
         return f;
     }
+
+    /**
+     *
+     * @return
+     */
     public static File getWallpapersFolder(){
     
     File f = null;
@@ -96,17 +129,38 @@ public class ManagerFiles {
         }
         return f;
     }
+
+    /**
+     *
+     * @return
+     */
     public static String getBackgroundsPath(){
         return getUserFolder() + LOCAL_SHARED + BACKGROUNDS_FOLDER;
     }
+
+    /**
+     *
+     * @return
+     */
     public static File getConfigurationFile () {
         File f = null;
         f = new File( configurationFolderPath()+File.separator + AppConfiguration.CONFIG_FILE );
     return f;
     }
+
+    /**
+     *
+     * @return
+     */
     public static String configurationFolderPath () {
     return  getUserFolder() + LOCAL_SHARED + CONFIGURATION_FOLDER;
     }
+
+    /**
+     *
+     * @param folder
+     * @param files
+     */
     public static void getFiles(File folder, List<File> files) {
         File[] fileList = folder.listFiles();
         
@@ -118,14 +172,21 @@ public class ManagerFiles {
             }
         }
     }
-    public static void copyFile(File in, File out) throws IOException {
+    /**
+     * Copy a file to a new file
+     * @param in file to copy
+     * @param out new file
+     * @throws IOException 
+     */
+    public static int copyFile(File in, File out) throws IOException {
     InputStream is = null;
         OutputStream os = null;
+        int length = -1;
     try {
         is = new FileInputStream(in);
         os = new FileOutputStream(out);
         byte[] buffer = new byte[1024];
-        int length;
+        
         while ((length = is.read(buffer)) > 0) {
             os.write(buffer, 0, length);
         }
@@ -137,5 +198,16 @@ public class ManagerFiles {
         is.close();
         os.close();
     }
+        return length;
     }
+    
+    public static boolean deleteFile( File file){
+    
+        boolean deleted = false;
+        if( file.exists()){
+            deleted = file.delete();
+        }
+        return deleted;
+    }
+    
 }

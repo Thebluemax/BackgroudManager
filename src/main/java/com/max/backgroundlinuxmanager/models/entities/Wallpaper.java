@@ -41,9 +41,16 @@ public class Wallpaper {
     private String scolor;
     private String shader_type;
 
+    /**
+     *
+     */
     public Wallpaper() {
     }
     
+    /**
+     *
+     * @param name
+     */
     public Wallpaper(String name) {
         this.name = name;
     }
@@ -77,13 +84,18 @@ public class Wallpaper {
     public void setFilename(String filename) {
         this.filename = filename;
     }
- @XmlElement(name="options")
+
+    /**
+     *
+     * @return
+     */
+    @XmlElement(name="options")
     public String getOptions() {
         return options;
     }
 
     /**
-     * @param filename the filename to set
+     * @param option
      */
     public void setOptions(String option) {
         this.options = option;

@@ -37,11 +37,20 @@ import javax.swing.JColorChooser;
  */
 public class WallpaperButtonAdapter extends MouseAdapter{
     private Wallpaper wp;
+
+    /**
+     *
+     * @param wp
+     */
     public WallpaperButtonAdapter(Wallpaper wp) {
         super();
         this.wp = wp;
     }
 
+    /**
+     *
+     * @param e
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
         super.mouseClicked(e);

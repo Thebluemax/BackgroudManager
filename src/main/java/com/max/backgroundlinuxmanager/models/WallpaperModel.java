@@ -35,6 +35,9 @@ public class WallpaperModel {
     private Wallpapers activeWallpapers;
     private List<Wallpaper> wallpapersList;
 
+    /**
+     *
+     */
     public WallpaperModel() {
     }
     

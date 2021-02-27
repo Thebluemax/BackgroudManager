@@ -29,8 +29,12 @@ package com.max.backgroundlinuxmanager.models.entities;
  */
 public class FrameBackground {
     private String filePath;
-    private int Duration;
+    private int duration;
     private String pathTo;
+
+    /**
+     *
+     */
     public FrameBackground() {
     }
 
@@ -49,17 +53,17 @@ public class FrameBackground {
     }
 
     /**
-     * @return the Duration
+     * @return the duration
      */
     public int getDuration() {
-        return Duration;
+        return duration;
     }
 
     /**
-     * @param Duration the Duration to set
+     * @param Duration the duration to set
      */
     public void setDuration(int Duration) {
-        this.Duration = Duration;
+        this.duration = Duration;
     }
 
     /**
