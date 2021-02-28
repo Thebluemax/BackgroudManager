@@ -23,6 +23,7 @@
  */
 package com.max.backgroundlinuxmanager.views.components;
 
+import com.max.backgroundlinuxmanager.controllers.BackgroundManager;
 import com.max.backgroundlinuxmanager.utils.IconFontManager;
 import com.max.backgroundlinuxmanager.views.components.AppColors.AppColors;
 import java.awt.Color;
@@ -65,6 +66,7 @@ public class ListAndButtons extends javax.swing.JPanel {
     }
 
     public void addButtonListener(ActionListener actionListener) {
+        addBtn.setActionCommand(BackgroundManager.ADD_ACTION);
         addBtn.addActionListener(actionListener);
         deleteBtn.addActionListener(actionListener);
     }

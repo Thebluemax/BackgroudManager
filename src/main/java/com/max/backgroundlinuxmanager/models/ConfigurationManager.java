@@ -45,7 +45,8 @@ public class ConfigurationManager {
      */
     public ConfigurationManager() {
         if(configFileExist()){
-            
+            XMLparse xmlParse = new XMLparse();
+            appConfig = xmlParse.unmarshallerConfig(configFile);
         }else {
 
          configFolderAndFile();
@@ -53,9 +54,13 @@ public class ConfigurationManager {
     }
     
     private boolean configFileExist() {
-        File confFile  = ManagerFiles.getConfigurationFile();
-        return confFile.exists() && confFile.isFile();
+        configFile  = ManagerFiles.getConfigurationFile();
+        return configFile.exists() && configFile.isFile();
     }
+
+    /**
+     * Crea el archivo y la carpeta con la configuración de la aplicación
+     */
     private void configFolderAndFile(){
         File confFile = ManagerFiles.getConfigurationFile();
         if (confFile == null || !confFile.exists()) {
@@ -67,6 +72,14 @@ public class ConfigurationManager {
             xmlParse.saveXML(new File(ManagerFiles.configurationFolderPath()+File.separator+AppConfiguration.CONFIG_FILE), XMLparse.CONFIG, appConfig);
         }
     }
-    
+
+    /**
+     * Getter del objeto AppConfiguration con la configuración actual
+     *
+     * @return AppConfiguration
+     */
+    private AppConfiguration getConfigInfo(){
+        return appConfig;
+    }
     
 }

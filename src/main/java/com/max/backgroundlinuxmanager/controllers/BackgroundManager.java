@@ -11,8 +11,6 @@ import com.max.backgroundlinuxmanager.models.ConfigurationManager;
 import com.max.backgroundlinuxmanager.models.XMLDOMBackground;
 import com.max.backgroundlinuxmanager.models.XMLparse;
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
-import com.max.backgroundlinuxmanager.models.entities.FrameBackground;
-import com.max.backgroundlinuxmanager.models.entities.SlideBackground;
 import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
 import com.max.backgroundlinuxmanager.models.entities.Wallpapers;
 import com.max.backgroundlinuxmanager.utils.ManagerFiles;
@@ -20,7 +18,7 @@ import com.max.backgroundlinuxmanager.views.*;
 import com.max.backgroundlinuxmanager.views.components.AddingToLibraryDialog;
 import com.max.backgroundlinuxmanager.views.components.SidePanel;
 import com.max.backgroundlinuxmanager.controllers.utils.DeleteOption;
-import java.awt.Color;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import com.max.backgroundlinuxmanager.exceptions.BackgroundException;
@@ -29,13 +27,11 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.*;
 
 /**
@@ -43,8 +39,9 @@ import javax.swing.*;
  * @author max
  */
 public class BackgroundManager implements ActionListener {
-    
+
     public final static String DELETE_ACTION = "DELETE";
+    public final static String ADD_ACTION = "ADD";
 
     private ConfigurationManager configManager;
     private MainJFrame frame;// = new MainJFrame();
@@ -60,14 +57,14 @@ public class BackgroundManager implements ActionListener {
     /**
      *
      */
-    public void initApp() {
+    public void initApp()  {
         frame = new MainJFrame();
         frame.setVisible(true);
         cachedFilesList = new ArrayList();
 
         checkConfig();
 
-        checkWallpapers();
+        checkWallpapersXML();
         getBackgroundLibrary();
         setListeners();
     }
@@ -80,6 +77,7 @@ public class BackgroundManager implements ActionListener {
      */
     public void checkConfig() {
         configManager = new ConfigurationManager();
+        System.out.println(configManager.toString());
     }
 
     private void setListeners() {
@@ -89,8 +87,8 @@ public class BackgroundManager implements ActionListener {
                 int index = list.getSelectedIndex();
                 String element = (String) list.getModel().getElementAt(index);
 
+                System.out.println(".mouseClicked()");
                 if (list.getName().compareTo(SidePanel.CHILD) == 0) {
-                    System.out.println(".mouseClicked()");
                     String filename = wallpapers.getWallpapers().get(index).getFilename();
                     if (isSlide(filename)) {
                         
@@ -165,21 +163,22 @@ public class BackgroundManager implements ActionListener {
     /**
      * Obteniendo los archivos xml con las colecciones de wallpapers
      */
-    public void checkWallpapers() {
+    public void checkWallpapersXML()  {
         File folder = ManagerFiles.getWallpapersFolder();
         cachedFilesList.clear();
+        String[] filenames = new String[cachedFilesList.size() + 1];
+        filenames[0] = SidePanel.LIBRARY_TAG;
         if (folder.isDirectory()) {
             ManagerFiles.getFiles(folder, cachedFilesList);
             //System.out.println(cachedFilesList.size());
-            String[] filenames = new String[cachedFilesList.size() + 1];
-            filenames[0] = SidePanel.LIBRARY_TAG;
             for (int i = 0; i < cachedFilesList.size(); i++) {
                 filenames[i + 1] = cachedFilesList.get(i).getName();
             }
-            frame.setList(folder.getPath(), filenames);
         } else {
             System.out.println("Error no directorio");
+             new BackgroundException(new FileNotFoundException(),"El directorio de wallpaper del usurio no existe");
         }
+        frame.setList(folder.getPath(), filenames);
     }
 
     /**
@@ -324,6 +323,9 @@ public class BackgroundManager implements ActionListener {
               //  }
                 break;
 
+            case  BackgroundManager.ADD_ACTION:
+                System.out.println("add");
+                break;
         }
 
     }

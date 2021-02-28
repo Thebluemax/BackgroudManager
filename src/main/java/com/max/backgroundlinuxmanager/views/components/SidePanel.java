@@ -25,6 +25,7 @@ package com.max.backgroundlinuxmanager.views.components;
 
 import com.max.backgroundlinuxmanager.views.components.AppColors.AppColors;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 
 /**
@@ -63,6 +64,9 @@ public class SidePanel extends javax.swing.JPanel {
     public void setListFather(String[] list) {
         fatherList.setList(list);
     }
+    public void setListenerFather(ActionListener aListener) {
+        childList.addButtonListener(aListener);
+    }
 
     public void setChildLidt(String[] list) {
         childList.setList(list);
@@ -71,7 +75,7 @@ public class SidePanel extends javax.swing.JPanel {
     public void setLibraryView(boolean flag) {
 
         childList.setVisible(flag ? false : true);
-        fatherList.deactivateDelete(flag);
+        fatherList.deactivateDelete(true);
     }
 
     public void addListMouseEvents(MouseAdapter mouseAdapter) {

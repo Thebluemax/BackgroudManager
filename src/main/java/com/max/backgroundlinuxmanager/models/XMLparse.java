@@ -100,7 +100,7 @@ public class XMLparse {
      * @param fileStream
      * @return 
      */
-    public AppConfiguration unmarshallerConfig(FileInputStream fileStream){
+    public AppConfiguration unmarshallerConfig(File fileStream){
         AppConfiguration config = null;
         jaxbContest = XMLparse.getJaxbContext(CONFIG);
         Unmarshaller unmarshaller = null;
@@ -123,7 +123,7 @@ public class XMLparse {
     public int saveXML(File xml, int type, Object objecto){
    int status = 0;
        Marshaller marshaller;
-        System.out.println("Guardando Comanda");
+        System.out.println("Guardando XML");
         try {
             //usamos el metodo de Marshaller para crear un documento con la
             //estructura de VendesArticles y los datos almacenados
@@ -131,7 +131,7 @@ public class XMLparse {
             marshaller = jaxbContest.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             if (type == CONFIG) {
-              // marshaller.marshal((AppConfiguration)objecto, xml);
+               marshaller.marshal((AppConfiguration)objecto, xml);
 
             } else {
                marshaller.marshal((Wallpapers)objecto, xml);
@@ -149,6 +149,7 @@ public class XMLparse {
 
         return status;
    }
-    
+
+
 
 }
