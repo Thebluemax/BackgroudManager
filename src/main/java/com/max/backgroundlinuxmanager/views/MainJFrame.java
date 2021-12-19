@@ -30,6 +30,7 @@ import com.max.backgroundlinuxmanager.views.components.NavComponent;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.awt.GridBagConstraints.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,6 +104,7 @@ public class MainJFrame extends javax.swing.JFrame {
      * @param aListener 
      */
     public void setListeners(ActionListener aListener) {
+
         toolBar.addActionListener(aListener);
         sideBar.setButtonsListener(aListener);
         

@@ -35,7 +35,7 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args)  {
         
         //Podría ser una app de consola
         
@@ -43,7 +43,10 @@ public class Main {
             if (args.length > 0) {
             bgManager.consoleBatchProcess();           
         } else {
-            bgManager.initApp();
+
+
+                    bgManager.initApp();
+
         }
     }
     

@@ -51,7 +51,7 @@ public class BackgroundManager implements ActionListener {
     private MainFrameController frame;// = new MainJFrame();
     private File[] resurces;
     private List<File> cachedFilesList;
-    private WallpaperXML wallpapers;
+    private WallpaperXML wallpaperXML;
     private List<Wallpaper> wpaperList;
     private File wallpaperXMLFIle;
     private Wallpaper activeWallpaper;
@@ -62,8 +62,8 @@ public class BackgroundManager implements ActionListener {
     /**
      *
      */
-    public void initApp() {
-        frame = new MainFrameController();
+    public void initApp()  {
+        frame = new MainJFrame();
         frame.setVisible(true);
         cachedFilesList = new ArrayList();
         activeWallpaperName = "";
@@ -83,6 +83,7 @@ public class BackgroundManager implements ActionListener {
      */
     public void checkConfig() {
         configManager = new ConfigurationManager();
+        System.out.println(configManager.toString());
     }
 
     private void setListeners() {
@@ -95,6 +96,7 @@ public class BackgroundManager implements ActionListener {
                     element = (String) list.getModel().getElementAt(index);
                 }
 
+                System.out.println(".mouseClicked()");
                 if (list.getName().compareTo(SidePanel.CHILD) == 0) {
                     if(element.isBlank())
                          new BackgroundException(new NullPointerException(),"The Collection is empty" ); 
@@ -115,7 +117,7 @@ public class BackgroundManager implements ActionListener {
                         
                         frame.setViewPortContainer(new WallpaperPanel(wallpapers.getWallpapers().get(index)));
                     }
-                    activeWallpaper = wallpapers.getWallpapers().get(index);
+                    activeWallpaper = wallpaperXML.getWallpapers().get(index);
                 } else {
                     System.out.println(".mouseClicked()-paper");
 
@@ -140,7 +142,7 @@ public class BackgroundManager implements ActionListener {
     }
 
     private void buildWallpapers(String filename) {
-        if (wallpapers == null) {
+        if (wallpaperXML == null) {
 
             wallpaperXMLFIle = new File(ManagerFiles.getWallpapersXMLFolder() + "/" + filename);
             XMLparse xmlParse = new XMLparse();
@@ -254,7 +256,7 @@ public class BackgroundManager implements ActionListener {
     }
 
     /**
-     * Add a new wallpaper from a image selected from the library
+     * Add a new wallpaper to a walpaperXML from a image selected from the library
      */
     private void newWallpaper(String selected) {
 
@@ -349,6 +351,16 @@ public class BackgroundManager implements ActionListener {
                 }
                 break;
 
+            case  BackgroundManager.ADD_ACTION:
+                System.out.println("add");
+                WallpaperXML newWallPaper = new WallpaperXML();
+                File folder = ManagerFiles.getWallpapersFolder();
+                if(!folder.exists()){
+                    folder.mkdir();
+                }
+                xmlParse = new XMLparse();
+                xmlParse.saveXML(new File (folder.getPath() + "test.xml"),XMLparse.WALLPAPER_XML,newWallPaper);
+                break;
         }
 
     }

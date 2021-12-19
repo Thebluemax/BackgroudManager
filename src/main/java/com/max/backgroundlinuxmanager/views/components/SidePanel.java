@@ -66,6 +66,9 @@ public class SidePanel extends javax.swing.JPanel {
     public void setListFather(String[] list) {
         fatherList.setList(list);
     }
+    public void setListenerFather(ActionListener aListener) {
+        fatherList.addButtonListener(aListener);
+    }
 
     public void setChildLidt(String[] list) {
         childList.setList(list);
@@ -74,7 +77,7 @@ public class SidePanel extends javax.swing.JPanel {
     public void setLibraryView(boolean flag) {
 
         childList.setVisible(flag ? false : true);
-        fatherList.deactivateDelete(flag);
+        fatherList.deactivateDelete(true);
     }
 
     public void addListMouseEvents(MouseAdapter mouseAdapter) {
