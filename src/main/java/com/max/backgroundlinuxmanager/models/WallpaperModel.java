@@ -24,7 +24,7 @@
 package com.max.backgroundlinuxmanager.models;
 
 import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
-import com.max.backgroundlinuxmanager.models.entities.Wallpapers;
+import com.max.backgroundlinuxmanager.models.entities.WallpaperXML;
 import java.util.List;
 
 /**
@@ -32,7 +32,7 @@ import java.util.List;
  * @author Maximiliano Fernández <thebluemax13 at gmail.com>
  */
 public class WallpaperModel {
-    private Wallpapers activeWallpapers;
+    private WallpaperXML activeWallpaperXML;
     private List<Wallpaper> wallpapersList;
 
     /**

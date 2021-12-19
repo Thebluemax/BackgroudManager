@@ -65,7 +65,7 @@ public class SidePanel extends javax.swing.JPanel {
         fatherList.setList(list);
     }
     public void setListenerFather(ActionListener aListener) {
-        childList.addButtonListener(aListener);
+        fatherList.addButtonListener(aListener);
     }
 
     public void setChildLidt(String[] list) {

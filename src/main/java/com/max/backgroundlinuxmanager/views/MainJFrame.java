@@ -104,6 +104,7 @@ public class MainJFrame extends javax.swing.JFrame {
     public void setListeners(ActionListener aListener) {
 
         toolBar.addActionListener(aListener);
+        sideBar.setListenerFather(aListener);
     }
     /**
      * 

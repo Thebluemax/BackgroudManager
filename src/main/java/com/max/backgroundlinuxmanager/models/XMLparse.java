@@ -24,8 +24,7 @@
 package com.max.backgroundlinuxmanager.models;
 
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
-import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
-import com.max.backgroundlinuxmanager.models.entities.Wallpapers;
+import com.max.backgroundlinuxmanager.models.entities.WallpaperXML;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.logging.Level;
@@ -45,6 +44,7 @@ public class XMLparse {
      *
      */
     public static int CONFIG = 1;
+    public static int WALLPAPER_XML = 2;
 
     /**
      *
@@ -68,8 +68,8 @@ public class XMLparse {
         JAXBContext jaxbContext = null;
         //Creamos la instancia de JAXB
         try {
-            if (type == BACKGROUNDS) {
-                jaxbContext = JAXBContext.newInstance(Wallpapers.class);
+            if (type == WALLPAPER_XML) {
+                jaxbContext = JAXBContext.newInstance(WallpaperXML.class);
             } else {
                 jaxbContext = JAXBContext.newInstance(AppConfiguration.class);
             }
@@ -83,17 +83,17 @@ public class XMLparse {
      * @param fileStream
      * @return 
      */
-    public Wallpapers unmarshallerWallpapers(FileInputStream fileStream){
-        Wallpapers wallpapers = null;
+    public WallpaperXML unmarshallerWallpapers(FileInputStream fileStream){
+        WallpaperXML wallpaperXML = null;
         jaxbContest = XMLparse.getJaxbContext(BACKGROUNDS);
         Unmarshaller unmarshaller = null;
         try {
             unmarshaller = jaxbContest.createUnmarshaller();
-            wallpapers = (Wallpapers) unmarshaller.unmarshal(fileStream);
+            wallpaperXML = (WallpaperXML) unmarshaller.unmarshal(fileStream);
          } catch (JAXBException ex) {
             Logger.getLogger(XMLparse.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return wallpapers;
+        return wallpaperXML;
     }
     /**
      * 
@@ -134,7 +134,7 @@ public class XMLparse {
                marshaller.marshal((AppConfiguration)objecto, xml);
 
             } else {
-               marshaller.marshal((Wallpapers)objecto, xml);
+               marshaller.marshal((WallpaperXML)objecto, xml);
 
             }
 

@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Maximiliano Fernández <thebluemax13 at gmail.com>
  */
 @XmlRootElement(name = "wallpapers")
-public class Wallpapers {
+public class WallpaperXML {
 
     private List<Wallpaper> wallpapers;
 
