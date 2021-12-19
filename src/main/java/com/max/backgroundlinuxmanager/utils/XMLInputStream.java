@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Maximiliano Fernández <thebluemax13 at gmail.com>.
+ * Copyright 2019 Maximiliano Fernández thebluemax13 at gmail.com.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Maximiliano Fernández <thebluemax13 at gmail.com>
+ * @author Maximiliano Fernández thebluemax13 at gmail.com
  */
 public class XMLInputStream {
     private FileInputStream fileStream;

@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2020 Maximiliano Fernández <thebluemax13 at gmail.com>.
+ * Copyright 2020 Maximiliano Fernández thebluemax13 at gmail.com.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ import javax.naming.ldap.ManageReferralControl;
 
 /**
  *
- * @author Maximiliano Fernández <thebluemax13 at gmail.com>
+ * @author Maximiliano Fernández thebluemax13 at gmail.com
  */
 public class ImageSave implements Callable<Integer>{
     
@@ -41,7 +41,7 @@ public class ImageSave implements Callable<Integer>{
     public ImageSave(File file) {
         
         fileImage = file;
-        String pathNew = ManagerFiles.getBackgroundsPath() + "/" + fileImage.getName();
+        String pathNew = ManagerFiles.getBackgroundsPath(true) + "/" + fileImage.getName();
         newFileImage = new File(pathNew);
     }
     

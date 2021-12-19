@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Maximiliano Fernández <thebluemax13 at gmail.com>.
+ * Copyright 2019 Maximiliano Fernández thebluemax13 at gmail.com.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,14 +31,14 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Maximiliano Fernández <thebluemax13 at gmail.com>
+ * @author Maximiliano Fernández thebluemax13 at gmail.com
  */
 public class NavComponent extends JPanel {
 
-    private String[] labelList = {"Add Library", "New Wallpaper", "New Slide",
-        "Save", "Delete"};
-    private String[] bottonRef = {"ADD_LIBRARY", "NEW_WALLP", "NEW_SLIDE",
-        "SAVE", "DELETE"};
+    private String[] labelList = {"Add Library", "New Wallpaper", "New Slide"};
+        //"Save", "Delete"};
+    private String[] bottonRef = {"ADD_LIBRARY", "NEW_WALLP", "NEW_SLIDE"};
+       // "SAVE", "DELETE"};
     private List<JButton> buttonList;
 
     /**
@@ -50,10 +50,10 @@ public class NavComponent extends JPanel {
         setForeground(new java.awt.Color(255, 255, 255));
         setToolTipText("");
         setMaximumSize(new java.awt.Dimension(750, 100));
-        setMinimumSize(new java.awt.Dimension(450, 30));
+        setMinimumSize(new java.awt.Dimension(450, 150));
         setOpaque(false);
         setPreferredSize(new java.awt.Dimension(450, 50));
-        java.awt.GridLayout flowLayout1 = new java.awt.GridLayout(5, 1);
+        java.awt.GridLayout flowLayout1 = new java.awt.GridLayout(3, 1);
         setLayout(flowLayout1);
         buttonList = new ArrayList<>();
         setButtons();
@@ -80,7 +80,7 @@ public class NavComponent extends JPanel {
             if (i < 3) {
                 buttonList.get(i).setVisible(flag);
             } else {
-                buttonList.get(i).setVisible(flag ? false : true);
+                buttonList.get(i).setEnabled(flag ? false : true);
             }
         }
     }

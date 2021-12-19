@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Maximiliano Fernández <thebluemax13 at gmail.com>.
+ * Copyright 2019 Maximiliano Fernández thebluemax13 at gmail.com.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -50,7 +50,7 @@ import jiconfont.icons.font_awesome.FontAwesome;
 
 /**
  *
- * @author Maximiliano Fernández <thebluemax13 at gmail.com>
+ * @author Maximiliano Fernández thebluemax13 at gmail.com
  */
 public class ImageBlockPane extends javax.swing.JPanel {
 
@@ -60,6 +60,7 @@ public class ImageBlockPane extends javax.swing.JPanel {
     private File image;
     private String filename;
     private File loadingFile;
+
     public ImageBlockPane(File f) {
         this.setBackground(new AppColors().generalColor());
         initComponents();
@@ -69,35 +70,42 @@ public class ImageBlockPane extends javax.swing.JPanel {
         imageHolder.setIcon(icon);
         erraseBtn.setText("");
         erraseBtn.setIcon(IconFontManager.createIcon(FontAwesome.TRASH, 12, Color.BLACK));
-        
+
         setIcon(f.getName());
         setButton();
     }
-    public void setListener (ActionListener event){
-       // event.actionPerformed(new ActionEvent(this, 0, BackgroundManager.DELETE_ACTION));
+
+    public void setListener(ActionListener event) {
+        // event.actionPerformed(new ActionEvent(this, 0, BackgroundManager.DELETE_ACTION));
         erraseBtn.setActionCommand(BackgroundManager.DELETE_ACTION);
         erraseBtn.addActionListener(event);
     }
-    
+
     public void setIcon(String name) {
-      
+
         objectCheckbox.setLabel(name);
         filename = name;
-       
+
     }
-    
-    public void loadImage(){
+/**
+ * Ejecuta el trhead que carga la imagen dentro del contenedor del la miniatura
+ * 
+ * @return void
+ */
+    public void loadImage() {
         System.out.println(filename);
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<ImageIcon> future;
+        
         if (!image.exists()) {
             image = new File("src/assets/no-image.png");
         }
-        ImageLoader iLoad = new ImageLoader(imageHolder.getWidth(), imageHolder.getHeight(), image);
-        future = executor.submit( () -> {
-            return iLoad.call(); //To change body of generated lambdas, choose Tools | Templates.
-        });
         
+        ImageLoader iLoad = new ImageLoader(imageHolder.getWidth(), imageHolder.getHeight(), image);
+        future = executor.submit(() -> {
+                return iLoad.call(); //To change body of generated lambdas, choose Tools | Templates.
+        });
+
         try {
             imageHolder.setIcon(future.get());
         } catch (InterruptedException ex) {
@@ -105,31 +113,44 @@ public class ImageBlockPane extends javax.swing.JPanel {
         } catch (ExecutionException ex) {
             Logger.getLogger(WallpaperPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         executor.shutdown();
         executor = null;
-        
+
     }
-    private void setButton(){
-       
+
+    private void setButton() {
+
     }
-    
-    public void setLabel(String label){
+    /**
+     * Setter para la etiqueta del bloque
+     * @param label String de la etiqueta 
+     */
+    public void setLabel(String label) {
         objectCheckbox.setLabel(label);
     }
-    
-    public boolean isChecked (){
-        
+/**
+ * Retorna un booleano que indica si el bloque ha sido marcado
+ * @return 
+ */
+    public boolean isChecked() {
+
         return objectCheckbox.isSelected();
-    
+
     }
-    
+
     public String getFilename() {
         return filename;
     }
-    
-    public File getImage(){
-         return image;
+
+    public String getFilePath() {
+        return image.getAbsolutePath();
     }
+
+    public File getImage() {
+        return image;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

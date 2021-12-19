@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Maximiliano Fernández <thebluemax13 at gmail.com>.
+ * Copyright 2019 Maximiliano Fernández thebluemax13 at gmail.com.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,10 +36,12 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SpringLayout;
+
 
 /**
  *
- * @author Maximiliano Fernández <thebluemax13 at gmail.com>
+ * @author Maximiliano Fernández thebluemax13 at gmail.com
  */
 public class MainJFrame extends javax.swing.JFrame {
 
@@ -50,13 +52,13 @@ public class MainJFrame extends javax.swing.JFrame {
     private static String GET_WALLPAPER = "getWallPaper";
     private static String LIBRARY_TAG ="Libreria"; 
 
-    private JPanel container;
-    private File[] fileList;
-    private DefaultListModel collectionName;
-    private DefaultListModel wallpaperName;
-    private SidePanel sideBar;
-    private NavComponent toolBar; 
-    private List<ImageBlockPane>  imageList ;
+    protected JPanel container;
+    protected File[] fileList;
+    protected DefaultListModel collectionName;
+    protected DefaultListModel wallpaperName;
+    protected SidePanel sideBar;
+    protected NavComponent toolBar; 
+    protected List<ImageBlockPane>  imageList ;
     
     
 /**
@@ -81,18 +83,18 @@ public class MainJFrame extends javax.swing.JFrame {
     /**
      * Inicio de la barra lateral 
      */
-    private void initSidebar(){
+    protected void initSidebar(){
         sideBar = new SidePanel();
         sideBar.setLibraryView(true);
-        getContentPane().add(sideBar,  new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 5, 180, 250));
+        getContentPane().add(sideBar,  new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 5, 180, 350));
     }
     /**
      * Inicio de la barra de herramientas
      */
-   private void initNavBar(){
+   protected void initNavBar(){
         toolBar = new NavComponent();
         toolBar.setVisibility(true);
-        getContentPane().add(toolBar,  new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 250, 150, 200));
+        getContentPane().add(toolBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 185, 150, 450) );
     }
     
     /**
@@ -102,79 +104,10 @@ public class MainJFrame extends javax.swing.JFrame {
      */
     public void setListeners(ActionListener aListener) {
         toolBar.addActionListener(aListener);
-    }
-    /**
-     * 
-     * Agregar un nuevo contenedor de miniaturas al viewport
-     * @param jPane Contenedor con las miniaturas
-     */
-    public void setViewPortContainer (JPanel jPane){
-        scrollContent.setViewportView(null);
-        scrollContent.setViewportView(jPane);
-    }
-    /**
-     * 
-     * @param visibility 
-     */
-    public void setLibraryView(boolean visibility){
-        sideBar.setLibraryView(visibility);
-        toolBar.setVisibility(visibility);
-        if (visibility) {
-            setViewPortContainer(container);         
-        } else {
-                scrollContent.setViewportView(null);
-        }
-    }
-    /**
-     * Agrega un objeto minuatura al contenedor
-     * @param jp 
-     */
-    public void addToPanel (JPanel jp){
-        imageList.add((ImageBlockPane)jp);
-        container.add(jp);
-    }
-    
-    public void remove(ImageBlockPane pane){
-        imageList.remove(pane);
-        container.remove(pane);
-        this.pack();
-    
-    }
-    /**
-     * return the path from the seledted item 
-     * @return 
-     */
-    public String getSelected(){
-        String r="";
-        for (int i = 0; i < imageList.size(); i++) {
-            if (imageList.get(i).isChecked()) {
-             r =    imageList.get(i).getFilename();
-            }
-        }
-    return r;
-    }
-    public List<ImageBlockPane> getAllImgeBlock(){
-        return imageList;
-    }
-    /**
-     * agrega un nuevo elemento a la lista secundaria 
-     * 
-     * @param nameWallpaper 
-     */
-    public void setWallpaperList(String[] nameWallpaper){
-       sideBar.setChildLidt(nameWallpaper);
-     
-    }
-    
-    public void setList(String folder, String[] listFile){
-        sideBar.setListFather(listFile);
-       
-        jLabel2.setText("Active Folder: "+folder);
+        sideBar.setButtonsListener(aListener);
         
     }
-    public void addSideBarEvents(MouseAdapter mouseAdapter){
-        sideBar.addListMouseEvents(mouseAdapter);
-    }
+  
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -195,10 +128,10 @@ public class MainJFrame extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setForeground(new java.awt.Color(206, 223, 253));
         setLocation(new java.awt.Point(100, 100));
-        setMaximumSize(new java.awt.Dimension(1200, 1000));
+        setMaximumSize(new java.awt.Dimension(1000, 800));
         setMinimumSize(new java.awt.Dimension(900, 600));
         setName("principalFrame"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(950, 600));
+        setPreferredSize(new java.awt.Dimension(950, 700));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setBackground(new java.awt.Color(1, 1, 1));
@@ -209,7 +142,7 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel2.setAutoscrolls(true);
         jLabel2.setRequestFocusEnabled(false);
         jLabel2.setVerifyInputWhenFocusTarget(false);
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 510, 700, 50));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 700, 50));
 
         scrollContent.setBorder(null);
         scrollContent.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -217,9 +150,11 @@ public class MainJFrame extends javax.swing.JFrame {
         scrollContent.setViewportBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         scrollContent.setAutoscrolls(true);
         scrollContent.setMaximumSize(new java.awt.Dimension(1000, 800));
-        scrollContent.setMinimumSize(new java.awt.Dimension(600, 400));
+        scrollContent.setMinimumSize(new java.awt.Dimension(800, 600));
+        scrollContent.setName(""); // NOI18N
         scrollContent.setPreferredSize(new java.awt.Dimension(760, 500));
-        getContentPane().add(scrollContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 5, 750, 500));
+        scrollContent.setVerifyInputWhenFocusTarget(false);
+        getContentPane().add(scrollContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 60, 750, 600));
 
         getAccessibleContext().setAccessibleDescription("");
 
@@ -262,7 +197,7 @@ public class MainJFrame extends javax.swing.JFrame {
  //   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane scrollContent;
+    protected javax.swing.JLabel jLabel2;
+    protected javax.swing.JScrollPane scrollContent;
     // End of variables declaration//GEN-END:variables
 }

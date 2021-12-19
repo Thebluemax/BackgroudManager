@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Maximiliano Fernández <thebluemax13 at gmail.com>.
+ * Copyright 2019 Maximiliano Fernández thebluemax13 at gmail.com.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,10 +32,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Maximiliano Fernández <thebluemax13 at gmail.com>
+ * @author Maximiliano Fernández thebluemax13 at gmail.com
  */
 @XmlRootElement(name = "wallpapers")
-public class Wallpapers {
+public class WallpaperXML {
 
     private List<Wallpaper> wallpapers;
 
@@ -46,6 +46,10 @@ public class Wallpapers {
     @XmlElement(name = "wallpaper")
 
     public List<Wallpaper> getWallpapers() {
+        if (wallpapers == null) {
+            wallpapers = new ArrayList<>();
+        }
+        
         return wallpapers;
     }
 
@@ -64,6 +68,10 @@ public class Wallpapers {
      * @param wallpapers the wallpapers to set
      */
     public void setWallpapers(List<Wallpaper> wallpapers) {
-        this.wallpapers = wallpapers;
+        if (wallpapers != null) {
+            this.wallpapers = wallpapers;
+        }else{
+            this.wallpapers = new ArrayList<Wallpaper>();
+        }
     }
 }

@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2020 Maximiliano Fernández <thebluemax13 at gmail.com>.
+ * Copyright 2020 Maximiliano Fernández thebluemax13 at gmail.com.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Maximiliano Fernández <thebluemax13 at gmail.com>
+ * @author Maximiliano Fernández thebluemax13 at gmail.com
  */
 public class AddingToLibraryDialog extends JDialog {
 
@@ -79,7 +79,10 @@ public class AddingToLibraryDialog extends JDialog {
         fileList = list;
         return launchWork();
     }
-
+/**
+ * Ejecuta el poolthread con la lista de archivos a guardar 
+ * @return 
+ */
     private boolean launchWork() {
         ExecutorService executor = Executors.newFixedThreadPool(fileList.length);
 
@@ -87,8 +90,8 @@ public class AddingToLibraryDialog extends JDialog {
 
         for (int i = 0; i < fileList.length; i++) {
             executor.submit(new ImageSave(fileList[i]));
-
         }
+        
         while (pool.getActiveCount() != 0) {
             System.err.println(pool.isTerminated() + "*" + pool.getTaskCount() + "/" + pool.getActiveCount());
 

@@ -1,7 +1,7 @@
-/*
+ /*
  * The MIT License
  *
- * Copyright 2019 Maximiliano Fernández <thebluemax13 at gmail.com>.
+ * Copyright 2019 Maximiliano Fernández thebluemax13 at gmail.com.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.max.backgroundlinuxmanager.models;
+package com.max.backgroundlinuxmanager.controllers;
 
+import com.max.backgroundlinuxmanager.controllers.utils.XMLparse;
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
 import com.max.backgroundlinuxmanager.utils.ManagerFiles;
 import java.io.File;
@@ -32,7 +33,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Maximiliano Fernández <thebluemax13 at gmail.com>
+ * @author Maximiliano Fernández thebluemax13 at gmail.com
  */
 public class ConfigurationManager {
     
@@ -44,18 +45,19 @@ public class ConfigurationManager {
      *
      */
     public ConfigurationManager() {
+        configFile  = ManagerFiles.getConfigurationFile();
         if(configFileExist()){
-            
+            XMLparse xmlParse = new XMLparse();
+            appConfig = xmlParse.unmarshallerConfig(configFile);
         }else {
-
          configFolderAndFile();
         }
     }
     
     private boolean configFileExist() {
-        File confFile  = ManagerFiles.getConfigurationFile();
-        return confFile.exists() && confFile.isFile();
+        return configFile.exists() && configFile.isFile();
     }
+    
     private void configFolderAndFile(){
         File confFile = ManagerFiles.getConfigurationFile();
         if (confFile == null || !confFile.exists()) {
@@ -64,9 +66,17 @@ public class ConfigurationManager {
             folderConfig.mkdir();
             appConfig = new AppConfiguration();
             XMLparse xmlParse = new XMLparse();
-            xmlParse.saveXML(new File(ManagerFiles.configurationFolderPath()+File.separator+AppConfiguration.CONFIG_FILE), XMLparse.CONFIG, appConfig);
+            xmlParse.saveXML(new File(ManagerFiles.configurationFolderPath() + 
+                    File.separator + AppConfiguration.CONFIG_FILE), XMLparse.CONFIG, appConfig);
         }
     }
     
-    
+      /**
+     * Getter del objeto AppConfiguration con la configuración actual
+     *
+     * @return AppConfiguration
+     */
+    private AppConfiguration getConfigInfo(){
+        return appConfig;
+    }
 }

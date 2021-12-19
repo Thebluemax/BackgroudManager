@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Maximiliano Fernández <thebluemax13 at gmail.com>.
+ * Copyright 2019 Maximiliano Fernández thebluemax13 at gmail.com.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,23 +24,22 @@
 package com.max.backgroundlinuxmanager.models;
 
 import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
-import com.max.backgroundlinuxmanager.models.entities.Wallpapers;
+import com.max.backgroundlinuxmanager.models.entities.WallpaperXML;
 import java.util.List;
 
 /**
  *
- * @author Maximiliano Fernández <thebluemax13 at gmail.com>
+ * @author Maximiliano Fernández thebluemax13 at gmail.com
  */
 public class WallpaperModel {
-    private Wallpapers activeWallpapers;
+    
+    private WallpaperXML activeWallpapers;
     private List<Wallpaper> wallpapersList;
 
     /**
-     *
+     * Constructor de la clase
      */
     public WallpaperModel() {
     }
-    
-    
     
 }

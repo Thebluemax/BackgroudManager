@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Maximiliano Fernández <thebluemax13 at gmail.com>.
+ * Copyright 2019 Maximiliano Fernández thebluemax13 at gmail.com.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.max.backgroundlinuxmanager.models;
+package com.max.backgroundlinuxmanager.controllers.utils;
 
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
 import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
-import com.max.backgroundlinuxmanager.models.entities.Wallpapers;
+import com.max.backgroundlinuxmanager.models.entities.WallpaperXML;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.logging.Level;
@@ -37,7 +37,7 @@ import javax.xml.bind.Unmarshaller;
 
 /**
  *
- * @author Maximiliano Fernández <thebluemax13 at gmail.com>
+ * @author Maximiliano Fernández thebluemax13 at gmail.com
  */
 public class XMLparse {
 
@@ -45,12 +45,9 @@ public class XMLparse {
      *
      */
     public static int CONFIG = 1;
-
-    /**
-     *
-     */
+    public static int WALLPAPER_XML = 2;
     public static int BACKGROUNDS = 0;
-    
+
     private JAXBContext jaxbContest;
 
     /**
@@ -58,18 +55,21 @@ public class XMLparse {
      */
     public XMLparse() {
     }
-  /**
-   * 
-   * @param type
-   * @return 
-   */
-    public static JAXBContext getJaxbContext(int type) {
 
+    /**
+     *Devuelve el contexto indicado en el typo seleccionado en el parámetro del
+     * método.
+     * 
+     * @param type int que representa el type de clase a contextualizar
+     * @return el contexto jaxb con el modelo definido
+     */
+    public static JAXBContext getJaxbContext(int type) {
+//TODO: El método se definió como estático en un principio, pero dado el desarrollo del programa se ha se modificar a privado
         JAXBContext jaxbContext = null;
         //Creamos la instancia de JAXB
         try {
-            if (type == BACKGROUNDS) {
-                jaxbContext = JAXBContext.newInstance(Wallpapers.class);
+            if (type == WALLPAPER_XML) {
+                jaxbContext = JAXBContext.newInstance(WallpaperXML.class);
             } else {
                 jaxbContext = JAXBContext.newInstance(AppConfiguration.class);
             }
@@ -78,51 +78,64 @@ public class XMLparse {
         }
         return jaxbContext;
     }
+
     /**
-     * 
+     *
      * @param fileStream
-     * @return 
+     * @return
      */
-    public Wallpapers unmarshallerWallpapers(FileInputStream fileStream){
-        Wallpapers wallpapers = null;
-        jaxbContest = XMLparse.getJaxbContext(BACKGROUNDS);
+    public WallpaperXML unmarshallerWallpapers(FileInputStream fileStream) {
+        WallpaperXML wallpapers = null;
+        jaxbContest = XMLparse.getJaxbContext(WALLPAPER_XML);
         Unmarshaller unmarshaller = null;
         try {
             unmarshaller = jaxbContest.createUnmarshaller();
-            wallpapers = (Wallpapers) unmarshaller.unmarshal(fileStream);
-         } catch (JAXBException ex) {
+            wallpapers = (WallpaperXML) unmarshaller.unmarshal(fileStream);
+        } catch (JAXBException ex) {
             Logger.getLogger(XMLparse.class.getName()).log(Level.SEVERE, null, ex);
         }
         return wallpapers;
     }
-    /**
-     * 
-     * @param fileStream
-     * @return 
-     */
-    public AppConfiguration unmarshallerConfig(FileInputStream fileStream){
-        AppConfiguration config = null;
-        jaxbContest = XMLparse.getJaxbContext(CONFIG);
-        Unmarshaller unmarshaller = null;
-        try {
-            unmarshaller = jaxbContest.createUnmarshaller();
-            config = (AppConfiguration) unmarshaller.unmarshal(fileStream);
-         } catch (JAXBException ex) {
-            Logger.getLogger(XMLparse.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return config;
-    }
 
     /**
      *
-     * @param xml
-     * @param type
-     * @param objecto
+     * @param fileStream
      * @return
      */
-    public int saveXML(File xml, int type, Object objecto){
-   int status = 0;
-       Marshaller marshaller;
+    public AppConfiguration unmarshallerConfig(File fileStream) {
+        AppConfiguration config = null;
+        jaxbContest = XMLparse.getJaxbContext(CONFIG);
+       return (AppConfiguration) unmarshaller(jaxbContest, fileStream);
+    }
+    /**
+     * 
+     * @param jaxbContest
+     * @return 
+     */
+    private Object unmarshaller(JAXBContext jaxbContest, File fileStream){
+        Object obj = null;
+         Unmarshaller unmarshaller = null;
+        try {
+            unmarshaller = jaxbContest.createUnmarshaller();
+            obj = (Object) unmarshaller.unmarshal(fileStream);
+        } catch (JAXBException ex) {
+            Logger.getLogger(XMLparse.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return obj;
+    }
+
+    /**
+     *Gurda un objeto en un archivo XML, empleando el modelo especificado en el tipo 
+     * los tipos pueden ser 3 y están definidos el las varibles estáticas de la clase
+     * 
+     * @param xml Objeto File en el que se guardará el documento XML
+     * @param type int que el tipo de modelo a usar
+     * @param objeto La instancia del modelo a persistir
+     * @return int estatus de la operación.
+     */
+    public int saveXML(File xml, int type, Object objecto) {
+        int status = 0;
+        Marshaller marshaller;
         System.out.println("Guardando Comanda");
         try {
             //usamos el metodo de Marshaller para crear un documento con la
@@ -131,24 +144,23 @@ public class XMLparse {
             marshaller = jaxbContest.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             if (type == CONFIG) {
-              // marshaller.marshal((AppConfiguration)objecto, xml);
+                marshaller.marshal((AppConfiguration) objecto, xml);
 
             } else {
-               marshaller.marshal((Wallpapers)objecto, xml);
+                marshaller.marshal((WallpaperXML) objecto, xml);
 
             }
 
         } catch (JAXBException ex) {
             Logger.getLogger(XMLparse.class.getName()).log(Level.SEVERE, null, ex);
             status = 2;
-        }catch (NullPointerException ex) {
+        } catch (NullPointerException ex) {
             Logger.getLogger(XMLparse.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getCause());
             status = 2;
         }
 
         return status;
-   }
-    
+    }
 
 }

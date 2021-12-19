@@ -5,69 +5,72 @@
  */
 package com.max.backgroundlinuxmanager.controllers;
 
-import com.max.backgroundlinuxmanager.controllers.utils.FileChooserController;
-import com.max.backgroundlinuxmanager.views.components.ImageBlockPane;
-import com.max.backgroundlinuxmanager.models.ConfigurationManager;
-import com.max.backgroundlinuxmanager.models.XMLDOMBackground;
-import com.max.backgroundlinuxmanager.models.XMLparse;
-import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
-import com.max.backgroundlinuxmanager.models.entities.FrameBackground;
-import com.max.backgroundlinuxmanager.models.entities.SlideBackground;
-import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
-import com.max.backgroundlinuxmanager.models.entities.Wallpapers;
-import com.max.backgroundlinuxmanager.utils.ManagerFiles;
-import com.max.backgroundlinuxmanager.views.*;
-import com.max.backgroundlinuxmanager.views.components.AddingToLibraryDialog;
-import com.max.backgroundlinuxmanager.views.components.SidePanel;
-import com.max.backgroundlinuxmanager.controllers.utils.DeleteOption;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import com.max.backgroundlinuxmanager.exceptions.BackgroundException;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import javax.swing.*;
+import com.max.backgroundlinuxmanager.controllers.utils.FileChooserController;
+import com.max.backgroundlinuxmanager.controllers.utils.XMLparse;
+import com.max.backgroundlinuxmanager.controllers.utils.DeleteOption;
+import com.max.backgroundlinuxmanager.models.entities.FrameBackground;
+import com.max.backgroundlinuxmanager.models.entities.SlideBackground;
+import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
+import com.max.backgroundlinuxmanager.models.entities.WallpaperXML;
+import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
+import com.max.backgroundlinuxmanager.models.XMLDOMBackground;
+import com.max.backgroundlinuxmanager.controllers.views.MainFrameController;
+import com.max.backgroundlinuxmanager.views.components.ImageBlockPane;
+import com.max.backgroundlinuxmanager.views.components.AddingToLibraryDialog;
+import com.max.backgroundlinuxmanager.views.components.SidePanel;
+import com.max.backgroundlinuxmanager.utils.ManagerFiles;
+import com.max.backgroundlinuxmanager.exceptions.BackgroundException;
+import com.max.backgroundlinuxmanager.views.WallpaperPanel;
+import java.awt.Color;
+import java.io.IOException;
+import javax.swing.JFrame;
 
 /**
  *
  * @author max
  */
 public class BackgroundManager implements ActionListener {
-    
+
     public final static String DELETE_ACTION = "DELETE";
+    public final static String ADD_ACTION = "ADD";
 
     private ConfigurationManager configManager;
-    private MainJFrame frame;// = new MainJFrame();
+    private MainFrameController frame;// = new MainJFrame();
     private File[] resurces;
     private List<File> cachedFilesList;
-    private Wallpapers wallpapers;
+    private WallpaperXML wallpapers;
     private List<Wallpaper> wpaperList;
-    private File wallpaperFIle;
+    private File wallpaperXMLFIle;
     private Wallpaper activeWallpaper;
     private XMLDOMBackground slideModel;
     private SlideEditPanelController editPanel;
+    private String activeWallpaperName;
 
     /**
      *
      */
     public void initApp() {
-        frame = new MainJFrame();
+        frame = new MainFrameController();
         frame.setVisible(true);
         cachedFilesList = new ArrayList();
+        activeWallpaperName = "";
 
         checkConfig();
 
-        checkWallpapers();
+        checkWallpapersXML();
         getBackgroundLibrary();
         setListeners();
     }
@@ -84,33 +87,43 @@ public class BackgroundManager implements ActionListener {
 
     private void setListeners() {
         frame.addSideBarEvents(new MouseAdapter() {
+            String element = "";
             public void mouseClicked(MouseEvent evt) {
                 JList list = (JList) evt.getSource();
                 int index = list.getSelectedIndex();
-                String element = (String) list.getModel().getElementAt(index);
+                if (index != -1) {
+                    element = (String) list.getModel().getElementAt(index);
+                }
 
                 if (list.getName().compareTo(SidePanel.CHILD) == 0) {
+                    if(element.isBlank())
+                         new BackgroundException(new NullPointerException(),"The Collection is empty" ); 
+                    
                     System.out.println(".mouseClicked()");
                     String filename = wallpapers.getWallpapers().get(index).getFilename();
                     if (isSlide(filename)) {
-                        
+
                         File f = new File(ManagerFiles.getUserFolder() + "/" + wallpapers.getWallpapers().get(index).getFilename());
                         slideModel = new XMLDOMBackground(f);
-                        editPanel = new SlideEditPanelController( slideModel );
+                        editPanel = new SlideEditPanelController(slideModel);
                         frame.setViewPortContainer(editPanel);
-                       // SlideBackground sb = slideModel.getSlideBackground();
-                      //  System.gc();
+                        // SlideBackground sb = slideModel.getSlideBackground();
+                        //  System.gc();
                         editPanel.setlist();
-                        
+
                     } else {
+                        
                         frame.setViewPortContainer(new WallpaperPanel(wallpapers.getWallpapers().get(index)));
                     }
                     activeWallpaper = wallpapers.getWallpapers().get(index);
                 } else {
+                    System.out.println(".mouseClicked()-paper");
+
                     System.out.println(element);
                     if (element.compareTo(SidePanel.LIBRARY_TAG) == 0) {
                         frame.setLibraryView(true);
                     } else {
+                        activeWallpaperName = element;
                         buildWallpapers(element);
                         frame.setLibraryView(false);
                     }
@@ -121,7 +134,7 @@ public class BackgroundManager implements ActionListener {
     }
 
     /**
-     *
+     * TODO posible CLI
      */
     public void consoleBatchProcess() {
     }
@@ -129,16 +142,17 @@ public class BackgroundManager implements ActionListener {
     private void buildWallpapers(String filename) {
         if (wallpapers == null) {
 
-            wallpaperFIle = new File(ManagerFiles.getWallpapersFolder() + "/" + filename);
+            wallpaperXMLFIle = new File(ManagerFiles.getWallpapersXMLFolder() + "/" + filename);
             XMLparse xmlParse = new XMLparse();
             try {
-                wallpapers = xmlParse.unmarshallerWallpapers(new FileInputStream(wallpaperFIle));
+                wallpapers = xmlParse.unmarshallerWallpapers(new FileInputStream(wallpaperXMLFIle));
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(BackgroundManager.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        // System.out.println(wallpapers.getWallpapers().size()+"ggg");
+         System.out.println(wallpapers.getWallpapers().size()+"ggg");
         wpaperList = wallpapers.getWallpapers();
+        activeWallpaperName = filename;
         String[] jPaneContent = new String[wpaperList.size()];
         // discoverSlide();
         for (int i = 0; i < wpaperList.size(); i++) {
@@ -165,21 +179,29 @@ public class BackgroundManager implements ActionListener {
     /**
      * Obteniendo los archivos xml con las colecciones de wallpapers
      */
-    public void checkWallpapers() {
-        File folder = ManagerFiles.getWallpapersFolder();
+    public void checkWallpapersXML() {
+        File folder = ManagerFiles.getWallpapersXMLFolder();
         cachedFilesList.clear();
+        String[] filenames = null;
+
         if (folder.isDirectory()) {
             ManagerFiles.getFiles(folder, cachedFilesList);
-            //System.out.println(cachedFilesList.size());
-            String[] filenames = new String[cachedFilesList.size() + 1];
+            filenames = new String[cachedFilesList.size() + 1];
             filenames[0] = SidePanel.LIBRARY_TAG;
+
+            System.out.println(cachedFilesList.size() + "");
+
             for (int i = 0; i < cachedFilesList.size(); i++) {
                 filenames[i + 1] = cachedFilesList.get(i).getName();
             }
-            frame.setList(folder.getPath(), filenames);
         } else {
+            filenames = new String[1];
+            filenames[0] = SidePanel.LIBRARY_TAG;
             System.out.println("Error no directorio");
+            new BackgroundException(new FileNotFoundException(), "El directorio de wallpaper del usurio no existe");
         }
+
+        frame.setList(activeWallpaperName, filenames);
     }
 
     /**
@@ -199,7 +221,7 @@ public class BackgroundManager implements ActionListener {
      *
      */
     public void getBackgroundLibrary() {
-        File folder = ManagerFiles.getBackgroundsFolder();
+        File folder = ManagerFiles.getBackgroundsFolder(true);
         cachedFilesList.clear();
         ManagerFiles.getFiles(folder, cachedFilesList);
 
@@ -235,12 +257,11 @@ public class BackgroundManager implements ActionListener {
      * Add a new wallpaper from a image selected from the library
      */
     private void newWallpaper(String selected) {
-        
-        Wallpaper newWallpaper = new Wallpaper();
-        newWallpaper.setFilename(ManagerFiles.FolderToObject() + selected);
-      //  System.out.println(ManagerFiles.getBackgroundsPath() + "/" + selected);
-      //  System.out.println(ManagerFiles.FolderToObject() + selected);
 
+        Wallpaper newWallpaper = new Wallpaper();
+        newWallpaper.setFilename(selected);
+        //  System.out.println(ManagerFiles.getBackgroundsPath() + "/" + selected);
+        //  System.out.println(ManagerFiles.folderToObject() + selected);
 
         newWallpaper.setName(selected);
         newWallpaper.setOptions(AppConfiguration.DEFAULT_OPTION);
@@ -248,15 +269,15 @@ public class BackgroundManager implements ActionListener {
         newWallpaper.setScolor(AppConfiguration.DEFAULT_COLOR);
         newWallpaper.setShaderType(AppConfiguration.DEFAULT_SHADER_TYPE);
         try {
-             wallpapers.add(newWallpaper);
-        frame.setViewPortContainer(new WallpaperPanel(newWallpaper));
-         int index = wallpapers.getWallpapers().indexOf(newWallpaper);
+            wallpapers.add(newWallpaper);
+            frame.setViewPortContainer(new WallpaperPanel(newWallpaper));
+            int index = wallpapers.getWallpapers().indexOf(newWallpaper);
         } catch (NullPointerException e) {
             System.err.println(e.getMessage());
-             new BackgroundException(e ,"No hay un archivo de background activo");
+            new BackgroundException(e, "No hay un archivo de background activo");
         }
-       
-         activeWallpaper = newWallpaper;
+
+        activeWallpaper = newWallpaper;
     }
 
     private void checkForTypeFile(File cachedFile) {
@@ -275,7 +296,7 @@ public class BackgroundManager implements ActionListener {
      * @param ae
      */
     @Override
-    public void actionPerformed(ActionEvent ae){
+    public void actionPerformed(ActionEvent ae) {
         //System.out.println(ae.getActionCommand());
         switch (ae.getActionCommand()) {
             case "ADD_LIBRARY":
@@ -285,43 +306,47 @@ public class BackgroundManager implements ActionListener {
                 if (res != null) {
                     resurces = res;
                     saveFilesInBGFolder(resurces);
-
-                } else {
-
                 }
+
                 break;
+
             case "NEW_WALLP":
-
                 String selected = frame.getSelected();
-              //  System.out.println(selected + "t");
-                
-                                    newWallpaper(selected);
-
+                newWallpaper(selected);
                 break;
+
             case "SAVE":
                 XMLparse xmlParse = new XMLparse();
-                 System.out.println(wallpaperFIle);
-                xmlParse.saveXML(wallpaperFIle, XMLparse.BACKGROUNDS, wallpapers);
+                System.out.println(wallpaperXMLFIle);
+                xmlParse.saveXML(wallpaperXMLFIle, XMLparse.WALLPAPER_XML, wallpapers);
+                break;
+
+            case BackgroundManager.DELETE_ACTION:
+                JButton block = (JButton) ae.getSource();
+                ImageBlockPane blockImage = (ImageBlockPane) block.getParent();
+
+                System.out.println(blockImage.getImage().getName());
+                DeleteOption option = new DeleteOption(blockImage);
+                
+                if (option.getResult()) {
+                    cachedFilesList.remove(blockImage.getImage());
+                    frame.remove(blockImage);
+                }
                 break;
                 
-            case BackgroundManager.DELETE_ACTION:
-                JButton block =(JButton) ae.getSource();
-                ImageBlockPane blockImage = (ImageBlockPane) block.getParent();
-                
-                System.out.println(blockImage.getImage().getName());
-
-                //JOptionPane.showConfirmDialog(null, "quiere borrar la entrada:" + activeWallpaper.getName(), "Eliminar Entrada", dialegButton);
-               // if (dialegButton == JOptionPane.YES_OPTION) {
-                DeleteOption option = new DeleteOption(blockImage);
-                if(option.getResult()){
-                    
-                   cachedFilesList.remove(blockImage.getImage());
-                   
-                    frame.remove(blockImage);
-                    
+            case BackgroundManager.ADD_ACTION:
+                System.out.println("add");
+                WallpaperXML newWallPaper = new WallpaperXML();
+                File folder = ManagerFiles.getWallpapersXMLFolder();
+                if (!folder.exists()) {
+                    folder.mkdir();
                 }
-                  // activeWallpaper = null;
-              //  }
+                xmlParse = new XMLparse();
+                String filename = JOptionPane.showInputDialog("Nombre del archivo");
+                int status = xmlParse.saveXML(new File(folder.getPath() + File.separator + filename + ".xml"), XMLparse.WALLPAPER_XML, newWallPaper);
+                if (status == 0) {
+                    checkWallpapersXML();
+                }
                 break;
 
         }

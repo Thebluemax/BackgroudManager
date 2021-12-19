@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Maximiliano Fernández <thebluemax13 at gmail.com>.
+ * Copyright 2019 Maximiliano Fernández thebluemax13 at gmail.com.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,13 +34,14 @@ import java.io.InputStreamReader;
 import java.io.InputStream;
 
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  *
- * @author Maximiliano Fernández <thebluemax13 at gmail.com>
+ * @author Maximiliano Fernández thebluemax13 at gmail.com
  */
 public class ManagerFiles {
 
@@ -52,12 +53,17 @@ public class ManagerFiles {
     /**
      *
      */
-    public static String BACKGROUNDS_FOLDER = "backgrounds";
+    public static String BG_FOLDER = "backgrounds";
+    /**
+     *
+     */
+    public static String OPTIONAL_BACKGROUNDS_FOLDER = "/wallpapers";
+    public static String BACKGROUNDS_THUMBS = "thumbs";
 
     /**
      *
      */
-    public static String LOCAL_SHARED= "/.local/share/";
+    public static String LOCAL_SHARED = "/.local/share/";
 
     /**
      *
@@ -66,94 +72,105 @@ public class ManagerFiles {
 
     /**
      *
-     * @return
+     * @return Un string que es el path a la carpeta del usuario.
      */
-    public static String getUserFolder () {
+    public static String getUserFolder() {
         return System.getProperty("user.home");
     }
-    
+
     /**
      *
      * @return
      */
-    public static String FolderToObject  (){
+    public static String folderToObject() {
         String s = LOCAL_SHARED.substring(1, LOCAL_SHARED.length());
-        return s+BACKGROUNDS_FOLDER+"/";
+        return s + BG_FOLDER + "/";
     }
-   /**
-    * Get the path of the default Picture folder defined in the System configuration
-    * 
-    * @return path strig the path. 
-    */
+
+    /**
+     * Get the path of the default Picture folder defined in the System
+     * configuration
+     *
+     * @return path strig the path.
+     */
     public static String getDefaultImagePath() {
         String path = "";
         try {
             Process runtimeProcess = Runtime.getRuntime().exec("xdg-user-dir PICTURES");
             BufferedReader runtimeInput = new BufferedReader(new InputStreamReader(runtimeProcess.getInputStream()));
             String tmpString;
-            while (( tmpString = runtimeInput.readLine()) != null) {
-               path =  tmpString;
-               //System.out.println("\n"+path+"e");
+            while ((tmpString = runtimeInput.readLine()) != null) {
+                path = tmpString;
+                //System.out.println("\n"+path+"e");
             }
         } catch (IOException ex) {
             Logger.getLogger(ManagerFiles.class.getName()).log(Level.SEVERE, null, ex);
         }
         return path;
     }
-    /**
-     * 
-     * @return 
-     */
-    public static File getBackgroundsFolder(){
-    
-    File f = null;
-        try {
-           f = new File(getUserFolder() + LOCAL_SHARED + BACKGROUNDS_FOLDER);
-        } catch (Exception e) {
-           // System.err.println(e.toString());
-        }
-        return f;
-    }
 
     /**
      *
      * @return
      */
-    public static File getWallpapersFolder(){
-    
-    File f = null;
-        try {
-           f = new File(getUserFolder() + LOCAL_SHARED + WALLPAPER_FOLDER);
-        } catch (Exception e) {
-           // System.err.println(e.toString());
-        }
-        return f;
-    }
+    public static File getBackgroundsFolder(boolean isDefault) {
 
-    /**
-     *
-     * @return
-     */
-    public static String getBackgroundsPath(){
-        return getUserFolder() + LOCAL_SHARED + BACKGROUNDS_FOLDER;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public static File getConfigurationFile () {
         File f = null;
-        f = new File( configurationFolderPath()+File.separator + AppConfiguration.CONFIG_FILE );
-    return f;
+        try {
+            if (isDefault) {
+                f = new File(getUserFolder() + LOCAL_SHARED + CONFIGURATION_FOLDER + OPTIONAL_BACKGROUNDS_FOLDER);
+                if(!f.exists()){
+                    f.mkdir();
+                }
+            } else {
+                f = new File(getUserFolder() + LOCAL_SHARED + BG_FOLDER);
+            }
+        } catch (Exception e) {
+             System.err.println(e.toString());
+        }
+        return f;
+    } 
+
+    /**
+     *
+     * @return
+     */
+    public static File getWallpapersXMLFolder() {
+
+        File f = null;
+        try {
+            f = new File(getUserFolder() + LOCAL_SHARED + WALLPAPER_FOLDER);
+        } catch (Exception e) {
+            // System.err.println(e.toString());
+        }
+        return f;
     }
 
     /**
      *
      * @return
      */
-    public static String configurationFolderPath () {
-    return  getUserFolder() + LOCAL_SHARED + CONFIGURATION_FOLDER;
+    public static String getBackgroundsPath(boolean isDefault) {
+        return  isDefault ? getUserFolder() + LOCAL_SHARED + CONFIGURATION_FOLDER + OPTIONAL_BACKGROUNDS_FOLDER
+                : getUserFolder() + LOCAL_SHARED + BG_FOLDER;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public static File getConfigurationFile() {
+        File f = null;
+        f = new File(configurationFolderPath() + File.separator + AppConfiguration.CONFIG_FILE);
+        return f;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public static String configurationFolderPath() {
+        return getUserFolder() + LOCAL_SHARED + CONFIGURATION_FOLDER;
     }
 
     /**
@@ -163,51 +180,65 @@ public class ManagerFiles {
      */
     public static void getFiles(File folder, List<File> files) {
         File[] fileList = folder.listFiles();
-        
+
         for (int i = 0; i < fileList.length; i++) {
             if (fileList[i].canRead() && fileList[i].isDirectory()) {
+
                 getFiles(fileList[i], files);
             } else {
-                files.add(fileList[i]);
+                try {
+                    String tipodeArchivo = Files.probeContentType(fileList[i].toPath());
+                    files.add(fileList[i]);
+
+                } catch (IOException ex) {
+                    Logger.getLogger(ManagerFiles.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
+
     /**
      * Copy a file to a new file
+     *
      * @param in file to copy
      * @param out new file
-     * @throws IOException 
+     * @throws IOException
      */
     public static int copyFile(File in, File out) throws IOException {
-    InputStream is = null;
+        InputStream is = null;
         OutputStream os = null;
         int length = -1;
-    try {
-        is = new FileInputStream(in);
-        os = new FileOutputStream(out);
-        byte[] buffer = new byte[1024];
-        
-        while ((length = is.read(buffer)) > 0) {
-            os.write(buffer, 0, length);
-        }
-    }   catch (FileNotFoundException ex) {
+        try {
+            is = new FileInputStream(in);
+            os = new FileOutputStream(out);
+            byte[] buffer = new byte[1024];
+
+            while ((length = is.read(buffer)) > 0) {
+                os.write(buffer, 0, length);
+            }
+        } catch (FileNotFoundException ex) {
             Logger.getLogger(ManagerFiles.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(ManagerFiles.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-        is.close();
-        os.close();
-    }
+            is.close();
+            os.close();
+        }
         return length;
     }
-    
-    public static boolean deleteFile( File file){
-    
+
+    public static boolean deleteFile(File file) {
+
         boolean deleted = false;
-        if( file.exists()){
+        if (file.exists()) {
             deleted = file.delete();
         }
         return deleted;
     }
     
+    public static boolean isSlide(String filename){
+        
+        return false;
+    }
+
 }

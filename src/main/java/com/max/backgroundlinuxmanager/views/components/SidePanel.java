@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Maximiliano Fernández <thebluemax13 at gmail.com>.
+ * Copyright 2019 Maximiliano Fernández thebluemax13 at gmail.com.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,11 +25,12 @@ package com.max.backgroundlinuxmanager.views.components;
 
 import com.max.backgroundlinuxmanager.views.components.AppColors.AppColors;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 
 /**
  *
- * @author Maximiliano Fernández <thebluemax13 at gmail.com>
+ * @author Maximiliano Fernández thebluemax13 at gmail.com
  */
 public class SidePanel extends javax.swing.JPanel {
 
@@ -59,7 +60,9 @@ public class SidePanel extends javax.swing.JPanel {
         add(fatherList);
         add(childList);
     }
-
+    public void setButtonsListener(ActionListener aListener){
+       fatherList.addButtonListener(aListener);
+    }
     public void setListFather(String[] list) {
         fatherList.setList(list);
     }

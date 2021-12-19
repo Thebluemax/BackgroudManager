@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Maximiliano Fernández <thebluemax13 at gmail.com>.
+ * Copyright 2019 Maximiliano Fernández thebluemax13 at gmail.com.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author Maximiliano Fernández <thebluemax13 at gmail.com>
+ * @author Maximiliano Fernández thebluemax13 at gmail.com
  */
 public class ImageManager {
 
@@ -45,11 +45,12 @@ public class ImageManager {
     }
     
     /**
-     *
-     * @param InputFile
-     * @param scaledWidth
-     * @param scaledHeight
-     * @return
+     *Método para reducir una imagen a la escala deseada
+     * 
+     * @param InputFile El archivo de imagen
+     * @param scaledWidth El valor para el ancho
+     * @param scaledHeight El valor para el alto
+     * @return ImageIcon EL objeto con la imagen reducida 
      */
     public static ImageIcon resize(File InputFile, int scaledWidth, int scaledHeight)
             {
@@ -61,12 +62,13 @@ public class ImageManager {
         File inputFile = InputFile;
         BufferedImage inputImage = null;
         Image thumb = null;
+        
         try {
             inputImage = ImageIO.read(inputFile);
-            thumb = inputImage.getScaledInstance(scaledWidth,scaledHeight,Image.SCALE_SMOOTH);
+            thumb = inputImage.getScaledInstance(scaledWidth,scaledHeight, Image.SCALE_SMOOTH);
         } catch (IOException ex) {
             Logger.getLogger(ImageManager.class.getName()).log(Level.SEVERE, null, ex);
-            thumb = inputImage.getScaledInstance(scaledWidth,scaledHeight,Image.SCALE_SMOOTH);
+            thumb = inputImage.getScaledInstance(scaledWidth,scaledHeight, Image.SCALE_SMOOTH);
         }catch(NullPointerException ex){
             System.out.println(ex.getCause().getMessage());          
         }catch(IllegalArgumentException ilEx){
