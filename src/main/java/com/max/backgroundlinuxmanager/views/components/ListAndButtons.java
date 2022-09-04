@@ -142,7 +142,6 @@ public class ListAndButtons extends javax.swing.JPanel {
         deleteBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(13, 39, 93));
-        setBorder(null);
         setForeground(new java.awt.Color(255, 255, 255));
         setToolTipText("");
         setMaximumSize(new java.awt.Dimension(200, 350));
@@ -152,7 +151,6 @@ public class ListAndButtons extends javax.swing.JPanel {
 
         listHolder.setBorder(null);
         listHolder.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        listHolder.setViewportBorder(null);
         listHolder.setAlignmentX(0.0F);
         listHolder.setAlignmentY(0.0F);
         listHolder.setMaximumSize(new java.awt.Dimension(180, 200));
@@ -161,7 +159,6 @@ public class ListAndButtons extends javax.swing.JPanel {
         listHolder.setPreferredSize(new java.awt.Dimension(160, 200));
 
         elementsList.setBackground(new AppColors().generalColor());
-        elementsList.setBorder(null);
         elementsList.setForeground(new java.awt.Color(237, 88, 88));
         elementsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         elementsList.setToolTipText("");

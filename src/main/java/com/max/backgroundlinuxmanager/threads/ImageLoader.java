@@ -23,7 +23,7 @@
  */
 package com.max.backgroundlinuxmanager.threads;
 
-import com.max.backgroundlinuxmanager.controllers.utils.ImageManager;
+import com.max.backgroundlinuxmanager.utils.ImageManager;
 import java.io.File;
 import java.util.concurrent.Callable;
 import javax.swing.ImageIcon;
@@ -37,17 +37,21 @@ public class ImageLoader implements Callable<ImageIcon> {
     private int width;
     private int heigth;
     private File file;
+    boolean saveThumb;
+    boolean isThumb;
 /**
  * Constructor del la clase, los parametros configuran futura del icono
  * @param width El ancho del contenedor.
  * @param heigth El alto del contenedor.
  * @param file El archivo con la imagen del wallpaper
  */
-    public ImageLoader(int width, int heigth, File file ) {
+    public ImageLoader(int width, int heigth, File file,boolean isThumb, boolean saveThumb ) {
      
         this.width = width;
         this.heigth = heigth;
         this.file = file;
+        this.saveThumb = true;
+        
     }
 
     /**
@@ -60,11 +64,11 @@ public class ImageLoader implements Callable<ImageIcon> {
     @Override
     public ImageIcon call() throws Exception {
         try {
-         return ImageManager.resize(file, width, heigth);
+         return ImageManager.resize(file, width, heigth, saveThumb);
 
         } catch (Exception e) {
             
-              return ImageManager.resize(new File("src/assets/no-image.png"), width, heigth);
+              return ImageManager.resize(new File("src/assets/no-image.png"), width, heigth, true);
         }
     }
     

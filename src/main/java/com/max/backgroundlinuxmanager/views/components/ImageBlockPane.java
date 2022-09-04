@@ -23,23 +23,15 @@
  */
 package com.max.backgroundlinuxmanager.views.components;
 
-import com.max.backgroundlinuxmanager.Main;
 import com.max.backgroundlinuxmanager.controllers.BackgroundManager;
 import java.io.File;
-import com.max.backgroundlinuxmanager.controllers.utils.ImageManager;
 import com.max.backgroundlinuxmanager.threads.ImageLoader;
 import com.max.backgroundlinuxmanager.utils.IconFontManager;
 import com.max.backgroundlinuxmanager.utils.ManagerFiles;
-import com.max.backgroundlinuxmanager.views.WallpaperPanel;
 import com.max.backgroundlinuxmanager.views.components.AppColors.AppColors;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.net.URL;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -58,14 +50,22 @@ public class ImageBlockPane extends javax.swing.JPanel {
      * Creates new form NewJPanel
      */
     private File image;
+    private File thumb;
     private String filename;
+    private String pathThumb;
+    private String pathReal;
     private File loadingFile;
 
-    public ImageBlockPane(File f) {
+    public ImageBlockPane(File f, int width, int height) {
+        pathThumb = ManagerFiles.getBackgroundsFolder() + "/thumbs/" + f.getName();
+        pathReal = ManagerFiles.getBackgroundsFolder() + "/" + f.getName();
+
+        thumb = new File(pathThumb);
         this.setBackground(new AppColors().generalColor());
         initComponents();
         ImageIcon icon = new ImageIcon("src/assets/835.gif");//ImageManager.resize(loadingFile, 120, 100);
         image = f;
+        imageHolder.setSize(width, height);
         imageHolder.setText("");
         imageHolder.setIcon(icon);
         erraseBtn.setText("");
@@ -96,12 +96,14 @@ public class ImageBlockPane extends javax.swing.JPanel {
         System.out.println(filename);
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<ImageIcon> future;
-        
+        if(thumb.exists()){
+            image = thumb;
+        }
         if (!image.exists()) {
             image = new File("src/assets/no-image.png");
         }
         
-        ImageLoader iLoad = new ImageLoader(imageHolder.getWidth(), imageHolder.getHeight(), image);
+        ImageLoader iLoad = new ImageLoader(imageHolder.getWidth(), imageHolder.getHeight(), image, true, true);
         future = executor.submit(() -> {
                 return iLoad.call(); //To change body of generated lambdas, choose Tools | Templates.
         });
@@ -144,7 +146,7 @@ public class ImageBlockPane extends javax.swing.JPanel {
     }
 
     public String getFilePath() {
-        return image.getAbsolutePath();
+        return pathReal;//image.getAbsolutePath();
     }
 
     public File getImage() {
@@ -167,39 +169,25 @@ public class ImageBlockPane extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(46, 36, 57));
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        setForeground(new java.awt.Color(2, 2, 2));
+        setMaximumSize(new java.awt.Dimension(150, 150));
         setPreferredSize(new java.awt.Dimension(150, 150));
-        setLayout(new java.awt.GridBagLayout());
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         imageHolder.setBackground(new java.awt.Color(35, 24, 12));
         imageHolder.setText("jLabel1");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.1;
-        gridBagConstraints.weighty = 0.1;
-        add(imageHolder, gridBagConstraints);
+        imageHolder.setMaximumSize(new java.awt.Dimension(150, 80));
+        imageHolder.setPreferredSize(new java.awt.Dimension(150, 80));
+        add(imageHolder, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 25, -1, -1));
 
         objectCheckbox.setFont(new java.awt.Font("Ubuntu", 0, 12)); // NOI18N
         objectCheckbox.setText("jCheckBox1");
         objectCheckbox.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         objectCheckbox.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 0.1;
-        add(objectCheckbox, gridBagConstraints);
+        add(objectCheckbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 154, -1));
 
         erraseBtn.setText("jButton1");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_START;
-        add(erraseBtn, gridBagConstraints);
+        add(erraseBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 106, 154, -1));
     }// </editor-fold>//GEN-END:initComponents
 
 

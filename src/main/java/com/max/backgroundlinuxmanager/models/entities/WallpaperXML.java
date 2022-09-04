@@ -25,9 +25,9 @@ package com.max.backgroundlinuxmanager.models.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -35,22 +35,23 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Maximiliano Fernández thebluemax13 at gmail.com
  */
 @XmlRootElement(name = "wallpapers")
+@XmlAccessorType(XmlAccessType.PROPERTY)
 public class WallpaperXML {
-
-    private List<Wallpaper> wallpapers;
+    
+    @XmlElement(name = "wallpaper")
+    private List<Wallpaper> wallpaper;
 
     /**
      * @return the wallpapers
      */
-    //@XmlElementWrapper(name = "Wallpaper")
-    @XmlElement(name = "wallpaper")
+    
 
     public List<Wallpaper> getWallpapers() {
-        if (wallpapers == null) {
-            wallpapers = new ArrayList<>();
+        if (wallpaper == null) {
+            wallpaper = new ArrayList<>();
         }
         
-        return wallpapers;
+        return wallpaper;
     }
 
     /**
@@ -58,10 +59,10 @@ public class WallpaperXML {
      * @param wallpaper
      */
     public void add(Wallpaper wallpaper) {
-        if (this.wallpapers == null) {
-            wallpapers = new ArrayList<Wallpaper>();
-        }
-        this.wallpapers.add(wallpaper);
+        if (this.wallpaper == null) {
+          //  wallpaper = new ArrayList<Wallpaper>();
+        }//
+        this.wallpaper.add(wallpaper);
     }
 
     /**
@@ -69,9 +70,9 @@ public class WallpaperXML {
      */
     public void setWallpapers(List<Wallpaper> wallpapers) {
         if (wallpapers != null) {
-            this.wallpapers = wallpapers;
+            this.wallpaper = wallpapers;
         }else{
-            this.wallpapers = new ArrayList<Wallpaper>();
+            this.wallpaper = new ArrayList<Wallpaper>();
         }
     }
 }

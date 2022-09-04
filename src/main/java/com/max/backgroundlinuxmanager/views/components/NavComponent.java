@@ -23,6 +23,7 @@
  */
 package com.max.backgroundlinuxmanager.views.components;
 
+import com.max.backgroundlinuxmanager.controllers.BackgroundManager;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +36,9 @@ import javax.swing.JPanel;
  */
 public class NavComponent extends JPanel {
 
-    private String[] labelList = {"Add Library", "New Wallpaper", "New Slide"};
+    private String[] labelList = {"New Wallpaper", "New Slide"};
         //"Save", "Delete"};
-    private String[] bottonRef = {"ADD_LIBRARY", "NEW_WALLP", "NEW_SLIDE"};
+    private String[] bottonRef = {BackgroundManager.NEW_WALLPAPER, "NEW_SLIDE"};
        // "SAVE", "DELETE"};
     private List<JButton> buttonList;
 
@@ -52,8 +53,8 @@ public class NavComponent extends JPanel {
         setMaximumSize(new java.awt.Dimension(750, 100));
         setMinimumSize(new java.awt.Dimension(450, 150));
         setOpaque(false);
-        setPreferredSize(new java.awt.Dimension(450, 50));
-        java.awt.GridLayout flowLayout1 = new java.awt.GridLayout(3, 1);
+        setPreferredSize(new java.awt.Dimension(50, 450));
+        java.awt.GridLayout flowLayout1 = new java.awt.GridLayout(1, 2);
         setLayout(flowLayout1);
         buttonList = new ArrayList<>();
         setButtons();
@@ -82,6 +83,15 @@ public class NavComponent extends JPanel {
             } else {
                 buttonList.get(i).setEnabled(flag ? false : true);
             }
+        }
+    }
+    
+    public void setEnabled(boolean flag) {
+
+        for (int i = 0; i < buttonList.size(); i++) {
+           
+          buttonList.get(i).setEnabled(flag);
+           
         }
     }
 

@@ -23,7 +23,7 @@
  */
 package com.max.backgroundlinuxmanager.controllers;
 
-import com.max.backgroundlinuxmanager.controllers.utils.XMLparse;
+import com.max.backgroundlinuxmanager.utils.XMLparse;
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
 import com.max.backgroundlinuxmanager.utils.ManagerFiles;
 import java.io.File;
@@ -46,12 +46,21 @@ public class ConfigurationManager {
      */
     public ConfigurationManager() {
         configFile  = ManagerFiles.getConfigurationFile();
-        if(configFileExist()){
-            XMLparse xmlParse = new XMLparse();
-            appConfig = xmlParse.unmarshallerConfig(configFile);
+        configFilePath = ManagerFiles.configurationFolderPath();
+        initConf();
+    }
+    
+    private void initConf(){
+         if(configFileExist()){
+           parseConf();
         }else {
          configFolderAndFile();
         }
+    }
+    
+    private void parseConf() {
+         XMLparse xmlParse = new XMLparse();
+         appConfig = xmlParse.unmarshallerConfig(configFile);
     }
     
     private boolean configFileExist() {
@@ -62,12 +71,11 @@ public class ConfigurationManager {
         File confFile = ManagerFiles.getConfigurationFile();
         if (confFile == null || !confFile.exists()) {
             
-            File folderConfig = new File(ManagerFiles.configurationFolderPath());
+            File folderConfig = new File(configFilePath);
             folderConfig.mkdir();
             appConfig = new AppConfiguration();
             XMLparse xmlParse = new XMLparse();
-            xmlParse.saveXML(new File(ManagerFiles.configurationFolderPath() + 
-                    File.separator + AppConfiguration.CONFIG_FILE), XMLparse.CONFIG, appConfig);
+            xmlParse.saveXML(new File(getDefaultFilePath()), XMLparse.CONFIG, appConfig);
         }
     }
     
@@ -78,5 +86,10 @@ public class ConfigurationManager {
      */
     private AppConfiguration getConfigInfo(){
         return appConfig;
+    }
+    
+    private String getDefaultFilePath(){
+        return configFilePath + 
+                    File.separator + AppConfiguration.CONFIG_FILE;
     }
 }

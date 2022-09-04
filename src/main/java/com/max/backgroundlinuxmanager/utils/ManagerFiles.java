@@ -48,27 +48,28 @@ public class ManagerFiles {
     /**
      *
      */
-    public static String WALLPAPER_FOLDER = "gnome-background-properties/";
+    public static String WALLPAPER_FOLDER = "/gnome-background-properties";
 
     /**
      *
      */
-    public static String BG_FOLDER = "backgrounds";
-    /**
-     *
-     */
-    public static String OPTIONAL_BACKGROUNDS_FOLDER = "/wallpapers";
-    public static String BACKGROUNDS_THUMBS = "thumbs";
+    public static String BG_FOLDER = "/backgrounds";
+    public static String WP_FOLDER = "/wallpapers";
 
     /**
      *
      */
-    public static String LOCAL_SHARED = "/.local/share/";
+    public static String BACKGROUNDS_THUMBS = "/thumbs";
 
     /**
      *
      */
-    public static String CONFIGURATION_FOLDER = "background-manager";
+    public static String LOCAL_SHARED = "/.local/share";
+
+    /**
+     *
+     */
+    public static String CONFIGURATION_FOLDER = "/background-manager";
 
     /**
      *
@@ -76,15 +77,6 @@ public class ManagerFiles {
      */
     public static String getUserFolder() {
         return System.getProperty("user.home");
-    }
-
-    /**
-     *
-     * @return
-     */
-    public static String folderToObject() {
-        String s = LOCAL_SHARED.substring(1, LOCAL_SHARED.length());
-        return s + BG_FOLDER + "/";
     }
 
     /**
@@ -113,18 +105,16 @@ public class ManagerFiles {
      *
      * @return
      */
-    public static File getBackgroundsFolder(boolean isDefault) {
-
+    public static File getBackgroundsFolder() {
         File f = null;
         try {
-            if (isDefault) {
-                f = new File(getUserFolder() + LOCAL_SHARED + CONFIGURATION_FOLDER + OPTIONAL_BACKGROUNDS_FOLDER);
+                f = new File(ManagerFiles.getBackgroundsPath());
                 if(!f.exists()){
                     f.mkdir();
-                }
-            } else {
-                f = new File(getUserFolder() + LOCAL_SHARED + BG_FOLDER);
-            }
+                 File d =   new File(ManagerFiles.getThumbsPath());
+                 d.mkdir();
+            } 
+              //  f = new File(getUserFolder() + LOCAL_SHARED + BG_FOLDER + "/" + WP_FOLDER);
         } catch (Exception e) {
              System.err.println(e.toString());
         }
@@ -150,9 +140,17 @@ public class ManagerFiles {
      *
      * @return
      */
-    public static String getBackgroundsPath(boolean isDefault) {
-        return  isDefault ? getUserFolder() + LOCAL_SHARED + CONFIGURATION_FOLDER + OPTIONAL_BACKGROUNDS_FOLDER
-                : getUserFolder() + LOCAL_SHARED + BG_FOLDER;
+    public static String getBackgroundsPath() {
+        return  getUserFolder() + LOCAL_SHARED + BG_FOLDER + WP_FOLDER;
+                
+    }
+     /**
+     *
+     * @return
+     */
+    public static String getThumbsPath() {
+        return  getUserFolder() + LOCAL_SHARED  + BG_FOLDER + WP_FOLDER + BACKGROUNDS_THUMBS;
+                
     }
 
     /**
@@ -184,15 +182,15 @@ public class ManagerFiles {
         for (int i = 0; i < fileList.length; i++) {
             if (fileList[i].canRead() && fileList[i].isDirectory()) {
 
-                getFiles(fileList[i], files);
+              //  getFiles(fileList[i], files);
             } else {
-                try {
-                    String tipodeArchivo = Files.probeContentType(fileList[i].toPath());
+               // try {
+                   // String tipodeArchivo = Files.probeContentType(fileList[i].toPath());
                     files.add(fileList[i]);
 
-                } catch (IOException ex) {
-                    Logger.getLogger(ManagerFiles.class.getName()).log(Level.SEVERE, null, ex);
-                }
+             //   } catch (IOException ex) {
+             //       Logger.getLogger(ManagerFiles.class.getName()).log(Level.SEVERE, null, ex);
+              //  }
             }
         }
     }

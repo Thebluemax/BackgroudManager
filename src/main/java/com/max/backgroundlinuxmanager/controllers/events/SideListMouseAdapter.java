@@ -12,7 +12,7 @@ import com.max.backgroundlinuxmanager.models.XMLDOMBackground;
 import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
 import com.max.backgroundlinuxmanager.models.entities.WallpaperXML;
 import com.max.backgroundlinuxmanager.utils.ManagerFiles;
-import com.max.backgroundlinuxmanager.views.WallpaperPanel;
+import com.max.backgroundlinuxmanager.views.components.WallpaperPanel;
 import com.max.backgroundlinuxmanager.views.components.SidePanel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -78,11 +78,10 @@ public class SideListMouseAdapter extends MouseAdapter {
                 frame.setLibraryView(true);
             } else {
                 activeWallpaperName = element;
-                buildWallpapers(element);
+               // buildWallpapers(element);
                 frame.setLibraryView(false);
             }
         }
     }
 }
 
-}

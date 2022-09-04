@@ -50,8 +50,8 @@ public class MainFrameController extends MainJFrame{
      * @param jPane Contenedor con las miniaturas
      */
     public void setViewPortContainer (JPanel jPane){
-        scrollContent.setViewportView(null);
-       scrollContent.setViewportView(jPane);
+     //   scrollContent.setViewportView(null);
+     //  scrollContent.setViewportView(jPane);
     }
     /**
      * 
@@ -63,24 +63,10 @@ public class MainFrameController extends MainJFrame{
         if (visibility) {
             setViewPortContainer(container);         
         } else {
-                scrollContent.setViewportView(null);
+            //    scrollContent.setViewportView(null);
         }
     }
-    /**
-     * Agrega un objeto minuatura al contenedor
-     * @param jp 
-     */
-    public void addToPanel (JPanel jp){
-        imageList.add((ImageBlockPane)jp);
-        container.add(jp);
-    }
-    
-    public void remove(ImageBlockPane pane){
-        imageList.remove(pane);
-        container.remove(pane);
-        this.pack();
-    
-    }
+   
     /**
      * return the path from the seledted item 
      * @return 
@@ -111,7 +97,6 @@ public class MainFrameController extends MainJFrame{
     public void setList(String wallpaperXML, String[] listFile){
         sideBar.setListFather(listFile);
        
-        jLabel2.setText("Active Wallpaper: "+ wallpaperXML);
         
     }
     public void addSideBarEvents(MouseAdapter mouseAdapter){

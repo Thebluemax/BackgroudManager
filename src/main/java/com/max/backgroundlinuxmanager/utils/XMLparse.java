@@ -21,13 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.max.backgroundlinuxmanager.controllers.utils;
+package com.max.backgroundlinuxmanager.utils;
 
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
-<<<<<<< HEAD:src/main/java/com/max/backgroundlinuxmanager/controllers/utils/XMLparse.java
 import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
-=======
->>>>>>> 1982ec43a6c607cb7b17060ffcec0e3de07ab980:src/main/java/com/max/backgroundlinuxmanager/models/XMLparse.java
 import com.max.backgroundlinuxmanager.models.entities.WallpaperXML;
 import java.io.File;
 import java.io.FileInputStream;
@@ -49,13 +46,7 @@ public class XMLparse {
      */
     public static int CONFIG = 1;
     public static int WALLPAPER_XML = 2;
-<<<<<<< HEAD:src/main/java/com/max/backgroundlinuxmanager/controllers/utils/XMLparse.java
-=======
 
-    /**
-     *
-     */
->>>>>>> 1982ec43a6c607cb7b17060ffcec0e3de07ab980:src/main/java/com/max/backgroundlinuxmanager/models/XMLparse.java
     public static int BACKGROUNDS = 0;
 
     private JAXBContext jaxbContest;
@@ -94,7 +85,6 @@ public class XMLparse {
      * @param fileStream
      * @return
      */
-<<<<<<< HEAD:src/main/java/com/max/backgroundlinuxmanager/controllers/utils/XMLparse.java
     public WallpaperXML unmarshallerWallpapers(FileInputStream fileStream) {
         WallpaperXML wallpapers = null;
         jaxbContest = XMLparse.getJaxbContext(WALLPAPER_XML);
@@ -102,20 +92,10 @@ public class XMLparse {
         try {
             unmarshaller = jaxbContest.createUnmarshaller();
             wallpapers = (WallpaperXML) unmarshaller.unmarshal(fileStream);
-        } catch (JAXBException ex) {
-=======
-    public WallpaperXML unmarshallerWallpapers(FileInputStream fileStream){
-        WallpaperXML wallpaperXML = null;
-        jaxbContest = XMLparse.getJaxbContext(BACKGROUNDS);
-        Unmarshaller unmarshaller = null;
-        try {
-            unmarshaller = jaxbContest.createUnmarshaller();
-            wallpaperXML = (WallpaperXML) unmarshaller.unmarshal(fileStream);
-         } catch (JAXBException ex) {
->>>>>>> 1982ec43a6c607cb7b17060ffcec0e3de07ab980:src/main/java/com/max/backgroundlinuxmanager/models/XMLparse.java
+        } catch (JAXBException ex) { 
             Logger.getLogger(XMLparse.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return wallpaperXML;
+        return wallpapers;
     }
 
     /**
@@ -123,11 +103,7 @@ public class XMLparse {
      * @param fileStream
      * @return
      */
-<<<<<<< HEAD:src/main/java/com/max/backgroundlinuxmanager/controllers/utils/XMLparse.java
-    public AppConfiguration unmarshallerConfig(File fileStream) {
-=======
     public AppConfiguration unmarshallerConfig(File fileStream){
->>>>>>> 1982ec43a6c607cb7b17060ffcec0e3de07ab980:src/main/java/com/max/backgroundlinuxmanager/models/XMLparse.java
         AppConfiguration config = null;
         jaxbContest = XMLparse.getJaxbContext(CONFIG);
        return (AppConfiguration) unmarshaller(jaxbContest, fileStream);
@@ -158,17 +134,12 @@ public class XMLparse {
      * @param objeto La instancia del modelo a persistir
      * @return int estatus de la operación.
      */
-<<<<<<< HEAD:src/main/java/com/max/backgroundlinuxmanager/controllers/utils/XMLparse.java
     public int saveXML(File xml, int type, Object objecto) {
         int status = 0;
         Marshaller marshaller;
         System.out.println("Guardando Comanda");
-=======
-    public int saveXML(File xml, int type, Object objecto){
-   int status = 0;
-       Marshaller marshaller;
+
         System.out.println("Guardando XML");
->>>>>>> 1982ec43a6c607cb7b17060ffcec0e3de07ab980:src/main/java/com/max/backgroundlinuxmanager/models/XMLparse.java
         try {
             //usamos el metodo de Marshaller para crear un documento con la
             //estructura de VendesArticles y los datos almacenados
@@ -176,17 +147,11 @@ public class XMLparse {
             marshaller = jaxbContest.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             if (type == CONFIG) {
-<<<<<<< HEAD:src/main/java/com/max/backgroundlinuxmanager/controllers/utils/XMLparse.java
-                marshaller.marshal((AppConfiguration) objecto, xml);
 
-            } else {
-                marshaller.marshal((WallpaperXML) objecto, xml);
-=======
                marshaller.marshal((AppConfiguration)objecto, xml);
 
             } else {
                marshaller.marshal((WallpaperXML)objecto, xml);
->>>>>>> 1982ec43a6c607cb7b17060ffcec0e3de07ab980:src/main/java/com/max/backgroundlinuxmanager/models/XMLparse.java
 
             }
 
@@ -200,12 +165,6 @@ public class XMLparse {
         }
 
         return status;
-<<<<<<< HEAD:src/main/java/com/max/backgroundlinuxmanager/controllers/utils/XMLparse.java
-    }
-=======
    }
-
-
->>>>>>> 1982ec43a6c607cb7b17060ffcec0e3de07ab980:src/main/java/com/max/backgroundlinuxmanager/models/XMLparse.java
 
 }

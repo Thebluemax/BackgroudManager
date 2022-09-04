@@ -31,9 +31,10 @@ import javax.xml.bind.annotation.XmlType;
  *
  * @author Maximiliano Fernández thebluemax13 at gmail.com
  */
-@XmlRootElement(name= "wallpaper")
+@XmlRootElement(name = "wallpaper")
 @XmlType(propOrder = {"name", "filename", "options", "pcolor", "scolor", "shaderType"})
 public class Wallpaper {
+
     private String name;
     private String filename;
     private String options;
@@ -46,7 +47,7 @@ public class Wallpaper {
      */
     public Wallpaper() {
     }
-    
+
     /**
      *
      * @param name
@@ -58,7 +59,7 @@ public class Wallpaper {
     /**
      * @return the name
      */
-    @XmlElement(name="name")
+    @XmlElement(name = "name")
     public String getName() {
         return name;
     }
@@ -73,7 +74,7 @@ public class Wallpaper {
     /**
      * @return the filename
      */
-    @XmlElement(name="filename")
+    @XmlElement(name = "filename")
     public String getFilename() {
         return filename;
     }
@@ -89,7 +90,7 @@ public class Wallpaper {
      *
      * @return
      */
-    @XmlElement(name="options")
+    @XmlElement(name = "options")
     public String getOptions() {
         return options;
     }
@@ -100,10 +101,11 @@ public class Wallpaper {
     public void setOptions(String option) {
         this.options = option;
     }
+
     /**
      * @return the pcolor
      */
-    @XmlElement(name="pcolor")
+    @XmlElement(name = "pcolor")
     public String getPcolor() {
         return pcolor;
     }
@@ -118,7 +120,7 @@ public class Wallpaper {
     /**
      * @return the scolor
      */
-    @XmlElement(name="scolor")
+    @XmlElement(name = "scolor")
     public String getScolor() {
         return scolor;
     }
@@ -133,7 +135,7 @@ public class Wallpaper {
     /**
      * @return the shader_type
      */
-    @XmlElement(name="shader_type")
+    @XmlElement(name = "shader_type")
     public String getShaderType() {
         return shader_type;
     }
@@ -143,5 +145,17 @@ public class Wallpaper {
      */
     public void setShaderType(String shaderType) {
         this.shader_type = shaderType;
+    }
+
+    public static Wallpaper factory(String filename) {
+
+        Wallpaper newWallpaper = new Wallpaper();
+        newWallpaper.setFilename(filename);
+        newWallpaper.setName(filename);
+        newWallpaper.setOptions(AppConfiguration.DEFAULT_OPTION);
+        newWallpaper.setPcolor(AppConfiguration.DEFAULT_COLOR);
+        newWallpaper.setScolor(AppConfiguration.DEFAULT_COLOR);
+        newWallpaper.setShaderType(AppConfiguration.DEFAULT_SHADER_TYPE);
+        return newWallpaper;
     }
 }

@@ -21,10 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.max.backgroundlinuxmanager.controllers.utils;
+package com.max.backgroundlinuxmanager.utils;
 
+import com.max.backgroundlinuxmanager.utils.ManagerFiles;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -38,6 +40,8 @@ import javax.swing.ImageIcon;
  */
 public class ImageManager {
 
+    private File inputFile;
+    private String filename;
     /**
      *
      */
@@ -52,7 +56,7 @@ public class ImageManager {
      * @param scaledHeight El valor para el alto
      * @return ImageIcon EL objeto con la imagen reducida 
      */
-    public static ImageIcon resize(File InputFile, int scaledWidth, int scaledHeight)
+    public static ImageIcon resize(File InputFile, int scaledWidth, int scaledHeight, boolean saveThumb)
             {
                 if (scaledHeight == 0 || scaledWidth == 0) {
                     scaledHeight = 100;
@@ -60,6 +64,7 @@ public class ImageManager {
                 }
         // reads input image
         File inputFile = InputFile;
+        
         BufferedImage inputImage = null;
         Image thumb = null;
         
@@ -74,6 +79,22 @@ public class ImageManager {
         }catch(IllegalArgumentException ilEx){
             
         }
+        if(saveThumb){
+            saveThumb(thumb,scaledWidth,scaledHeight, inputFile.getName());
+        }
+        
         return new ImageIcon(thumb);
-    }}
+    }
+    
+    private static void saveThumb(Image thumb,int scaledWidth, int scaledHeight, String filename) {
+        try {
+            BufferedImage buffer = new BufferedImage(scaledWidth,scaledHeight, BufferedImage.TYPE_INT_RGB);
+            buffer.getGraphics().drawImage(thumb, 0, 0, null);
+            String path =  ManagerFiles.getThumbsPath() + File.separator + filename;
+            ImageIO.write(buffer, "jpg",new File(path));
+        } catch (IOException ex) {
+            Logger.getLogger(ImageManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+}
 

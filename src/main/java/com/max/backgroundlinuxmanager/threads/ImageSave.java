@@ -41,7 +41,7 @@ public class ImageSave implements Callable<Integer>{
     public ImageSave(File file) {
         
         fileImage = file;
-        String pathNew = ManagerFiles.getBackgroundsPath(true) + "/" + fileImage.getName();
+        String pathNew = ManagerFiles.getBackgroundsPath()+ "/" + fileImage.getName();
         newFileImage = new File(pathNew);
     }
     

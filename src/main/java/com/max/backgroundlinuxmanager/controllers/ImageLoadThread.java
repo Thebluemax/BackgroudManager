@@ -41,7 +41,7 @@ public class ImageLoadThread implements Runnable {
      */
     public ImageLoadThread(String path, List<ImageBlockPane> list) {
         container = list;
-        ImageBlockPane bPanel = new ImageBlockPane(new File(path));
+        ImageBlockPane bPanel = new ImageBlockPane(new File(path),80,80);
         bPanel.setLabel(path);
         try {
             bPanel.loadImage();

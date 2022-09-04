@@ -23,6 +23,7 @@
  */
 package com.max.backgroundlinuxmanager.views;
 
+import com.max.backgroundlinuxmanager.controllers.views.LibraryController;
 import com.max.backgroundlinuxmanager.views.components.AppColors.AppColors;
 import com.max.backgroundlinuxmanager.views.components.ImageBlockPane;
 import com.max.backgroundlinuxmanager.views.components.SidePanel;
@@ -60,6 +61,7 @@ public class MainJFrame extends javax.swing.JFrame {
     protected SidePanel sideBar;
     protected NavComponent toolBar; 
     protected List<ImageBlockPane>  imageList ;
+    protected LibraryController scrollContent;
     
     
 /**
@@ -67,18 +69,8 @@ public class MainJFrame extends javax.swing.JFrame {
  */
     public MainJFrame() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.getContentPane().setBackground( new AppColors().generalColor() );
-        imageList = new ArrayList<>();
+        this.getContentPane().setBackground( new AppColors().generalColor());
         initComponents();
-        initSidebar();  
-        initNavBar();  
-   
-        container = new JPanel();
-        container.setSize(510, 1024);
-        container.setLayout(new GridLayout(0,5));
-        container.setBackground(new AppColors().generalColor());
-        scrollContent.setViewportView(container);
-        scrollContent.setBackground(new AppColors().generalColor());
         pack();
     }
     /**
@@ -110,6 +102,10 @@ public class MainJFrame extends javax.swing.JFrame {
         
     }
   
+    public void addToMain(JPanel panel,int x, int y, int width, int heigth){
+        getContentPane().add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width, heigth));
+        pack();
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -120,44 +116,17 @@ public class MainJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
-        scrollContent = new javax.swing.JScrollPane();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Background Manager");
         setBackground(new java.awt.Color(18, 39, 93));
-        setBounds(new java.awt.Rectangle(0, 0, 800, 500));
+        setBounds(new java.awt.Rectangle(0, 0, 950, 1000));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setForeground(new java.awt.Color(206, 223, 253));
-        setLocation(new java.awt.Point(100, 100));
-        setMaximumSize(new java.awt.Dimension(1000, 800));
-        setMinimumSize(new java.awt.Dimension(900, 600));
+        setLocation(new java.awt.Point(10, 10));
         setName("principalFrame"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(950, 700));
+        setPreferredSize(new java.awt.Dimension(950, 1000));
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel2.setBackground(new java.awt.Color(1, 1, 1));
-        jLabel2.setForeground(new java.awt.Color(253, 251, 251));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel2.setLabelFor(scrollContent);
-        jLabel2.setText("jLabel2");
-        jLabel2.setAutoscrolls(true);
-        jLabel2.setRequestFocusEnabled(false);
-        jLabel2.setVerifyInputWhenFocusTarget(false);
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 700, 50));
-
-        scrollContent.setBorder(null);
-        scrollContent.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollContent.setToolTipText("");
-        scrollContent.setViewportBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        scrollContent.setAutoscrolls(true);
-        scrollContent.setMaximumSize(new java.awt.Dimension(1000, 800));
-        scrollContent.setMinimumSize(new java.awt.Dimension(800, 600));
-        scrollContent.setName(""); // NOI18N
-        scrollContent.setPreferredSize(new java.awt.Dimension(760, 500));
-        scrollContent.setVerifyInputWhenFocusTarget(false);
-        getContentPane().add(scrollContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 60, 750, 600));
-
         getAccessibleContext().setAccessibleDescription("");
 
         pack();
@@ -199,7 +168,5 @@ public class MainJFrame extends javax.swing.JFrame {
  //   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    protected javax.swing.JLabel jLabel2;
-    protected javax.swing.JScrollPane scrollContent;
     // End of variables declaration//GEN-END:variables
 }

@@ -92,7 +92,7 @@ public class SlideEditPanelController extends SlideEditPanel{
         for (int i = 0; i < wallpaperFrames.size(); i++) {
             System.out.println(wallpaperFrames.get(i).getFilePath());
             File file = new File(wallpaperFrames.get(i).getFilePath());
-            ImageBlockPane tempBlock = new ImageBlockPane(file);
+            ImageBlockPane tempBlock = new ImageBlockPane(file,100,90);
          //   tempBlock.setSize(bounds.width/6, bounds.height/3);
           listBlock.add(tempBlock);
             addToPanel(tempBlock);

@@ -21,12 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.max.backgroundlinuxmanager.views;
+package com.max.backgroundlinuxmanager.views.components;
 
+import com.max.backgroundlinuxmanager.controllers.BackgroundManager;
 import com.max.backgroundlinuxmanager.controllers.events.WallpaperButtonAdapter;
-import com.max.backgroundlinuxmanager.controllers.utils.ImageManager;
+import com.max.backgroundlinuxmanager.utils.ImageManager;
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
 import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
+import com.max.backgroundlinuxmanager.models.entities.WallpaperXML;
 import com.max.backgroundlinuxmanager.utils.ColorManager;
 import com.max.backgroundlinuxmanager.utils.ManagerFiles;
 import com.max.backgroundlinuxmanager.views.components.AppColors.AppColors;
@@ -34,6 +36,8 @@ import com.max.backgroundlinuxmanager.threads.ImageLoader;
 import java.awt.Color;
 
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ContainerAdapter;
 import java.awt.event.ContainerListener;
@@ -56,65 +60,116 @@ import javax.swing.plaf.basic.BasicSliderUI;
  *
  * @author Maximiliano Fernández thebluemax13 at gmail.com
  */
-public class WallpaperPanel extends javax.swing.JPanel {
+public class WallpaperPanel extends javax.swing.JPanel implements ActionListener{
 
     /**
      * Creates new form JpaneWallpaper
      */
-    private Wallpaper wp;
+    protected Wallpaper wp;
     public static final String PCOLOR = "pcolor";
     public static final String SCOLOR = "scolor";
 
     public WallpaperPanel(Wallpaper wp) {
 
         this.wp = wp;
-        // this.setBackground();
-        // final Color foregroundColor =new AppColors().foregroundColorGeneral();
-
         initComponents();
-
         nameLabel.setText(this.wp.getName());
-
-        pathLabel.setText(ManagerFiles.getUserFolder() + "/" + wp.getFilename());
-
         imageHolder.setText("");
-        imageHolder.setBounds(0, 0, 550, 300);
-        // controlPanel.setBounds(new Rectangle(300, 200));
         imageHolder.setIcon(null);
         comboBuild();
-        pcolor.setBackground(ColorManager.getColor(wp.getPcolor()));
-        pcolor.setOpaque(true);
+        setColors(new AppColors().generalColor(), new AppColors().foregroundColorGeneral());
+
         pcolor.setName(PCOLOR);
         pcolor.setText(wp.getPcolor());
-        scolor.setBackground(ColorManager.getColor(wp.getScolor()));
+
         scolor.setText(wp.getScolor());
         scolor.setName(SCOLOR);
-        scolor.setOpaque(true);
-        //System.out.println(this.getSize().height);
 
         WallpaperButtonAdapter adapter = new WallpaperButtonAdapter(wp);
         pcolor.addMouseListener(adapter);
         scolor.addMouseListener(adapter);
-        //  pcolor.add
+
+    }
+    
+     public WallpaperPanel(Wallpaper wp, WallpaperXML walpaperXML) {
+        this.wp = wp;
+        initComponents();
+        nameLabel.setText(this.wp.getName());
+        imageHolder.setText("");
+        imageHolder.setIcon(null);
+        comboBuild();
         setColors(new AppColors().generalColor(), new AppColors().foregroundColorGeneral());
-        loadImage();
+
+        pcolor.setName(PCOLOR);
+        pcolor.setText(wp.getPcolor());
+
+        scolor.setText(wp.getScolor());
+        scolor.setName(SCOLOR);
+
+        WallpaperButtonAdapter adapter = new WallpaperButtonAdapter(wp);
+        pcolor.addMouseListener(adapter);
+        scolor.addMouseListener(adapter);
+        jButton1.addActionListener(optionCombobox);
+
     }
 
     private void setColors(Color background, Color foreground) {
         this.setBackground(background);
+        pcolor.setBackground(ColorManager.getColor(wp.getPcolor()));
+        pcolor.setOpaque(true);
+        scolor.setOpaque(true);
+
+        scolor.setBackground(ColorManager.getColor(wp.getScolor()));
         nameLabel.setForeground(new AppColors().foregroundColorGeneral());
         optionLabel.setForeground(foreground);
-        pathLabel.setForeground(foreground);
         shaderLabel.setForeground(foreground);
         sColorLabel.setForeground(foreground);
         pColorLabel.setForeground(foreground);
     }
 
-    private void loadImage() {
+    private void comboBuild() {
+
+        String[] arr = AppConfiguration.OPTIONS_WALLPAPER;
+        for (int i = 0; i < arr.length; i++) {
+            optionCombobox.addItem(arr[i]);
+        }
+        optionCombobox.setSelectedItem(wp.getOptions());
+
+        arr = AppConfiguration.SHADER_TYPE;
+
+        for (int i = 0; i < arr.length; i++) {
+            shaderCombobox.addItem(arr[i]);
+
+        }
+        shaderCombobox.setSelectedItem(wp.getShaderType());
+    }
+
+    public Wallpaper getWallpaper() {
+        return wp;
+    }
+    
+    public void setListeners(ActionListener litener) {
+        jButton1.setActionCommand(BackgroundManager.SAVE_NEW_WALLPAPER);
+        jButton1.addActionListener(litener);
+    }
+
+    /**
+     * Ejecuta el trhead que carga la imagen dentro del contenedor del la
+     * miniatura
+     *
+     * @return void
+     */
+    public void loadImage() {
+        System.out.println(wp.getFilename());
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<ImageIcon> future;
-        File f = new File(ManagerFiles.getUserFolder() + "/" + wp.getFilename());
-        ImageLoader iLoad = new ImageLoader(imageHolder.getWidth(), imageHolder.getHeight(), f);
+        File image = new File(wp.getFilename());
+
+        if (!image.exists()) {
+            image = new File("src/assets/no-image.png");
+        }
+
+        ImageLoader iLoad = new ImageLoader(imageHolder.getWidth(), imageHolder.getHeight(), image, true, true);
         future = executor.submit(() -> {
             return iLoad.call(); //To change body of generated lambdas, choose Tools | Templates.
         });
@@ -127,27 +182,9 @@ public class WallpaperPanel extends javax.swing.JPanel {
             Logger.getLogger(WallpaperPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }
+        executor.shutdown();
+        executor = null;
 
-    private void comboBuild() {
-
-        String[] arr = AppConfiguration.OPTIONS_WALLPAPER;
-        for (int i = 0; i < arr.length; i++) {
-            optionCombobox.addItem(arr[i]);
-        }
-        optionCombobox.setSelectedItem(wp.getOptions());
-        
-        arr = AppConfiguration.SHADER_TYPE;
-        
-        for (int i = 0; i < arr.length; i++) {
-            shaderCombobox.addItem(arr[i]);
-            
-        }
-        shaderCombobox.setSelectedItem(wp.getShaderType());
-    }
-
-    private Wallpaper getWallpaper() {
-        return wp;
     }
 
     ;
@@ -163,7 +200,6 @@ public class WallpaperPanel extends javax.swing.JPanel {
 
         nameLabel = new javax.swing.JLabel();
         imageHolder = new javax.swing.JLabel();
-        pathLabel = new javax.swing.JLabel();
         controlPanel = new javax.swing.JPanel();
         optionLabel = new javax.swing.JLabel();
         optionCombobox = new javax.swing.JComboBox<>();
@@ -177,7 +213,6 @@ public class WallpaperPanel extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
-        setBorder(null);
         setForeground(new java.awt.Color(236, 236, 226));
         setToolTipText("");
         setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
@@ -205,18 +240,16 @@ public class WallpaperPanel extends javax.swing.JPanel {
 
         imageHolder.setText("jLabel1");
         imageHolder.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        imageHolder.setMaximumSize(new java.awt.Dimension(3000, 1400));
+        imageHolder.setMinimumSize(new java.awt.Dimension(3000, 1400));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weighty = 0.6;
         add(imageHolder, gridBagConstraints);
-
-        pathLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        pathLabel.setText("jLabel5");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.insets = new java.awt.Insets(1, 0, 1, 0);
-        add(pathLabel, gridBagConstraints);
 
         controlPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         controlPanel.setOpaque(false);
@@ -301,7 +334,7 @@ public class WallpaperPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel controlPanel;
-    private javax.swing.JLabel imageHolder;
+    protected javax.swing.JLabel imageHolder;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
@@ -309,11 +342,15 @@ public class WallpaperPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> optionCombobox;
     private javax.swing.JLabel optionLabel;
     private javax.swing.JLabel pColorLabel;
-    private javax.swing.JLabel pathLabel;
     private javax.swing.JLabel pcolor;
     private javax.swing.JLabel sColorLabel;
     private javax.swing.JLabel scolor;
     private javax.swing.JComboBox<String> shaderCombobox;
     private javax.swing.JLabel shaderLabel;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
