@@ -104,20 +104,30 @@ public class XmlWallpaperController extends XmlWallpaperPanel implements ItemLis
 
     public boolean saveCurrent() {
         Wallpaper wp = panel.getWallpaper();
-        try{
-        wallpaperXML.add(wp);
-        }catch(Exception e){
+        try {
+            wallpaperXML.add(wp);
+        } catch (Exception e) {
             new BackgroundException(e, "No se ha seleccionado un walpaper");
         }
         XMLparse xmlParse = new XMLparse();
-        
+
         int status = xmlParse.saveXML(wallpaperXMLFIle, XMLparse.WALLPAPER_XML, wallpaperXML);
+        
+        remove(panel);
+        panel = null;
         if (status == 0) {
-            // checkWallpapersXML();
+            
+            
         }
         return false;
     }
-    public void setListener(ActionListener listener){
+    
+    public void clear(){
+        remove(panel);
+        panel = null;
+    }
+
+    public void setListener(ActionListener listener) {
         panel.setListeners(listener);
     }
 
