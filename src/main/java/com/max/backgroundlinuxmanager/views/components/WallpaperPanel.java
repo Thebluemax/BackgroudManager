@@ -25,24 +25,16 @@ package com.max.backgroundlinuxmanager.views.components;
 
 import com.max.backgroundlinuxmanager.controllers.BackgroundManager;
 import com.max.backgroundlinuxmanager.controllers.events.WallpaperButtonAdapter;
-import com.max.backgroundlinuxmanager.utils.ImageManager;
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
 import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
 import com.max.backgroundlinuxmanager.models.entities.WallpaperXML;
 import com.max.backgroundlinuxmanager.utils.ColorManager;
-import com.max.backgroundlinuxmanager.utils.ManagerFiles;
 import com.max.backgroundlinuxmanager.views.components.AppColors.AppColors;
 import com.max.backgroundlinuxmanager.threads.ImageLoader;
 import java.awt.Color;
 
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ContainerAdapter;
-import java.awt.event.ContainerListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -50,11 +42,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ComboBoxModel;
 import javax.swing.ImageIcon;
-import javax.swing.JColorChooser;
-import javax.swing.JList;
-import javax.swing.plaf.basic.BasicSliderUI;
 
 /**
  *
@@ -244,8 +232,9 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
         imageHolder.setMinimumSize(new java.awt.Dimension(3000, 1400));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridheight = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weighty = 0.6;
@@ -296,13 +285,13 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 9;
         gridBagConstraints.ipady = 16;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(1, 0, 1, 0);
         add(controlPanel, gridBagConstraints);
 
@@ -315,11 +304,11 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
         jPanel1.add(jButton2);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        gridBagConstraints.insets = new java.awt.Insets(1, 4, 1, 0);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_END;
         add(jPanel1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
