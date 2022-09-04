@@ -139,6 +139,8 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
     public void setListeners(ActionListener litener) {
         jButton1.setActionCommand(BackgroundManager.SAVE_NEW_WALLPAPER);
         jButton1.addActionListener(litener);
+        jButton2.setActionCommand(BackgroundManager.CANCEL );
+        jButton2.addActionListener(litener);
     }
 
     /**
@@ -156,8 +158,8 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
         if (!image.exists()) {
             image = new File("src/assets/no-image.png");
         }
-
-        ImageLoader iLoad = new ImageLoader(imageHolder.getWidth(), imageHolder.getHeight(), image, true, true);
+        //System.out.println(getPreferredSize().width + "--" + getHeight());
+        ImageLoader iLoad = new ImageLoader(getPreferredSize().width, getPreferredSize().height - 150, image, true, true);
         future = executor.submit(() -> {
             return iLoad.call(); //To change body of generated lambdas, choose Tools | Templates.
         });
@@ -236,8 +238,8 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.gridheight = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weighty = 0.6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.weighty = 0.5;
         add(imageHolder, gridBagConstraints);
 
         controlPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -285,17 +287,16 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridheight = 4;
         gridBagConstraints.ipadx = 9;
         gridBagConstraints.ipady = 16;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
+        gridBagConstraints.weightx = 0.1;
         gridBagConstraints.insets = new java.awt.Insets(1, 0, 1, 0);
         add(controlPanel, gridBagConstraints);
 
-        jPanel1.setLayout(new java.awt.GridLayout(2, 1));
+        jPanel1.setLayout(new java.awt.GridLayout(1, 2));
 
         jButton1.setText("SAVE");
         jPanel1.add(jButton1);
@@ -305,10 +306,10 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.gridy = 11;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_END;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_END;
+        gridBagConstraints.weightx = 0.2;
         add(jPanel1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
