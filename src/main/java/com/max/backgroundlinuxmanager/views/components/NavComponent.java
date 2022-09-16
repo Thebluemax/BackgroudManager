@@ -36,9 +36,9 @@ import javax.swing.JPanel;
  */
 public class NavComponent extends JPanel {
 
-    private String[] labelList = {"New Wallpaper", "New Slide"};
+    private String[] labelList = {"Wallpaper", "New Wallpaper", "New Slide"};
         //"Save", "Delete"};
-    private String[] bottonRef = {BackgroundManager.NEW_WALLPAPER, "NEW_SLIDE"};
+    private String[] bottonRef = {BackgroundManager.WALLPAPER, BackgroundManager.NEW_WALLPAPER, "NEW_SLIDE"};
        // "SAVE", "DELETE"};
     private List<JButton> buttonList;
 
@@ -50,11 +50,11 @@ public class NavComponent extends JPanel {
         setBorder(javax.swing.BorderFactory.createCompoundBorder());
         setForeground(new java.awt.Color(255, 255, 255));
         setToolTipText("");
-        setMaximumSize(new java.awt.Dimension(750, 100));
-        setMinimumSize(new java.awt.Dimension(450, 150));
+        setMaximumSize(new java.awt.Dimension(1750, 100));
+        setMinimumSize(new java.awt.Dimension(450, 50));
         setOpaque(false);
         setPreferredSize(new java.awt.Dimension(50, 450));
-        java.awt.GridLayout flowLayout1 = new java.awt.GridLayout(1, 2);
+        java.awt.GridLayout flowLayout1 = new java.awt.GridLayout(1, 3);
         setLayout(flowLayout1);
         buttonList = new ArrayList<>();
         setButtons();

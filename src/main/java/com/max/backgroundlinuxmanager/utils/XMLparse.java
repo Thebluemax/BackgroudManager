@@ -58,9 +58,9 @@ public class XMLparse {
     }
 
     /**
-     *Devuelve el contexto indicado en el typo seleccionado en el parámetro del
+     * Devuelve el contexto indicado en el typo seleccionado en el parámetro del
      * método.
-     * 
+     *
      * @param type int que representa el type de clase a contextualizar
      * @return el contexto jaxb con el modelo definido
      */
@@ -92,7 +92,7 @@ public class XMLparse {
         try {
             unmarshaller = jaxbContest.createUnmarshaller();
             wallpapers = (WallpaperXML) unmarshaller.unmarshal(fileStream);
-        } catch (JAXBException ex) { 
+        } catch (JAXBException ex) {
             Logger.getLogger(XMLparse.class.getName()).log(Level.SEVERE, null, ex);
         }
         return wallpapers;
@@ -103,19 +103,20 @@ public class XMLparse {
      * @param fileStream
      * @return
      */
-    public AppConfiguration unmarshallerConfig(File fileStream){
+    public AppConfiguration unmarshallerConfig(File fileStream) {
         AppConfiguration config = null;
         jaxbContest = XMLparse.getJaxbContext(CONFIG);
-       return (AppConfiguration) unmarshaller(jaxbContest, fileStream);
+        return (AppConfiguration) unmarshaller(jaxbContest, fileStream);
     }
+
     /**
-     * 
+     *
      * @param jaxbContest
-     * @return 
+     * @return
      */
-    private Object unmarshaller(JAXBContext jaxbContest, File fileStream){
+    private Object unmarshaller(JAXBContext jaxbContest, File fileStream) {
         Object obj = null;
-         Unmarshaller unmarshaller = null;
+        Unmarshaller unmarshaller = null;
         try {
             unmarshaller = jaxbContest.createUnmarshaller();
             obj = (Object) unmarshaller.unmarshal(fileStream);
@@ -126,9 +127,10 @@ public class XMLparse {
     }
 
     /**
-     *Gurda un objeto en un archivo XML, empleando el modelo especificado en el tipo 
-     * los tipos pueden ser 3 y están definidos el las varibles estáticas de la clase
-     * 
+     * Gurda un objeto en un archivo XML, empleando el modelo especificado en el
+     * tipo los tipos pueden ser 3 y están definidos el las varibles estáticas
+     * de la clase
+     *
      * @param xml Objeto File en el que se guardará el documento XML
      * @param type int que el tipo de modelo a usar
      * @param objeto La instancia del modelo a persistir
@@ -137,22 +139,16 @@ public class XMLparse {
     public int saveXML(File xml, int type, Object objecto) {
         int status = 0;
         Marshaller marshaller;
-        System.out.println("Guardando Comanda");
-
-        System.out.println("Guardando XML");
+        System.out.println("Guardando XML " + xml.getName());
         try {
-            //usamos el metodo de Marshaller para crear un documento con la
-            //estructura de VendesArticles y los datos almacenados
             jaxbContest = getJaxbContext(type);
             marshaller = jaxbContest.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            System.out.println("Guardando XML");
             if (type == CONFIG) {
-
-               marshaller.marshal((AppConfiguration)objecto, xml);
-
+                marshaller.marshal((AppConfiguration) objecto, xml);
             } else {
-               marshaller.marshal((WallpaperXML)objecto, xml);
-
+                marshaller.marshal((WallpaperXML) objecto, xml);
             }
 
         } catch (JAXBException ex) {
@@ -165,6 +161,6 @@ public class XMLparse {
         }
 
         return status;
-   }
+    }
 
 }

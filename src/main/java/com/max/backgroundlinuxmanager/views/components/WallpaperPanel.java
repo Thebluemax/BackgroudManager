@@ -23,7 +23,6 @@
  */
 package com.max.backgroundlinuxmanager.views.components;
 
-import com.max.backgroundlinuxmanager.controllers.BackgroundManager;
 import com.max.backgroundlinuxmanager.controllers.events.WallpaperButtonAdapter;
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
 import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
@@ -97,7 +96,7 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
         WallpaperButtonAdapter adapter = new WallpaperButtonAdapter(wp);
         pcolor.addMouseListener(adapter);
         scolor.addMouseListener(adapter);
-        jButton1.addActionListener(optionCombobox);
+      //  jButton1.addActionListener(optionCombobox);
 
     }
 
@@ -137,10 +136,10 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
     }
     
     public void setListeners(ActionListener litener) {
-        jButton1.setActionCommand(BackgroundManager.SAVE_NEW_WALLPAPER);
-        jButton1.addActionListener(litener);
-        jButton2.setActionCommand(BackgroundManager.CANCEL );
-        jButton2.addActionListener(litener);
+     //   jButton1.setActionCommand(BackgroundManager.SAVE_NEW_WALLPAPER);
+     //   jButton1.addActionListener(litener);
+     //   jButton2.setActionCommand(BackgroundManager.CANCEL );
+     //   jButton2.addActionListener(litener);
     }
 
     /**
@@ -159,7 +158,7 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
             image = new File("src/assets/no-image.png");
         }
         //System.out.println(getPreferredSize().width + "--" + getHeight());
-        ImageLoader iLoad = new ImageLoader(getPreferredSize().width, getPreferredSize().height - 150, image, true, true);
+        ImageLoader iLoad = new ImageLoader(getWidth() - 20, getHeight() - 300, image, true, true);
         future = executor.submit(() -> {
             return iLoad.call(); //To change body of generated lambdas, choose Tools | Templates.
         });
@@ -186,7 +185,6 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         nameLabel = new javax.swing.JLabel();
         imageHolder = new javax.swing.JLabel();
@@ -199,18 +197,12 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
         pcolor = new javax.swing.JLabel();
         sColorLabel = new javax.swing.JLabel();
         scolor = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
 
         setForeground(new java.awt.Color(236, 236, 226));
         setToolTipText("");
         setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
-        setMaximumSize(new java.awt.Dimension(800, 500));
-        setMinimumSize(new java.awt.Dimension(400, 181));
         setName(""); // NOI18N
-        setPreferredSize(new java.awt.Dimension(750, 450));
-        setLayout(new java.awt.GridBagLayout());
+        setLayout(new java.awt.GridLayout(3, 1));
 
         nameLabel.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         nameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -218,29 +210,13 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
         nameLabel.setText("jLabel6");
         nameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         nameLabel.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 1;
-        gridBagConstraints.ipady = 1;
-        gridBagConstraints.weighty = 0.2;
-        add(nameLabel, gridBagConstraints);
+        add(nameLabel);
 
         imageHolder.setText("jLabel1");
         imageHolder.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         imageHolder.setMaximumSize(new java.awt.Dimension(3000, 1400));
         imageHolder.setMinimumSize(new java.awt.Dimension(3000, 1400));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.gridheight = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        gridBagConstraints.weighty = 0.5;
-        add(imageHolder, gridBagConstraints);
+        add(imageHolder);
 
         controlPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         controlPanel.setOpaque(false);
@@ -285,32 +261,7 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
         scolor.setText("jLabel4");
         controlPanel.add(scolor);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.gridheight = 4;
-        gridBagConstraints.ipadx = 9;
-        gridBagConstraints.ipady = 16;
-        gridBagConstraints.weightx = 0.1;
-        gridBagConstraints.insets = new java.awt.Insets(1, 0, 1, 0);
-        add(controlPanel, gridBagConstraints);
-
-        jPanel1.setLayout(new java.awt.GridLayout(1, 2));
-
-        jButton1.setText("SAVE");
-        jPanel1.add(jButton1);
-
-        jButton2.setText("DELETE");
-        jPanel1.add(jButton2);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 11;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_END;
-        gridBagConstraints.weightx = 0.2;
-        add(jPanel1, gridBagConstraints);
+        add(controlPanel);
     }// </editor-fold>//GEN-END:initComponents
 
     private void optionComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionComboboxActionPerformed
@@ -325,9 +276,6 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel controlPanel;
     protected javax.swing.JLabel imageHolder;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JComboBox<String> optionCombobox;
     private javax.swing.JLabel optionLabel;

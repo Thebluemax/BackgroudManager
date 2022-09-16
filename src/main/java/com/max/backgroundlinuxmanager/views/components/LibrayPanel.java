@@ -28,10 +28,11 @@ public class LibrayPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         scrollContent = new javax.swing.JScrollPane();
+        jPanel1 = new javax.swing.JPanel();
         titleLabel = new javax.swing.JLabel();
         addButton = new javax.swing.JButton();
 
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setLayout(null);
 
         scrollContent.setBorder(null);
         scrollContent.setForeground(new java.awt.Color(222, 22, 222));
@@ -41,12 +42,15 @@ public class LibrayPanel extends javax.swing.JPanel {
         scrollContent.setAutoscrolls(true);
         scrollContent.setName(""); // NOI18N
         scrollContent.setVerifyInputWhenFocusTarget(false);
-        add(scrollContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 53, 777, 566));
+        add(scrollContent);
+        scrollContent.setBounds(0, 53, 777, 566);
+
+        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 200, 5));
 
         titleLabel.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         titleLabel.setText("Library");
         titleLabel.setToolTipText("");
-        add(titleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 458, 38));
+        jPanel1.add(titleLabel);
 
         addButton.setText("ADD");
         addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -54,7 +58,10 @@ public class LibrayPanel extends javax.swing.JPanel {
                 addButtonActionPerformed(evt);
             }
         });
-        add(addButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(651, 0, 120, 40));
+        jPanel1.add(addButton);
+
+        add(jPanel1);
+        jPanel1.setBounds(0, 0, 770, 39);
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
@@ -64,6 +71,7 @@ public class LibrayPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton addButton;
+    private javax.swing.JPanel jPanel1;
     protected javax.swing.JScrollPane scrollContent;
     private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables

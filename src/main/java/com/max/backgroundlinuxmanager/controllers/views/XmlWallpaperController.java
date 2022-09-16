@@ -13,7 +13,9 @@ import com.max.backgroundlinuxmanager.utils.ManagerFiles;
 import com.max.backgroundlinuxmanager.utils.XMLparse;
 import com.max.backgroundlinuxmanager.views.components.SidePanel;
 import com.max.backgroundlinuxmanager.views.components.WallpaperPanel;
+import com.max.backgroundlinuxmanager.views.components.WallpaperView;
 import com.max.backgroundlinuxmanager.views.components.XmlWallpaperPanel;
+import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -25,6 +27,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -37,13 +40,14 @@ public class XmlWallpaperController extends XmlWallpaperPanel implements ItemLis
     private File wallpaperXMLFIle;
     private List<Wallpaper> wpaperList;
     private String activeWallpaperName;
-    private WallpaperPanel panel;
+    private JPanel panel;
     public static String EMPTY_STRING = "";
 
     public XmlWallpaperController() {
         cachedFilesList = new ArrayList();
         checkWallpapersXML();
         wallpaperCombo.addItemListener(this);
+        
     }
 
     /**
@@ -56,11 +60,11 @@ public class XmlWallpaperController extends XmlWallpaperPanel implements ItemLis
 
         if (folder.isDirectory()) {
             ManagerFiles.getFiles(folder, cachedFilesList);
-            filenames = new String[cachedFilesList.size() + 1];
-            filenames[0] = EMPTY_STRING;
+            filenames = new String[cachedFilesList.size()];
+            // filenames[0] = EMPTY_STRING;
 
             for (int i = 0; i < cachedFilesList.size(); i++) {
-                filenames[i + 1] = cachedFilesList.get(i).getName();
+                filenames[i] = cachedFilesList.get(i).getName();
             }
             poblateCombo(filenames);
 
@@ -70,15 +74,25 @@ public class XmlWallpaperController extends XmlWallpaperPanel implements ItemLis
             new BackgroundException(new FileNotFoundException(), "El directorio de wallpaper del usurio no existe");
         }
     }
-
+/**
+ * 
+ * @param filemanes Strimg[]
+ * @return void
+ */
     private void poblateCombo(String[] filemanes) {
         for (int i = 0; i < filemanes.length; i++) {
             wallpaperCombo.addItem(filemanes[i]);
         }
+        activeWallpaperName = (String) wallpaperCombo.getItemAt(0);
+        buildWallpapers(activeWallpaperName);
     }
-
+/**
+ * 
+ * @param filename String
+ * @return void
+ */
     private void buildWallpapers(String filename) {
-        if (wallpaperXML == null) {
+        if (true) {
             wallpaperXMLFIle = new File(ManagerFiles.getWallpapersXMLFolder() + "/" + filename);
             XMLparse xmlParse = new XMLparse();
             try {
@@ -92,18 +106,28 @@ public class XmlWallpaperController extends XmlWallpaperPanel implements ItemLis
         activeWallpaperName = filename;
 
     }
-
+/**
+ * 
+ * @param selected String
+ * @return void
+ */
     public void newWallpaper(String selected) {
 
         Wallpaper newWallpaper = Wallpaper.factory(selected);
         panel = new WallpaperPanel(newWallpaper);
-        addToPanel(panel, 0, 50, getWidth(), getHeight() - 300);
-        panel.loadImage();
+        addToPanel(panel, 0, 50, getWidth(), getHeight() - 50);
+        WallpaperPanel p = (WallpaperPanel) panel;
+        p.loadImage();
 
     }
-
+/**
+ * 
+ * @return boolean 
+ */
     public boolean saveCurrent() {
-        Wallpaper wp = panel.getWallpaper();
+        WallpaperPanel p = (WallpaperPanel) panel;
+
+        Wallpaper wp = p.getWallpaper();
         try {
             wallpaperXML.add(wp);
         } catch (Exception e) {
@@ -112,31 +136,56 @@ public class XmlWallpaperController extends XmlWallpaperPanel implements ItemLis
         XMLparse xmlParse = new XMLparse();
 
         int status = xmlParse.saveXML(wallpaperXMLFIle, XMLparse.WALLPAPER_XML, wallpaperXML);
-        
+
         remove(panel);
         panel = null;
         if (status == 0) {
-            
-            
+
         }
         return false;
     }
-    
-    public void clear(){
-        remove(panel);
-        panel = null;
+/**
+ * @return void
+ */
+    public void seeWallpaper() {
+        panel = new WallpaperView(wpaperList, wallpaperXML);
+        System.out.println(getWidth() + "-" + (getHeight() - 300));
+        addToPanel(panel, 0, 50, getWidth(), getHeight() - 60);
+        //panel.setPreferredSize(new Dimension(getWidth(),  getHeight() - 300));
+        WallpaperView p = (WallpaperView) panel;
+        p.buildList();
     }
+/**
+ * @return void
+ */
+    public void clear() {
+        if (panel != null) {
+            remove(panel);
+            panel = null;
+        }
 
+    }
+/**
+ * 
+ * @param listener
+ */
     public void setListener(ActionListener listener) {
-        panel.setListeners(listener);
+        cancellWallpaperBtn.setActionCommand(BackgroundManager.CLOSE_XMLWALLPAPER);
+        cancellWallpaperBtn.addActionListener(listener);
     }
-
+/**
+ * 
+ * @param e ItemEvent
+ */
     @Override
     public void itemStateChanged(ItemEvent e) {
         System.out.println("Selected" + e.getStateChange());
         if (e.getSource() == wallpaperCombo && e.getStateChange() == 1) {
             buildWallpapers((String) wallpaperCombo.getSelectedItem());
+            clear();
+            seeWallpaper();
             System.out.println((String) wallpaperCombo.getSelectedItem());
+            // buildWallpapers(String filename)
         }
 
     }

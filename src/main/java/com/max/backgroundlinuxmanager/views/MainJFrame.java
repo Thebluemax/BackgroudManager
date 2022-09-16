@@ -28,6 +28,8 @@ import com.max.backgroundlinuxmanager.views.components.AppColors.AppColors;
 import com.max.backgroundlinuxmanager.views.components.ImageBlockPane;
 import com.max.backgroundlinuxmanager.views.components.SidePanel;
 import com.max.backgroundlinuxmanager.views.components.NavComponent;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -35,6 +37,7 @@ import java.awt.GridBagConstraints.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -103,7 +106,10 @@ public class MainJFrame extends javax.swing.JFrame {
     }
   
     public void addToMain(JPanel panel,int x, int y, int width, int heigth){
-        getContentPane().add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width, heigth));
+        panel.setBorder(BorderFactory.createLineBorder(
+                                    Color.DARK_GRAY.darker(), 5, true));
+        getContentPane().add(panel);
+        panel.setBounds(x, y, width, heigth);
         pack();
     }
     
@@ -126,7 +132,7 @@ public class MainJFrame extends javax.swing.JFrame {
         setName("principalFrame"); // NOI18N
         setPreferredSize(new java.awt.Dimension(950, 1000));
         setResizable(false);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().setLayout(null);
         getAccessibleContext().setAccessibleDescription("");
 
         pack();
