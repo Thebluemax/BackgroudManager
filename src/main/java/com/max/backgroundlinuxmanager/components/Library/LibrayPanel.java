@@ -32,7 +32,8 @@ public class LibrayPanel extends javax.swing.JPanel {
         titleLabel = new javax.swing.JLabel();
         addButton = new javax.swing.JButton();
 
-        setLayout(null);
+        setForeground(new java.awt.Color(2, 222, 222));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         scrollContent.setBorder(null);
         scrollContent.setForeground(new java.awt.Color(222, 22, 222));
@@ -42,8 +43,7 @@ public class LibrayPanel extends javax.swing.JPanel {
         scrollContent.setAutoscrolls(true);
         scrollContent.setName(""); // NOI18N
         scrollContent.setVerifyInputWhenFocusTarget(false);
-        add(scrollContent);
-        scrollContent.setBounds(0, 53, 777, 566);
+        add(scrollContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 53, 777, 566));
 
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 200, 5));
 
@@ -60,8 +60,7 @@ public class LibrayPanel extends javax.swing.JPanel {
         });
         jPanel1.add(addButton);
 
-        add(jPanel1);
-        jPanel1.setBounds(0, 0, 770, 39);
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed

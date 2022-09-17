@@ -60,14 +60,14 @@ public class SideListMouseAdapter extends MouseAdapter {
                 File f = new File(ManagerFiles.getUserFolder() + "/" + wallpapers.getWallpapers().get(index).getFilename());
                 slideModel = new XMLDOMBackground(f);
                 editPanel = new SlideEditPanelController(slideModel);
-                frame.setViewPortContainer(editPanel);
+               // frame.setViewPortContainer(editPanel);
                 // SlideBackground sb = slideModel.getSlideBackground();
                 //  System.gc();
                 editPanel.setlist();
 
             } else {
 
-                frame.setViewPortContainer(new WallpaperPanel(wallpapers.getWallpapers().get(index)));
+          //      frame.setViewPortContainer(new WallpaperPanel(wallpapers.getWallpapers().get(index)));
             }
             activeWallpaper = wallpapers.getWallpapers().get(index);
         } else {
@@ -75,11 +75,11 @@ public class SideListMouseAdapter extends MouseAdapter {
 
             System.out.println(element);
             if (element.compareTo(SidePanel.LIBRARY_TAG) == 0) {
-                frame.setLibraryView(true);
+            //    frame.setLibraryView(true);
             } else {
                 activeWallpaperName = element;
                // buildWallpapers(element);
-                frame.setLibraryView(false);
+             //   frame.setLibraryView(false);
             }
         }
     }

@@ -23,7 +23,7 @@
  */
 package com.max.backgroundlinuxmanager.views.components;
 
-import com.max.backgroundlinuxmanager.controllers.BackgroundManager;
+import com.max.backgroundlinuxmanager.components.Library.LibraryListener;
 import java.io.File;
 import com.max.backgroundlinuxmanager.threads.ImageLoader;
 import com.max.backgroundlinuxmanager.utils.IconFontManager;
@@ -77,8 +77,7 @@ public class ImageBlockPane extends javax.swing.JPanel {
     }
 
     public void setListener(ActionListener event) {
-        // event.actionPerformed(new ActionEvent(this, 0, BackgroundManager.DELETE_ACTION));
-        erraseBtn.setActionCommand(BackgroundManager.DELETE_ACTION);
+        erraseBtn.setActionCommand(LibraryListener.DELETE_OF_LIBRARY);
         erraseBtn.addActionListener(event);
     }
     public void setBlockListener(MouseListener listener) {
@@ -93,7 +92,7 @@ public class ImageBlockPane extends javax.swing.JPanel {
 /**
  * Ejecuta el trhead que carga la imagen dentro del contenedor del la miniatura
  * 
- * @return void
+ * 
  */
     public void loadImage() {
         System.out.println(filename);
@@ -106,7 +105,7 @@ public class ImageBlockPane extends javax.swing.JPanel {
             image = new File("src/assets/no-image.png");
         }
         
-        ImageLoader iLoad = new ImageLoader(imageHolder.getWidth(), imageHolder.getHeight(), image, true, true);
+        ImageLoader iLoad = new ImageLoader(imageHolder.getSize().width, imageHolder.getSize().height, image, true, true);
         future = executor.submit(() -> {
                 return iLoad.call(); //To change body of generated lambdas, choose Tools | Templates.
         });
@@ -155,6 +154,18 @@ public class ImageBlockPane extends javax.swing.JPanel {
     public File getImage() {
         return image;
     }
+     /**
+     * Check if the background file is a xml document
+     *
+     * @param filename
+     * @return boolean
+     */
+    public static boolean isSlide(String filename) {
+        String name = filename;
+        name = name.substring(name.length() - 3, name.length());
+        return (name.compareTo("xml") == 0);
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
