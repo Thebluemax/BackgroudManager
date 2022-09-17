@@ -31,6 +31,7 @@ import com.max.backgroundlinuxmanager.utils.ManagerFiles;
 import com.max.backgroundlinuxmanager.views.components.AppColors.AppColors;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -80,7 +81,9 @@ public class ImageBlockPane extends javax.swing.JPanel {
         erraseBtn.setActionCommand(BackgroundManager.DELETE_ACTION);
         erraseBtn.addActionListener(event);
     }
-
+    public void setBlockListener(MouseListener listener) {
+        addMouseListener(listener);
+    }
     public void setIcon(String name) {
 
         objectCheckbox.setLabel(name);

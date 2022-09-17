@@ -84,7 +84,7 @@ public class ConfigurationManager {
      *
      * @return AppConfiguration
      */
-    private AppConfiguration getConfigInfo(){
+    public AppConfiguration getConfig(){
         return appConfig;
     }
     

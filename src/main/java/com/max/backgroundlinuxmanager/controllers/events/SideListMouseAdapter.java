@@ -6,7 +6,7 @@
 package com.max.backgroundlinuxmanager.controllers.events;
 
 import com.max.backgroundlinuxmanager.controllers.SlideEditPanelController;
-import com.max.backgroundlinuxmanager.controllers.views.MainFrameController;
+import com.max.backgroundlinuxmanager.components.MainFrame.MainFrameController;
 import com.max.backgroundlinuxmanager.exceptions.BackgroundException;
 import com.max.backgroundlinuxmanager.models.XMLDOMBackground;
 import com.max.backgroundlinuxmanager.models.entities.Wallpaper;

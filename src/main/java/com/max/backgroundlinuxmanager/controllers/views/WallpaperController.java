@@ -29,7 +29,8 @@ public class WallpaperController extends WallpaperPanel{
          loadImage();
     }
     
-    private void loadImage() {
+  /*  @Override
+    public void loadImage() {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<ImageIcon> future;
         File f = new File(ManagerFiles.getUserFolder() + "/" + wp.getFilename());
@@ -46,5 +47,5 @@ public class WallpaperController extends WallpaperPanel{
             Logger.getLogger(WallpaperPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }
+    }*/
 }
