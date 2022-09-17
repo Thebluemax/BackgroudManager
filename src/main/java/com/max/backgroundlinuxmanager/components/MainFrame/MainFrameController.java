@@ -55,7 +55,7 @@ public class MainFrameController extends MainJFrame {
         
         addToMain(library, 0, 0, getWidth(), getHeight() - 100);
         addToMain(nav, 0, getHeight() - 100, getWidth(), 100);
-        addToMain(xmlWallpaper, 0, 0, getWidth(), getHeight());
+       // addToMain(xmlWallpaper, 0, 0, getWidth(), getHeight());
     }
     /**
      * Hide the library panel
