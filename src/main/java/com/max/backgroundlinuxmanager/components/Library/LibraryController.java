@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.max.backgroundlinuxmanager.controllers.views;
+package com.max.backgroundlinuxmanager.components.Library;
 
 import com.max.backgroundlinuxmanager.controllers.utils.FileChooserController;
+import com.max.backgroundlinuxmanager.components.MainFrame.MainFrameController;
+import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
 import com.max.backgroundlinuxmanager.views.components.AddingToLibraryDialog;
 import com.max.backgroundlinuxmanager.views.components.AppColors.AppColors;
 import com.max.backgroundlinuxmanager.views.components.ImageBlockPane;
-import com.max.backgroundlinuxmanager.views.components.LibrayPanel;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
@@ -34,11 +35,11 @@ public class LibraryController extends LibrayPanel {
     protected JPanel container;
     private MainFrameController frame;
 
-    public LibraryController(MainFrameController frame) {
+    public LibraryController(AppConfiguration appConfig) {
         super();
-        this.frame = frame;
-        width = frame.getWidth() - 80;
-        heigth = frame.getHeight() - 80;
+     //   this.frame = frame;
+     //   width = frame.getWidth() - 80;
+     //   heigth = frame.getHeight() - 80;
         column = 5;
         imageList = new ArrayList<>();
         container = new JPanel();

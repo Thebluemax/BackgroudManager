@@ -7,6 +7,7 @@ package com.max.backgroundlinuxmanager.controllers.views;
 
 import com.max.backgroundlinuxmanager.controllers.BackgroundManager;
 import com.max.backgroundlinuxmanager.exceptions.BackgroundException;
+import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
 import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
 import com.max.backgroundlinuxmanager.models.entities.WallpaperXML;
 import com.max.backgroundlinuxmanager.utils.ManagerFiles;
@@ -41,9 +42,11 @@ public class XmlWallpaperController extends XmlWallpaperPanel implements ItemLis
     private List<Wallpaper> wpaperList;
     private String activeWallpaperName;
     private JPanel panel;
+    private AppConfiguration appConf;
     public static String EMPTY_STRING = "";
 
-    public XmlWallpaperController() {
+    public XmlWallpaperController(AppConfiguration appConf) {
+        this.appConf = appConf;
         cachedFilesList = new ArrayList();
         checkWallpapersXML();
         wallpaperCombo.addItemListener(this);
@@ -170,7 +173,7 @@ public class XmlWallpaperController extends XmlWallpaperPanel implements ItemLis
  * @param listener
  */
     public void setListener(ActionListener listener) {
-        cancellWallpaperBtn.setActionCommand(BackgroundManager.CLOSE_XMLWALLPAPER);
+      // cancellWallpaperBtn.setActionCommand(BackgroundManager.CLOSE_XMLWALLPAPER);
         cancellWallpaperBtn.addActionListener(listener);
     }
 /**

@@ -19,6 +19,7 @@ public class XmlWallpaperPanel extends javax.swing.JPanel {
      */
     public XmlWallpaperPanel() {
         initComponents();
+        navPanel.setBounds(0, 0, getWidth(), 50);
     }
 
     public void addToPanel(JPanel panel, int x, int y, int width, int heigth){
@@ -37,13 +38,15 @@ public class XmlWallpaperPanel extends javax.swing.JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        navPanel = new javax.swing.JPanel();
         newXmlWallpaperBtn = new javax.swing.JButton();
         cancellWallpaperBtn = new javax.swing.JButton();
 
-        setLayout(null);
+        setBackground(new java.awt.Color(51, 51, 255));
+        setForeground(new java.awt.Color(222, 222, 2));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setLayout(new java.awt.GridBagLayout());
+        navPanel.setLayout(new java.awt.GridBagLayout());
 
         newXmlWallpaperBtn.setText("ADD NEW");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -51,7 +54,7 @@ public class XmlWallpaperPanel extends javax.swing.JPanel {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        jPanel2.add(newXmlWallpaperBtn, gridBagConstraints);
+        navPanel.add(newXmlWallpaperBtn, gridBagConstraints);
 
         cancellWallpaperBtn.setText("ADD NEW");
         cancellWallpaperBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -62,7 +65,7 @@ public class XmlWallpaperPanel extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        jPanel2.add(cancellWallpaperBtn, gridBagConstraints);
+        navPanel.add(cancellWallpaperBtn, gridBagConstraints);
 
         wallpaperCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -75,10 +78,9 @@ public class XmlWallpaperPanel extends javax.swing.JPanel {
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 0.1;
-        jPanel2.add(wallpaperCombo, gridBagConstraints);
+        navPanel.add(wallpaperCombo, gridBagConstraints);
 
-        add(jPanel2);
-        jPanel2.setBounds(0, 0, 400, 30);
+        add(navPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void wallpaperComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wallpaperComboActionPerformed
@@ -93,7 +95,7 @@ public class XmlWallpaperPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JButton cancellWallpaperBtn;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel navPanel;
     protected javax.swing.JButton newXmlWallpaperBtn;
     public final javax.swing.JComboBox<String> wallpaperCombo = new javax.swing.JComboBox<>();
     // End of variables declaration//GEN-END:variables

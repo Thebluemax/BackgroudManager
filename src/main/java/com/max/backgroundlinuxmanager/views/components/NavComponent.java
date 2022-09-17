@@ -38,7 +38,7 @@ public class NavComponent extends JPanel {
 
     private String[] labelList = {"Wallpaper", "New Wallpaper", "New Slide"};
         //"Save", "Delete"};
-    private String[] bottonRef = {BackgroundManager.WALLPAPER, BackgroundManager.NEW_WALLPAPER, "NEW_SLIDE"};
+    private String[] bottonRef = {"hh", "fff", "NEW_SLIDE"};
        // "SAVE", "DELETE"};
     private List<JButton> buttonList;
 

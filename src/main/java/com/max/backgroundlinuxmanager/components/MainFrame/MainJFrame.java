@@ -21,9 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.max.backgroundlinuxmanager.views;
+package com.max.backgroundlinuxmanager.components.MainFrame;
 
-import com.max.backgroundlinuxmanager.controllers.views.LibraryController;
+import com.max.backgroundlinuxmanager.components.Library.LibraryController;
 import com.max.backgroundlinuxmanager.views.components.AppColors.AppColors;
 import com.max.backgroundlinuxmanager.views.components.ImageBlockPane;
 import com.max.backgroundlinuxmanager.views.components.SidePanel;
