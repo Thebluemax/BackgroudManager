@@ -23,7 +23,7 @@
  */
 package com.max.backgroundlinuxmanager.components.MainFrame;
 
-import com.max.backgroundlinuxmanager.components.Library.LibraryController;
+import com.max.backgroundlinuxmanager.components.Library.LibraryComponent;
 import com.max.backgroundlinuxmanager.views.components.AppColors.AppColors;
 import com.max.backgroundlinuxmanager.views.components.ImageBlockPane;
 import com.max.backgroundlinuxmanager.views.components.SidePanel;
@@ -64,7 +64,7 @@ public class MainJFrame extends javax.swing.JFrame {
     protected SidePanel sideBar;
     protected NavComponent toolBar; 
     protected List<ImageBlockPane>  imageList ;
-    protected LibraryController scrollContent;
+    protected LibraryComponent scrollContent;
     
     
 /**

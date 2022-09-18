@@ -24,7 +24,7 @@ import javax.swing.JPanel;
  *
  * @author max
  */
-public class LibraryController extends LibrayPanel {
+public class LibraryComponent extends LibrayPanel {
 
     private int width;
     private int heigth;
@@ -35,7 +35,7 @@ public class LibraryController extends LibrayPanel {
     protected JPanel container;
     private MainFrameController frame;
 
-    public LibraryController(AppConfiguration appConfig) {
+    public LibraryComponent(AppConfiguration appConfig) {
         super();
         column = 5;
         blockList = new ArrayList<>();

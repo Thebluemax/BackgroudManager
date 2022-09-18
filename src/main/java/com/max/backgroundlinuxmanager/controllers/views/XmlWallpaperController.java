@@ -5,6 +5,7 @@
  */
 package com.max.backgroundlinuxmanager.controllers.views;
 
+import com.max.backgroundlinuxmanager.components.MainFrame.MainFrameListener;
 import com.max.backgroundlinuxmanager.controllers.BackgroundManager;
 import com.max.backgroundlinuxmanager.exceptions.BackgroundException;
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
@@ -172,8 +173,8 @@ public class XmlWallpaperController extends XmlWallpaperPanel implements ItemLis
  * 
  * @param listener
  */
-    public void setListener(ActionListener listener) {
-      // cancellWallpaperBtn.setActionCommand(BackgroundManager.CLOSE_XMLWALLPAPER);
+    public void setCloseListener(MainFrameListener listener) {
+       cancellWallpaperBtn.setActionCommand(MainFrameListener.CLOSE_XML_WALLPAPER);
         cancellWallpaperBtn.addActionListener(listener);
     }
 /**

@@ -18,10 +18,10 @@ import javax.swing.JButton;
 public class LibraryListener implements ActionListener{
      public static final String ADD_TO_LIBRARY = "ADD_TO_LIBRARY";
      public static final String DELETE_OF_LIBRARY = "DELETE_OF_LIBRARY";
-     private LibraryController library;
+     private LibraryComponent library;
 
 
-    public LibraryListener(LibraryController library) {
+    public LibraryListener(LibraryComponent library) {
         this.library = library;
     }
 
