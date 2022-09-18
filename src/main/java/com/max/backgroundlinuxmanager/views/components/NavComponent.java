@@ -23,6 +23,7 @@
  */
 package com.max.backgroundlinuxmanager.views.components;
 
+import com.max.backgroundlinuxmanager.components.MainFrame.MainFrameListener;
 import com.max.backgroundlinuxmanager.controllers.BackgroundManager;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -36,10 +37,9 @@ import javax.swing.JPanel;
  */
 public class NavComponent extends JPanel {
 
-    private String[] labelList = {"Wallpaper", "New Wallpaper", "New Slide"};
-        //"Save", "Delete"};
-    private String[] bottonRef = {"hh", "fff", "NEW_SLIDE"};
-       // "SAVE", "DELETE"};
+    private String[] labelList = {"Save to Wallpaper", "Save to Slide"};
+    private String[] bottonRef = {MainFrameListener.SAVE_TO_NEW_WALLPAPER,
+        MainFrameListener.NEW_XML_SLIDE};
     private List<JButton> buttonList;
 
     /**
