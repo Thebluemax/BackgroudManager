@@ -5,26 +5,8 @@
  */
 package com.max.backgroundlinuxmanager.controllers;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JButton;
-import javax.swing.*;
-import com.max.backgroundlinuxmanager.utils.XMLparse;
-import com.max.backgroundlinuxmanager.controllers.utils.DeleteOption;
-import com.max.backgroundlinuxmanager.components.Library.LibraryComponent;
-import com.max.backgroundlinuxmanager.models.entities.WallpaperXML;
 import com.max.backgroundlinuxmanager.components.MainFrame.MainFrameController;
-import com.max.backgroundlinuxmanager.views.components.ImageBlockPane;
-import com.max.backgroundlinuxmanager.controllers.views.XmlWallpaperController;
-import com.max.backgroundlinuxmanager.utils.ManagerFiles;
-import com.max.backgroundlinuxmanager.exceptions.BackgroundException;
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
-import com.max.backgroundlinuxmanager.views.components.NavComponent;
 
 /**
  *
@@ -34,48 +16,33 @@ public class BackgroundManager  {
 
 
     private ConfigurationManager configManager;
-    private MainFrameController frame;// = new MainJFrame();
+    private MainFrameController frame;
     private AppConfiguration appConfig;
 
     /**
-     *
+     * Initi app
      */
     public void initApp() {
         initComponents();
-        checkConfig();
+        loadConfig();
     }
-
+/**
+ * Inicio del componente principal
+ */
     private void initComponents() {
         frame = new MainFrameController(appConfig);
         frame.setVisible(true);
-
-     //   library = new LibraryComponent(frame);
-
-    //    System.out.println(frame.getHeight() + "add" + frame.getWidth());
-     //   frame.addToMain(library, 5, 5, frame.getWidth() - 10, frame.getHeight() - 105);
-     //   library.inti();
-      //  XmlPanel = new XmlWallpaperController();
-      //  frame.addToMain(XmlPanel, 5, 5, frame.getWidth() - 10, frame.getHeight() - 105);
-      //  XmlPanel.setVisible(false);
-
-     //   nav = new NavComponent();
-     //   frame.addToMain(nav, 5, frame.getContentPane().getHeight() - 60, frame.getContentPane().getWidth() - 5, 60);
-     //   setListeners();
     }
 
     /**
-     *   Método que crea un objeto con la configuración de la APP
+     *   Carga de la configuración
      **/
-    public void checkConfig() {
+    public void loadConfig() {
         configManager = new ConfigurationManager();
         appConfig = configManager.getConfig();
     }
 
-    /**
-     * TODO posible CLI
-     */
-   /* public void consoleBatchProcess() {
-    }/*/
+   
 
     /**
      * implementación de la interface ActionListener
@@ -87,23 +54,7 @@ public class BackgroundManager  {
     public void actionPerformed(ActionEvent ae) {
         System.out.println("click" + ae.getActionCommand());
         switch (ae.getActionCommand()) {
-          
-            case NEW_WALLPAPER:
-                String selected = library.getSelected();
-                newWallpaper(selected);
-                break;
 
-            case BackgroundManager.SAVE_NEW_WALLPAPER:
-                XmlPanel.saveCurrent();
-                library.setVisible(true);
-                XmlPanel.setVisible(false);
-                break;
-
-            case BackgroundManager.CANCEL:
-                XmlPanel.clear();
-                library.setVisible(true);
-                XmlPanel.setVisible(false);
-                break;
             case BackgroundManager.WALLPAPER:
                 library.setVisible(false);
                 XmlPanel.setVisible(true);
@@ -111,19 +62,7 @@ public class BackgroundManager  {
                 XmlPanel.setListener(this);
 
                 break;
-            case BackgroundManager.DELETE_ACTION:
-                JButton block = (JButton) ae.getSource();
-                ImageBlockPane blockImage = (ImageBlockPane) block.getParent();
-
-                System.out.println(blockImage.getImage().getName());
-                DeleteOption option = new DeleteOption(blockImage);
-
-                if (option.getResult()) {
-                    cachedFilesList.remove(blockImage.getImage());
-                    frame.remove(blockImage);
-                }
-                break;
-
+        
             case BackgroundManager.CLOSE_XMLWALLPAPER:
                 System.out.println("close add");
                 XmlPanel.clear();

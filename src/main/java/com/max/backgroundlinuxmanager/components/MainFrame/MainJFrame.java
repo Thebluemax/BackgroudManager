@@ -23,26 +23,11 @@
  */
 package com.max.backgroundlinuxmanager.components.MainFrame;
 
-import com.max.backgroundlinuxmanager.components.Library.LibraryComponent;
 import com.max.backgroundlinuxmanager.views.components.AppColors.AppColors;
-import com.max.backgroundlinuxmanager.views.components.ImageBlockPane;
-import com.max.backgroundlinuxmanager.views.components.SidePanel;
-import com.max.backgroundlinuxmanager.views.components.NavComponent;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.GridBagConstraints.*;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SpringLayout;
-
 
 /**
  *
@@ -55,16 +40,7 @@ public class MainJFrame extends javax.swing.JFrame {
      */
     private static String ADD_TO_LIBRARY = "addToLibrary";
     private static String GET_WALLPAPER = "getWallPaper";
-    private static String LIBRARY_TAG ="Libreria"; 
-
-    protected JPanel container;
-    protected File[] fileList;
-    protected DefaultListModel collectionName;
-    protected DefaultListModel wallpaperName;
-    protected SidePanel sideBar;
-    protected NavComponent toolBar; 
-    protected List<ImageBlockPane>  imageList ;
-    protected LibraryComponent scrollContent;
+    private static String LIBRARY_TAG = "Libreria";
     
     
 /**
@@ -76,38 +52,10 @@ public class MainJFrame extends javax.swing.JFrame {
         initComponents();
         pack();
     }
-    /**
-     * Inicio de la barra lateral 
-     */
-    protected void initSidebar(){
-        sideBar = new SidePanel();
-        sideBar.setLibraryView(true);
-        getContentPane().add(sideBar,  new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 5, 180, 350));
-    }
-    /**
-     * Inicio de la barra de herramientas
-     */
-   protected void initNavBar(){
-        toolBar = new NavComponent();
-        toolBar.setVisibility(true);
-        getContentPane().add(toolBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 185, 150, 450) );
-    }
-    
-    /**
-     * setear os listeners
-     * 
-     * @param aListener 
-     */
-    public void setListeners(ActionListener aListener) {
-
-        toolBar.addActionListener(aListener);
-        sideBar.setButtonsListener(aListener);
-        
-    }
   
     public void addToMain(JPanel panel,int x, int y, int width, int heigth){
         panel.setBorder(BorderFactory.createLineBorder(
-                                    Color.DARK_GRAY.darker(), 5, true));
+                                    Color.ORANGE, 1, true));
         getContentPane().add(panel);
         panel.setBounds(x, y, width, heigth);
         pack();
