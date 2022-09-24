@@ -6,7 +6,7 @@
 package com.max.backgroundlinuxmanager.components.MainFrame;
 
 import com.max.backgroundlinuxmanager.components.Library.LibraryComponent;
-import com.max.backgroundlinuxmanager.controllers.views.XmlWallpaperController;
+import com.max.backgroundlinuxmanager.components.XmlWallpaperComponent.XmlWallpaperController;
 import com.max.backgroundlinuxmanager.exceptions.BackgroundException;
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
 import com.max.backgroundlinuxmanager.views.components.NavComponent;
@@ -41,9 +41,9 @@ public class MainFrameController extends MainJFrame {
 
     private void init() {
         library = new LibraryComponent(appConfig);
-        xmlWallpaper = new XmlWallpaperController(appConfig);
+        xmlWallpaper = new XmlWallpaperController(appConfig,  getWidth(), getHeight());
         nav = new NavComponent();
-
+           System.out.println( getHeight() +"++"+ getWidth());
         addToMain(library, 0, 0, getWidth(), getHeight() - 100);
         addToMain(nav, 0, getHeight() - 100, getWidth(), 100);
         addToMain(xmlWallpaper, 0, 0, getWidth(), getHeight());
