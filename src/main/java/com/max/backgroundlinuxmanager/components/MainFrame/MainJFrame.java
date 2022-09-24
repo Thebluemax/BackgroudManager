@@ -56,8 +56,9 @@ public class MainJFrame extends javax.swing.JFrame {
     public void addToMain(JPanel panel,int x, int y, int width, int heigth){
         panel.setBorder(BorderFactory.createLineBorder(
                                     Color.ORANGE, 1, true));
+         panel.setBounds(x, y, width, heigth);
         getContentPane().add(panel);
-        panel.setBounds(x, y, width, heigth);
+       
         pack();
     }
     

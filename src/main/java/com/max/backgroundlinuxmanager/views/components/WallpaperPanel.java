@@ -185,6 +185,7 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         nameLabel = new javax.swing.JLabel();
         imageHolder = new javax.swing.JLabel();
@@ -202,7 +203,7 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
         setToolTipText("");
         setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         setName(""); // NOI18N
-        setLayout(new java.awt.GridLayout(3, 1));
+        setLayout(new java.awt.GridBagLayout());
 
         nameLabel.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         nameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -210,13 +211,16 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
         nameLabel.setText("jLabel6");
         nameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         nameLabel.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        add(nameLabel);
+        add(nameLabel, new java.awt.GridBagConstraints());
 
         imageHolder.setText("jLabel1");
         imageHolder.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         imageHolder.setMaximumSize(new java.awt.Dimension(3000, 1400));
         imageHolder.setMinimumSize(new java.awt.Dimension(3000, 1400));
-        add(imageHolder);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 3;
+        add(imageHolder, gridBagConstraints);
 
         controlPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         controlPanel.setOpaque(false);
@@ -261,7 +265,10 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
         scolor.setText("jLabel4");
         controlPanel.add(scolor);
 
-        add(controlPanel);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        add(controlPanel, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void optionComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionComboboxActionPerformed

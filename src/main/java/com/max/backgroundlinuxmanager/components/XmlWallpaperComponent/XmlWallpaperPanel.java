@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.max.backgroundlinuxmanager.views.components;
+package com.max.backgroundlinuxmanager.components.XmlWallpaperComponent;
 
 import java.awt.Panel;
 import javax.swing.JPanel;
+import org.jdesktop.swingx.auth.JAASLoginService;
 
 /**
  *
@@ -17,14 +18,21 @@ public class XmlWallpaperPanel extends javax.swing.JPanel {
     /**
      * Creates new form XmlWallpaperPanel
      */
-    public XmlWallpaperPanel() {
+    private JPanel panel;
+    public XmlWallpaperPanel( int width, int heigth) {
+        setBounds(0, 0, width, heigth);
         initComponents();
-        navPanel.setBounds(0, 0, getWidth(), 50);
+        System.out.println(getWidth()+"//"+getHeight());
+        panel = new JPanel();
+      add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, getWidth(), getHeight() - 200));
+        //navPanel.setBounds(0, 0, getWidth(), 50);
+       
     }
 
     public void addToPanel(JPanel panel, int x, int y, int width, int heigth){
-    add(panel);
     panel.setBounds(x, y, width, heigth);
+    this.panel.add(panel,new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 160));
+  
     
     }
     /**
@@ -35,68 +43,13 @@ public class XmlWallpaperPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
-
-        jPanel1 = new javax.swing.JPanel();
-        navPanel = new javax.swing.JPanel();
-        newXmlWallpaperBtn = new javax.swing.JButton();
-        cancellWallpaperBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(51, 51, 255));
         setForeground(new java.awt.Color(222, 222, 2));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        navPanel.setLayout(new java.awt.GridBagLayout());
-
-        newXmlWallpaperBtn.setText("ADD NEW");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 8;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        navPanel.add(newXmlWallpaperBtn, gridBagConstraints);
-
-        cancellWallpaperBtn.setText("ADD NEW");
-        cancellWallpaperBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancellWallpaperBtnActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        navPanel.add(cancellWallpaperBtn, gridBagConstraints);
-
-        wallpaperCombo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                wallpaperComboActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 0.1;
-        navPanel.add(wallpaperCombo, gridBagConstraints);
-
-        add(navPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 30));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void wallpaperComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wallpaperComboActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_wallpaperComboActionPerformed
-
-    private void cancellWallpaperBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancellWallpaperBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cancellWallpaperBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    protected javax.swing.JButton cancellWallpaperBtn;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel navPanel;
-    protected javax.swing.JButton newXmlWallpaperBtn;
-    public final javax.swing.JComboBox<String> wallpaperCombo = new javax.swing.JComboBox<>();
     // End of variables declaration//GEN-END:variables
 }

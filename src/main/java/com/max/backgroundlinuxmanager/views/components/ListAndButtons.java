@@ -66,7 +66,7 @@ public class ListAndButtons extends javax.swing.JPanel {
     }
 
     public void addButtonListener(ActionListener actionListener) {
-        addBtn.setActionCommand(BackgroundManager.ADD_ACTION);
+    //    addBtn.setActionCommand(BackgroundManager.ADD_ACTION);
         addBtn.addActionListener(actionListener);
         deleteBtn.addActionListener(actionListener);
     }

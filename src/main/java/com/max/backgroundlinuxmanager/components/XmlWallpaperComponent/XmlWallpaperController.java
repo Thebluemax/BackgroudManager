@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.max.backgroundlinuxmanager.controllers.views;
+package com.max.backgroundlinuxmanager.components.XmlWallpaperComponent;
 
 import com.max.backgroundlinuxmanager.components.MainFrame.MainFrameListener;
 import com.max.backgroundlinuxmanager.controllers.BackgroundManager;
@@ -15,7 +15,7 @@ import com.max.backgroundlinuxmanager.utils.ManagerFiles;
 import com.max.backgroundlinuxmanager.utils.XMLparse;
 import com.max.backgroundlinuxmanager.views.components.WallpaperPanel;
 import com.max.backgroundlinuxmanager.views.components.WallpaperView;
-import com.max.backgroundlinuxmanager.views.components.XmlWallpaperPanel;
+import com.max.backgroundlinuxmanager.components.XmlWallpaperComponent.XmlWallpaperPanel;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
@@ -31,7 +31,7 @@ import javax.swing.JPanel;
  *
  * @author max
  */
-public class XmlWallpaperController extends XmlWallpaperPanel implements ItemListener {
+public class XmlWallpaperController extends XmlWallpaperPanel {
 
     private List<File> cachedFilesList;
     private WallpaperXML wallpaperXML;
@@ -41,13 +41,17 @@ public class XmlWallpaperController extends XmlWallpaperPanel implements ItemLis
     private JPanel panel;
     private AppConfiguration appConf;
     public static String EMPTY_STRING = "";
+    private XmlPanelNav navComponent;
 
-    public XmlWallpaperController(AppConfiguration appConf) {
+    public XmlWallpaperController(AppConfiguration appConf, int width, int heigth) {
+        super(width, heigth);
+        navComponent = new XmlPanelNav();
         this.appConf = appConf;
         cachedFilesList = new ArrayList();
         checkWallpapersXML();
-        wallpaperCombo.addItemListener(this);
-        
+        add(navComponent, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, width, 50));
+        // wallpaperCombo.addItemListener(this);
+
     }
 
     /**
@@ -74,23 +78,25 @@ public class XmlWallpaperController extends XmlWallpaperPanel implements ItemLis
             new BackgroundException(new FileNotFoundException(), "El directorio de wallpaper del usurio no existe");
         }
     }
-/**
- * 
- * @param filemanes Strimg[]
- * @return void
- */
+
+    /**
+     *
+     * @param filemanes Strimg[]
+     * @return void
+     */
     private void poblateCombo(String[] filemanes) {
-        for (int i = 0; i < filemanes.length; i++) {
-            wallpaperCombo.addItem(filemanes[i]);
-        }
-        activeWallpaperName = (String) wallpaperCombo.getItemAt(0);
+
+       activeWallpaperName = navComponent.poblateCombo(filemanes);
+
+        //   (String) wallpaperCombo.getItemAt(0);
         buildWallpapers(activeWallpaperName);
     }
-/**
- * 
- * @param filename String
- * @return void
- */
+
+    /**
+     *
+     * @param filename String
+     * @return void
+     */
     private void buildWallpapers(String filename) {
         if (true) {
             wallpaperXMLFIle = new File(ManagerFiles.getWallpapersXMLFolder() + "/" + filename);
@@ -106,13 +112,14 @@ public class XmlWallpaperController extends XmlWallpaperPanel implements ItemLis
         activeWallpaperName = filename;
 
     }
-/**
- * 
- * @param selected String
- * @return void
- */
-    public void newWallpaper(String selected) {
 
+    /**
+     *
+     * @param selected String
+     * @return void
+     */
+    public void newWallpaper(String selected) {
+        System.out.println(getWidth() + "--" + getHeight());
         Wallpaper newWallpaper = Wallpaper.factory(selected);
         panel = new WallpaperPanel(newWallpaper);
         addToPanel(panel, 0, 50, getWidth(), getHeight() - 50);
@@ -120,10 +127,11 @@ public class XmlWallpaperController extends XmlWallpaperPanel implements ItemLis
         p.loadImage();
 
     }
-/**
- * 
- * @return boolean 
- */
+
+    /**
+     *
+     * @return boolean
+     */
     public boolean saveCurrent() {
         WallpaperPanel p = (WallpaperPanel) panel;
 
@@ -144,9 +152,10 @@ public class XmlWallpaperController extends XmlWallpaperPanel implements ItemLis
         }
         return false;
     }
-/**
- * @return void
- */
+
+    /**
+     * @return void
+     */
     public void seeWallpaper() {
         panel = new WallpaperView(wpaperList, wallpaperXML);
         System.out.println(getWidth() + "-" + (getHeight() - 300));
@@ -155,9 +164,10 @@ public class XmlWallpaperController extends XmlWallpaperPanel implements ItemLis
         WallpaperView p = (WallpaperView) panel;
         p.buildList();
     }
-/**
- * @return void
- */
+
+    /**
+     * @return void
+     */
     public void clear() {
         if (panel != null) {
             remove(panel);
@@ -165,29 +175,27 @@ public class XmlWallpaperController extends XmlWallpaperPanel implements ItemLis
         }
 
     }
-/**
- * 
- * @param listener
- */
-    public void setCloseListener(MainFrameListener listener) {
-       cancellWallpaperBtn.setActionCommand(MainFrameListener.CLOSE_XML_WALLPAPER);
-        cancellWallpaperBtn.addActionListener(listener);
-    }
-/**
- * 
- * @param e ItemEvent
- */
-    @Override
-    public void itemStateChanged(ItemEvent e) {
-        System.out.println("Selected" + e.getStateChange());
-        if (e.getSource() == wallpaperCombo && e.getStateChange() == 1) {
-            buildWallpapers((String) wallpaperCombo.getSelectedItem());
-            clear();
-            seeWallpaper();
-            System.out.println((String) wallpaperCombo.getSelectedItem());
-            // buildWallpapers(String filename)
-        }
 
+    /**
+     *
+     * @param listener
+     */
+    public void setCloseListener(MainFrameListener listener) {
+        //  cancellWallpaperBtn.setActionCommand(MainFrameListener.CLOSE_XML_WALLPAPER);
+        //  cancellWallpaperBtn.addActionListener(listener);
     }
+    /**
+     *
+     * @param e ItemEvent
+     *
+     * @Override public void itemStateChanged(ItemEvent e) {
+     * System.out.println("Selected" + e.getStateChange()); if (e.getSource() ==
+     * wallpaperCombo && e.getStateChange() == 1) { buildWallpapers((String)
+     * wallpaperCombo.getSelectedItem()); clear(); seeWallpaper();
+     * System.out.println((String) wallpaperCombo.getSelectedItem()); //
+     * buildWallpapers(String filename) }
+     *
+     * }
+     */
 
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.max.backgroundlinuxmanager.controllers.events;
+package com.max.backgroundlinuxmanager.components.XmlWallpaperComponent;
 
 import com.max.backgroundlinuxmanager.views.components.WallpaperView;
 import java.awt.event.MouseEvent;

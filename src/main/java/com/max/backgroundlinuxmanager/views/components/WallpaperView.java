@@ -5,7 +5,7 @@
  */
 package com.max.backgroundlinuxmanager.views.components;
 
-import com.max.backgroundlinuxmanager.controllers.events.XmlWallpaperListener;
+import com.max.backgroundlinuxmanager.components.XmlWallpaperComponent.XmlWallpaperListener;
 import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
 import com.max.backgroundlinuxmanager.models.entities.WallpaperXML;
 import com.max.backgroundlinuxmanager.threads.ImageLoader;
