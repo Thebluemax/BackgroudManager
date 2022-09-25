@@ -44,9 +44,9 @@ public class MainFrameController extends MainJFrame {
         xmlWallpaper = new XmlWallpaperController(appConfig,  getWidth(), getHeight());
         nav = new NavComponent();
            System.out.println( getHeight() +"++"+ getWidth());
-        addToMain(library, 0, 0, getWidth(), getHeight() - 100);
-        addToMain(nav, 0, getHeight() - 100, getWidth(), 100);
-        addToMain(xmlWallpaper, 0, 0, getWidth(), getHeight());
+        addToMain(library, 0, 0, getWidth(), getHeight() - 120);
+        addToMain(nav, 0, getHeight() - 120, getWidth(), 50);
+        addToMain(xmlWallpaper, 0, 0, getWidth(), getHeight() - 120);
         nav.addActionListener(new MainFrameListener(this));
         xmlWallpaper.setCloseListener(new MainFrameListener(this));
     }

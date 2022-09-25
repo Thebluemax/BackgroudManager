@@ -18,23 +18,24 @@ public class XmlWallpaperPanel extends javax.swing.JPanel {
     /**
      * Creates new form XmlWallpaperPanel
      */
-    private JPanel panel;
-    public XmlWallpaperPanel( int width, int heigth) {
+    protected JPanel panel;
+
+    public XmlWallpaperPanel(int width, int heigth) {
         setBounds(0, 0, width, heigth);
         initComponents();
-        System.out.println(getWidth()+"//"+getHeight());
+        System.out.println(getWidth() + "//" + getHeight());
         panel = new JPanel();
-      add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, getWidth(), getHeight() - 200));
+        add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, getWidth(), getHeight()));
         //navPanel.setBounds(0, 0, getWidth(), 50);
-       
+
     }
 
-    public void addToPanel(JPanel panel, int x, int y, int width, int heigth){
-    panel.setBounds(x, y, width, heigth);
-    this.panel.add(panel,new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 160));
-  
-    
+    public void addToPanel(JPanel panel, int x, int y, int width, int heigth) {
+        //panel.setBounds(x, y, width, heigth);
+        this.panel.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, width, heigth));
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

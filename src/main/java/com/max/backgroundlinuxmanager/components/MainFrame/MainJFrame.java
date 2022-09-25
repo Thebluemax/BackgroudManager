@@ -57,7 +57,7 @@ public class MainJFrame extends javax.swing.JFrame {
         panel.setBorder(BorderFactory.createLineBorder(
                                     Color.ORANGE, 1, true));
          panel.setBounds(x, y, width, heigth);
-        getContentPane().add(panel);
+        getContentPane().add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints( x, y, width, heigth));
        
         pack();
     }
@@ -74,12 +74,12 @@ public class MainJFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Background Manager");
         setBackground(new java.awt.Color(18, 39, 93));
-        setBounds(new java.awt.Rectangle(0, 0, 950, 1000));
+        setBounds(new java.awt.Rectangle(0, 0, 1000, 650));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setForeground(new java.awt.Color(206, 223, 253));
         setLocation(new java.awt.Point(10, 10));
         setName("principalFrame"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(950, 1000));
+        setPreferredSize(new java.awt.Dimension(1000, 650));
         setResizable(false);
         getContentPane().setLayout(null);
         getAccessibleContext().setAccessibleDescription("");

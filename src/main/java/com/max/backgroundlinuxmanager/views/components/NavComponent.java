@@ -24,7 +24,7 @@
 package com.max.backgroundlinuxmanager.views.components;
 
 import com.max.backgroundlinuxmanager.components.MainFrame.MainFrameListener;
-import com.max.backgroundlinuxmanager.controllers.BackgroundManager;
+import com.max.backgroundlinuxmanager.BackgroundManager;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,11 +50,11 @@ public class NavComponent extends JPanel {
         setBorder(javax.swing.BorderFactory.createCompoundBorder());
         setForeground(new java.awt.Color(255, 255, 255));
         setToolTipText("");
-        setMaximumSize(new java.awt.Dimension(1750, 100));
+        setMaximumSize(new java.awt.Dimension(1750, 50));
         setMinimumSize(new java.awt.Dimension(450, 50));
         setOpaque(false);
-        setPreferredSize(new java.awt.Dimension(50, 450));
-        java.awt.GridLayout flowLayout1 = new java.awt.GridLayout(1, 3);
+        
+        java.awt.GridLayout flowLayout1 = new java.awt.GridLayout(1, 2);
         setLayout(flowLayout1);
         buttonList = new ArrayList<>();
         setButtons();
@@ -64,9 +64,15 @@ public class NavComponent extends JPanel {
     private void setButtons() {
         for (int i = 0; i < labelList.length; i++) {
             JButton b = new JButton(labelList[i]);
+            b.setSize(450, 50);
             b.setActionCommand(bottonRef[i]);
             buttonList.add(b);
             add(b);
+        }
+    }
+    public void setDisabledNav(boolean status){
+        for(int i= 0; i < buttonList.size(); i++){
+            buttonList.get(i).setEnabled(status);
         }
     }
 

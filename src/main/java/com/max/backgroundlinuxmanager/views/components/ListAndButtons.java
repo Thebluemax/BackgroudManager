@@ -23,7 +23,7 @@
  */
 package com.max.backgroundlinuxmanager.views.components;
 
-import com.max.backgroundlinuxmanager.controllers.BackgroundManager;
+import com.max.backgroundlinuxmanager.BackgroundManager;
 import com.max.backgroundlinuxmanager.utils.IconFontManager;
 import com.max.backgroundlinuxmanager.views.components.AppColors.AppColors;
 import java.awt.Color;

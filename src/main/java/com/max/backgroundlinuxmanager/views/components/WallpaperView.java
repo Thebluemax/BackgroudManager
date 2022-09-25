@@ -60,7 +60,7 @@ public class WallpaperView extends javax.swing.JPanel {
             holder.setPreferredSize(new java.awt.Dimension(150, 80));
             container.add(holder);
             loadImage(fWallpaper, holder);
-            holder.addMouseListener(new XmlWallpaperListener(this));
+         //   holder.addMouseListener(new XmlWallpaperListener(this));
         }
     }
 
