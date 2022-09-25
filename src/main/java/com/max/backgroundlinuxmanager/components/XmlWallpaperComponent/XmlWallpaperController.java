@@ -6,7 +6,6 @@
 package com.max.backgroundlinuxmanager.components.XmlWallpaperComponent;
 
 import com.max.backgroundlinuxmanager.components.MainFrame.MainFrameListener;
-import com.max.backgroundlinuxmanager.controllers.BackgroundManager;
 import com.max.backgroundlinuxmanager.exceptions.BackgroundException;
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
 import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
@@ -16,15 +15,10 @@ import com.max.backgroundlinuxmanager.utils.XMLparse;
 import com.max.backgroundlinuxmanager.views.components.WallpaperPanel;
 import com.max.backgroundlinuxmanager.views.components.WallpaperView;
 import com.max.backgroundlinuxmanager.components.XmlWallpaperComponent.XmlWallpaperPanel;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JPanel;
 
 /**
@@ -38,7 +32,7 @@ public class XmlWallpaperController extends XmlWallpaperPanel {
     private File wallpaperXMLFIle;
     private List<Wallpaper> wpaperList;
     private String activeWallpaperName;
-    private JPanel panel;
+    private JPanel wPanel;
     private AppConfiguration appConf;
     public static String EMPTY_STRING = "";
     private XmlPanelNav navComponent;
@@ -49,8 +43,8 @@ public class XmlWallpaperController extends XmlWallpaperPanel {
         this.appConf = appConf;
         cachedFilesList = new ArrayList();
         checkWallpapersXML();
-        add(navComponent, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, width, 50));
-        // wallpaperCombo.addItemListener(this);
+        add(navComponent, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, width, 30));
+        navComponent.setAddListener(new XmlWallpaperListener(this));
 
     }
 
@@ -65,13 +59,10 @@ public class XmlWallpaperController extends XmlWallpaperPanel {
         if (folder.isDirectory()) {
             ManagerFiles.getFiles(folder, cachedFilesList);
             filenames = new String[cachedFilesList.size()];
-            // filenames[0] = EMPTY_STRING;
-
             for (int i = 0; i < cachedFilesList.size(); i++) {
                 filenames[i] = cachedFilesList.get(i).getName();
             }
             poblateCombo(filenames);
-
         } else {
             filenames = new String[1];
             System.out.println("Error no directorio");
@@ -85,10 +76,7 @@ public class XmlWallpaperController extends XmlWallpaperPanel {
      * @return void
      */
     private void poblateCombo(String[] filemanes) {
-
-       activeWallpaperName = navComponent.poblateCombo(filemanes);
-
-        //   (String) wallpaperCombo.getItemAt(0);
+        activeWallpaperName = navComponent.poblateCombo(filemanes);
         buildWallpapers(activeWallpaperName);
     }
 
@@ -98,19 +86,10 @@ public class XmlWallpaperController extends XmlWallpaperPanel {
      * @return void
      */
     private void buildWallpapers(String filename) {
-        if (true) {
-            wallpaperXMLFIle = new File(ManagerFiles.getWallpapersXMLFolder() + "/" + filename);
-            XMLparse xmlParse = new XMLparse();
-            try {
-                wallpaperXML = xmlParse.unmarshallerWallpapers(new FileInputStream(wallpaperXMLFIle));
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(BackgroundManager.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
+        wallpaperXMLFIle = new File(ManagerFiles.getWallpapersXMLFolder() + "/" + filename);
+        wallpaperXML = WallpaperXML.factory(wallpaperXMLFIle);
         wpaperList = wallpaperXML.getWallpapers();
         activeWallpaperName = filename;
-
     }
 
     /**
@@ -121,11 +100,11 @@ public class XmlWallpaperController extends XmlWallpaperPanel {
     public void newWallpaper(String selected) {
         System.out.println(getWidth() + "--" + getHeight());
         Wallpaper newWallpaper = Wallpaper.factory(selected);
-        panel = new WallpaperPanel(newWallpaper);
-        addToPanel(panel, 0, 50, getWidth(), getHeight() - 50);
-        WallpaperPanel p = (WallpaperPanel) panel;
+        wPanel = new WallpaperPanel(newWallpaper);
+        addToPanel( wPanel, 0, 0, getWidth(), getHeight());
+        WallpaperPanel p = (WallpaperPanel) wPanel;
         p.loadImage();
-
+        p.setListeners(new XmlWallpaperListener(this));
     }
 
     /**
@@ -133,8 +112,7 @@ public class XmlWallpaperController extends XmlWallpaperPanel {
      * @return boolean
      */
     public boolean saveCurrent() {
-        WallpaperPanel p = (WallpaperPanel) panel;
-
+        WallpaperPanel p = (WallpaperPanel) wPanel;
         Wallpaper wp = p.getWallpaper();
         try {
             wallpaperXML.add(wp);
@@ -142,11 +120,9 @@ public class XmlWallpaperController extends XmlWallpaperPanel {
             new BackgroundException(e, "No se ha seleccionado un walpaper");
         }
         XMLparse xmlParse = new XMLparse();
-
         int status = xmlParse.saveXML(wallpaperXMLFIle, XMLparse.WALLPAPER_XML, wallpaperXML);
-
-        remove(panel);
-        panel = null;
+        this.panel.removeAll();
+        //panel = null;
         if (status == 0) {
 
         }
@@ -160,7 +136,6 @@ public class XmlWallpaperController extends XmlWallpaperPanel {
         panel = new WallpaperView(wpaperList, wallpaperXML);
         System.out.println(getWidth() + "-" + (getHeight() - 300));
         addToPanel(panel, 0, 50, getWidth(), getHeight() - 60);
-        //panel.setPreferredSize(new Dimension(getWidth(),  getHeight() - 300));
         WallpaperView p = (WallpaperView) panel;
         p.buildList();
     }
@@ -169,11 +144,10 @@ public class XmlWallpaperController extends XmlWallpaperPanel {
      * @return void
      */
     public void clear() {
-        if (panel != null) {
-            remove(panel);
-            panel = null;
+        if (wPanel != null) {
+            panel.remove(wPanel);
+            wPanel = null;
         }
-
     }
 
     /**
@@ -181,8 +155,7 @@ public class XmlWallpaperController extends XmlWallpaperPanel {
      * @param listener
      */
     public void setCloseListener(MainFrameListener listener) {
-        //  cancellWallpaperBtn.setActionCommand(MainFrameListener.CLOSE_XML_WALLPAPER);
-        //  cancellWallpaperBtn.addActionListener(listener);
+         navComponent.setCloseListener(listener);
     }
     /**
      *

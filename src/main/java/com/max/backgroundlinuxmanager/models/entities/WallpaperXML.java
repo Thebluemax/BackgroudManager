@@ -23,8 +23,16 @@
  */
 package com.max.backgroundlinuxmanager.models.entities;
 
+import com.max.backgroundlinuxmanager.BackgroundManager;
+import com.max.backgroundlinuxmanager.utils.ManagerFiles;
+import com.max.backgroundlinuxmanager.utils.XMLparse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -75,4 +83,17 @@ public class WallpaperXML {
             this.wallpaper = new ArrayList<Wallpaper>();
         }
     }
+    
+    public static WallpaperXML factory(File file){
+         //File wallpaperXMLFIle = new File(ManagerFiles.getWallpapersXMLFolder() + "/" + filename);
+            XMLparse xmlParse = new XMLparse();
+            WallpaperXML wallpaperXML = null;
+            try {
+                wallpaperXML = xmlParse.unmarshallerWallpapers(new FileInputStream(file));
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(BackgroundManager.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return  wallpaperXML;
+    }
+    
 }

@@ -23,9 +23,6 @@
  */
 package com.max.backgroundlinuxmanager;
 
-import com.max.backgroundlinuxmanager.controllers.BackgroundManager;
-import com.max.backgroundlinuxmanager.exceptions.BackgroundException;
-
 /**
  *
  * @author Maximiliano Fernández thebluemax13 at gmail.com
@@ -35,19 +32,16 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
+
         
-        //Podría ser una app de consola
-        
-             BackgroundManager bgManager = new BackgroundManager();
-            if (args.length > 0) {
-            bgManager.consoleBatchProcess();           
+        BackgroundManager bgManager = new BackgroundManager();
+        if (args.length > 0) {
+            //Podría ser una app de consola
+            //  bgManager.consoleBatchProcess();           
         } else {
-
-
-                    bgManager.initApp();
-
+            bgManager.initApp();
         }
     }
-    
+
 }

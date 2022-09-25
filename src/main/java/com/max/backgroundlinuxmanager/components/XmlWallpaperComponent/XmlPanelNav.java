@@ -5,6 +5,7 @@
  */
 package com.max.backgroundlinuxmanager.components.XmlWallpaperComponent;
 
+import com.max.backgroundlinuxmanager.components.MainFrame.MainFrameListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -32,6 +33,15 @@ public class XmlPanelNav extends javax.swing.JPanel implements ItemListener {
         }
         return (String) wallpaperCombo.getItemAt(0);
         //   buildWallpapers(activeWallpaperName);
+    }
+    
+    public void setCloseListener(MainFrameListener listener){
+        cancellWallpaperBtn.setActionCommand(MainFrameListener.CLOSE_XML_WALLPAPER);
+        cancellWallpaperBtn.addActionListener(listener);
+    }
+    public void setAddListener(XmlWallpaperListener listener){
+        newXmlWallpaperBtn.setActionCommand(XmlWallpaperListener.NEW_XML_WALLPAPER);
+        newXmlWallpaperBtn.addActionListener(listener);
     }
     /**
      *
@@ -73,7 +83,7 @@ public class XmlPanelNav extends javax.swing.JPanel implements ItemListener {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         add(newXmlWallpaperBtn, gridBagConstraints);
 
-        cancellWallpaperBtn.setText("ADD NEW");
+        cancellWallpaperBtn.setText("CLOSE");
         cancellWallpaperBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancellWallpaperBtnActionPerformed(evt);

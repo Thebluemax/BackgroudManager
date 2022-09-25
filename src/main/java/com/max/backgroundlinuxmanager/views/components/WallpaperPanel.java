@@ -23,6 +23,7 @@
  */
 package com.max.backgroundlinuxmanager.views.components;
 
+import com.max.backgroundlinuxmanager.components.XmlWallpaperComponent.XmlWallpaperListener;
 import com.max.backgroundlinuxmanager.controllers.events.WallpaperButtonAdapter;
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
 import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
@@ -135,11 +136,9 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
         return wp;
     }
     
-    public void setListeners(ActionListener litener) {
-     //   jButton1.setActionCommand(BackgroundManager.SAVE_NEW_WALLPAPER);
-     //   jButton1.addActionListener(litener);
-     //   jButton2.setActionCommand(BackgroundManager.CANCEL );
-     //   jButton2.addActionListener(litener);
+    public void setListeners(XmlWallpaperListener listener) {
+       saveBtn.setActionCommand(XmlWallpaperListener.SAVE);
+        saveBtn.addActionListener(listener);
     }
 
     /**
@@ -158,7 +157,8 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
             image = new File("src/assets/no-image.png");
         }
         //System.out.println(getPreferredSize().width + "--" + getHeight());
-        ImageLoader iLoad = new ImageLoader(getWidth() - 20, getHeight() - 300, image, true, true);
+        double cosntRatio = 0.45 * (float) getWidth();
+        ImageLoader iLoad = new ImageLoader(getWidth() - 20, Math.round((float)cosntRatio), image, true, true);
         future = executor.submit(() -> {
             return iLoad.call(); //To change body of generated lambdas, choose Tools | Templates.
         });
@@ -198,6 +198,9 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
         pcolor = new javax.swing.JLabel();
         sColorLabel = new javax.swing.JLabel();
         scolor = new javax.swing.JLabel();
+        actionsPanel = new javax.swing.JPanel();
+        saveBtn = new javax.swing.JButton();
+        cancelBtn = new javax.swing.JButton();
 
         setForeground(new java.awt.Color(236, 236, 226));
         setToolTipText("");
@@ -219,7 +222,8 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
         imageHolder.setMinimumSize(new java.awt.Dimension(3000, 1400));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridheight = 3;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.insets = new java.awt.Insets(7, 2, 8, 3);
         add(imageHolder, gridBagConstraints);
 
         controlPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -269,6 +273,26 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         add(controlPanel, gridBagConstraints);
+
+        actionsPanel.setLayout(new java.awt.GridBagLayout());
+
+        saveBtn.setText("Save");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        actionsPanel.add(saveBtn, gridBagConstraints);
+
+        cancelBtn.setText("Cancel");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE_TRAILING;
+        actionsPanel.add(cancelBtn, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        add(actionsPanel, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void optionComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionComboboxActionPerformed
@@ -281,6 +305,8 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel actionsPanel;
+    private javax.swing.JButton cancelBtn;
     private javax.swing.JPanel controlPanel;
     protected javax.swing.JLabel imageHolder;
     private javax.swing.JLabel nameLabel;
@@ -289,6 +315,7 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
     private javax.swing.JLabel pColorLabel;
     private javax.swing.JLabel pcolor;
     private javax.swing.JLabel sColorLabel;
+    private javax.swing.JButton saveBtn;
     private javax.swing.JLabel scolor;
     private javax.swing.JComboBox<String> shaderCombobox;
     private javax.swing.JLabel shaderLabel;
