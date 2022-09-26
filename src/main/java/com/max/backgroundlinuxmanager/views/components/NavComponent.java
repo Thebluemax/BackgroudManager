@@ -37,9 +37,10 @@ import javax.swing.JPanel;
  */
 public class NavComponent extends JPanel {
 
-    private String[] labelList = {"Save to Wallpaper", "Save to Slide"};
+    private String[] labelList = {"Save to Wallpaper", "Save to Slide", "Show XmlWallpaper"};
     private String[] bottonRef = {MainFrameListener.SAVE_TO_NEW_WALLPAPER,
-        MainFrameListener.NEW_XML_SLIDE};
+        MainFrameListener.NEW_XML_SLIDE,
+        MainFrameListener.SHOW_XML_WALLPAPER};
     private List<JButton> buttonList;
 
     /**

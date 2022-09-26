@@ -18,6 +18,8 @@ public class MainFrameListener implements ActionListener{
     public final static String SAVE_TO_NEW_WALLPAPER = "SAVE_TO_WALLPAPER";
     public final static String NEW_XML_WALLPAPER = "NEW_XML_WALLPAPER";
     public final static String NEW_XML_SLIDE = "NEW_XML_SLIDE";
+    public final static String SHOW_XML_WALLPAPER = "SHOW_XML_WALLPAPER";
+
     public final static String CLOSE_XML_WALLPAPER = "CLOSE_XML_WALLPAPER";
 
     private MainFrameController mainFrame;
@@ -42,6 +44,9 @@ public class MainFrameListener implements ActionListener{
                 break;
             case CLOSE_XML_WALLPAPER:
                 mainFrame.closeXmlWallpaper();
+                break;
+            case SHOW_XML_WALLPAPER:
+                mainFrame.showActiveXmlWallpaper();
                 break;
         }
     }

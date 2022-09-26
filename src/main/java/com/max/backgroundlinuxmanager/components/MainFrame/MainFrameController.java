@@ -95,6 +95,14 @@ public class MainFrameController extends MainJFrame {
         library.setVisible(true);
         xmlWallpaper.setVisible(false);
     }
+    public void showXmlWallpaper(){
+    library.setVisible(false);
+            xmlWallpaper.setVisible(true);
+    }
+    public void showActiveXmlWallpaper(){
+        showXmlWallpaper();
+        xmlWallpaper.showWallpaper();
+    }
     /**
      *
      * @param visibility
