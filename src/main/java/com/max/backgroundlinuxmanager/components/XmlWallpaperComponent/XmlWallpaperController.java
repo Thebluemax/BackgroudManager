@@ -132,11 +132,11 @@ public class XmlWallpaperController extends XmlWallpaperPanel {
     /**
      * @return void
      */
-    public void seeWallpaper() {
-        panel = new WallpaperView(wpaperList, wallpaperXML);
-        System.out.println(getWidth() + "-" + (getHeight() - 300));
-        addToPanel(panel, 0, 50, getWidth(), getHeight() - 60);
-        WallpaperView p = (WallpaperView) panel;
+    public void showWallpaper() {
+        wPanel = new WallpaperView(wpaperList, wallpaperXML);
+        System.out.println(getWidth() + "-" + (getHeight()));
+        addToPanel(wPanel, 0, 0, getWidth(), getHeight());
+        WallpaperView p = (WallpaperView) wPanel;
         p.buildList();
     }
 

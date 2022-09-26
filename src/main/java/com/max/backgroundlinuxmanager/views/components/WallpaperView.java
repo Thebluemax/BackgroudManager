@@ -96,7 +96,7 @@ public class WallpaperView extends javax.swing.JPanel {
         System.out.println(wp.getFilename());
 
         WallpaperPanel view = new WallpaperPanel(wp);
-        wallpaperHolder.add(view, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, getWidth()-10, getHeight() - 200));
+        wallpaperHolder.add(view, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, getWidth()-10, getHeight()));
 
         view.loadImage();
 
