@@ -25,25 +25,17 @@ package com.max.backgroundlinuxmanager.controllers;
 
 import com.max.backgroundlinuxmanager.models.XMLDOMBackground;
 import com.max.backgroundlinuxmanager.models.entities.FrameBackground;
-import com.max.backgroundlinuxmanager.threads.ImageLoader;
-import com.max.backgroundlinuxmanager.views.components.AppColors.AppColors;
 import com.max.backgroundlinuxmanager.views.components.ImageBlockPane;
 import com.max.backgroundlinuxmanager.views.components.ListAndButtons;
-import com.max.backgroundlinuxmanager.views.components.SidePanel;
 import com.max.backgroundlinuxmanager.views.components.SlideEditPanel;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
-import javax.swing.JPanel;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import javax.swing.ImageIcon;
 
 /**
  *
