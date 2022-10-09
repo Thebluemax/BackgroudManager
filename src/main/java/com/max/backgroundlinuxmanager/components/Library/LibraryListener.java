@@ -49,7 +49,6 @@ public class LibraryListener implements ActionListener{
         System.out.println(e.getActionCommand());
         switch (e.getActionCommand()) {
             case ADD_TO_LIBRARY:
-                System.out.println("add to library");
                  library.addToLibrary();
                 break;
             case DELETE_OF_LIBRARY:
@@ -62,7 +61,6 @@ public class LibraryListener implements ActionListener{
                 if (option.getResult()) {
                     ManagerFiles.deleteFile(blockImage.getImage());
                     library.remove(blockImage);
-                   ;
                 }
                 System.out.println("delete to library");
                 break;
