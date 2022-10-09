@@ -44,6 +44,7 @@ public class LibrayPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         scrollContent = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
@@ -63,12 +64,17 @@ public class LibrayPanel extends javax.swing.JPanel {
         scrollContent.setVerifyInputWhenFocusTarget(false);
         add(scrollContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 53, 777, 566));
 
-        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 200, 5));
+        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel1.setFocusable(false);
+        jPanel1.setLayout(new java.awt.GridBagLayout());
 
         titleLabel.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         titleLabel.setText("Library");
         titleLabel.setToolTipText("");
-        jPanel1.add(titleLabel);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridwidth = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        jPanel1.add(titleLabel, gridBagConstraints);
 
         addButton.setText("ADD");
         addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -76,13 +82,16 @@ public class LibrayPanel extends javax.swing.JPanel {
                 addButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(addButton);
+        jPanel1.add(addButton, new java.awt.GridBagConstraints());
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, -1));
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jPanel1.getAccessibleContext().setAccessibleName("");
+        jPanel1.getAccessibleContext().setAccessibleParent(jPanel1);
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_addButtonActionPerformed
 
 

@@ -23,8 +23,8 @@
  */
 package com.max.backgroundlinuxmanager.controllers.utils;
 
-import com.max.backgroundlinuxmanager.utils.ManagerFiles;
 import javax.swing.JOptionPane;
+import com.max.backgroundlinuxmanager.utils.ManagerFiles;
 import com.max.backgroundlinuxmanager.views.components.ImageBlockPane;
 
 /**

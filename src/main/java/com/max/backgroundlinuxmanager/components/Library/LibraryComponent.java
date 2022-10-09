@@ -32,7 +32,6 @@ import com.max.backgroundlinuxmanager.views.components.AppColors.AppColors;
 import com.max.backgroundlinuxmanager.views.components.ImageBlockPane;
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
