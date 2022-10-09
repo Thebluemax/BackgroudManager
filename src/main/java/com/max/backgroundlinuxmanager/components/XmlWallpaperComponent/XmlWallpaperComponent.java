@@ -43,7 +43,7 @@ import javax.swing.JPanel;
  *
  * @author max
  */
-public class XmlWallpaperController extends XmlWallpaperPanel {
+public class XmlWallpaperComponent extends XmlWallpaperPanel {
 
     private List<File> cachedFilesList;
     private WallpaperXML wallpaperXML;
@@ -55,7 +55,7 @@ public class XmlWallpaperController extends XmlWallpaperPanel {
     public static String EMPTY_STRING = "";
     private XmlPanelNav navComponent;
 
-    public XmlWallpaperController(AppConfiguration appConf, int width, int heigth) {
+    public XmlWallpaperComponent(AppConfiguration appConf, int width, int heigth) {
         super(width, heigth);
         navComponent = new XmlPanelNav();
         this.appConf = appConf;

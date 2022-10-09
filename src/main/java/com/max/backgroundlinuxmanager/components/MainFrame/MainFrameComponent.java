@@ -24,7 +24,7 @@
 package com.max.backgroundlinuxmanager.components.MainFrame;
 
 import com.max.backgroundlinuxmanager.components.Library.LibraryComponent;
-import com.max.backgroundlinuxmanager.components.XmlWallpaperComponent.XmlWallpaperController;
+import com.max.backgroundlinuxmanager.components.XmlWallpaperComponent.XmlWallpaperComponent;
 import com.max.backgroundlinuxmanager.exceptions.BackgroundException;
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
 import com.max.backgroundlinuxmanager.views.components.NavComponent;
@@ -39,19 +39,19 @@ import javax.swing.JPanel;
  *
  * @author max
  */
-public class MainFrameController extends MainJFrame {
+public class MainFrameComponent extends MainJFrame {
 
    
 //    private File[] fileList;
 //    private DefaultListModel collectionName;
     //   private DefaultListModel wallpaperName;
     private LibraryComponent library;
-    private XmlWallpaperController xmlWallpaper;
+    private XmlWallpaperComponent xmlWallpaper;
     private NavComponent nav;
     private AppConfiguration appConfig;
    
 
-    public MainFrameController(AppConfiguration appConfig) {
+    public MainFrameComponent(AppConfiguration appConfig) {
         super();
         this.appConfig = appConfig;
         init();
@@ -59,7 +59,7 @@ public class MainFrameController extends MainJFrame {
 
     private void init() {
         library = new LibraryComponent(appConfig);
-        xmlWallpaper = new XmlWallpaperController(appConfig,  getWidth(), getHeight());
+        xmlWallpaper = new XmlWallpaperComponent(appConfig,  getWidth(), getHeight());
         nav = new NavComponent();
            System.out.println( getHeight() +"++"+ getWidth());
         addToMain(library, 0, 0, getWidth(), getHeight() - 120);
