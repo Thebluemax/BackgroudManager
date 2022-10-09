@@ -23,10 +23,8 @@
  */
 package com.max.backgroundlinuxmanager.views.components;
 
-import com.max.backgroundlinuxmanager.controllers.ImageLoadThread;
 import com.max.backgroundlinuxmanager.threads.ImageSave;
 import java.awt.Container;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;

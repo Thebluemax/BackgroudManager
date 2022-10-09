@@ -28,7 +28,7 @@ import java.awt.event.ActionListener;
 
 /**
  * Implementación de la interface ActionListener para las acciones 
- * correspondientes a MainFrameController 
+ correspondientes a MainFrameComponent 
  * 
  * @author max
  */
@@ -40,12 +40,12 @@ public class MainFrameListener implements ActionListener{
 
     public final static String CLOSE_XML_WALLPAPER = "CLOSE_XML_WALLPAPER";
 
-    private MainFrameController mainFrame;
+    private MainFrameComponent mainFrame;
     /**
      * 
      * @param mainFrame 
      */
-    public MainFrameListener(MainFrameController mainFrame) {
+    public MainFrameListener(MainFrameComponent mainFrame) {
         this.mainFrame = mainFrame;
     }
 
