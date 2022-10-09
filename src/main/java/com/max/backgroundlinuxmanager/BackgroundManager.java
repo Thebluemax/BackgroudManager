@@ -23,7 +23,7 @@
  */
 package com.max.backgroundlinuxmanager;
 
-import com.max.backgroundlinuxmanager.components.MainFrame.MainFrameController;
+import com.max.backgroundlinuxmanager.components.MainFrame.MainFrameComponent;
 import com.max.backgroundlinuxmanager.controllers.ConfigurationManager;
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
 
@@ -35,7 +35,7 @@ public class BackgroundManager  {
 
 
     private ConfigurationManager configManager;
-    private MainFrameController frame;
+    private MainFrameComponent frame;
     private AppConfiguration appConfig;
 
     /**
@@ -49,7 +49,7 @@ public class BackgroundManager  {
  * Inicio del componente principal
  */
     private void initComponents() {
-        frame = new MainFrameController(appConfig);
+        frame = new MainFrameComponent(appConfig);
         frame.setVisible(true);
     }
 

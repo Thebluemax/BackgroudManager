@@ -24,7 +24,7 @@
 package com.max.backgroundlinuxmanager.components.Library;
 
 import com.max.backgroundlinuxmanager.controllers.utils.FileChooserController;
-import com.max.backgroundlinuxmanager.components.MainFrame.MainFrameController;
+import com.max.backgroundlinuxmanager.components.MainFrame.MainFrameComponent;
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
 import com.max.backgroundlinuxmanager.utils.ManagerFiles;
 import com.max.backgroundlinuxmanager.views.components.AddingToLibraryDialog;
@@ -50,7 +50,7 @@ public class LibraryComponent extends LibrayPanel {
     private List<File> cachedFilesList;
     protected List<ImageBlockPane> blockList;
     protected JPanel container;
-    private MainFrameController frame;
+    private MainFrameComponent frame;
 
     public LibraryComponent(AppConfiguration appConfig) {
         super();
