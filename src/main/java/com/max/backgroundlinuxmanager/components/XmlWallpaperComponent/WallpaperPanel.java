@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.max.backgroundlinuxmanager.views.components;
+package com.max.backgroundlinuxmanager.components.XmlWallpaperComponent;
 
 import com.max.backgroundlinuxmanager.components.XmlWallpaperComponent.XmlWallpaperListener;
 import com.max.backgroundlinuxmanager.controllers.events.WallpaperButtonAdapter;

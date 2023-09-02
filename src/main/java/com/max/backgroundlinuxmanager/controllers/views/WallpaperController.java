@@ -26,7 +26,7 @@ package com.max.backgroundlinuxmanager.controllers.views;
 import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
 import com.max.backgroundlinuxmanager.threads.ImageLoader;
 import com.max.backgroundlinuxmanager.utils.ManagerFiles;
-import com.max.backgroundlinuxmanager.views.components.WallpaperPanel;
+import com.max.backgroundlinuxmanager.components.XmlWallpaperComponent.WallpaperPanel;
 import java.io.File;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;

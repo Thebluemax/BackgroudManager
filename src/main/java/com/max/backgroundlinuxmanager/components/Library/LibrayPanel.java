@@ -63,7 +63,9 @@ public class LibrayPanel extends javax.swing.JPanel {
         scrollContent.setVerifyInputWhenFocusTarget(false);
         add(scrollContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 53, 777, 566));
 
-        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 200, 5));
+        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.LEFT);
+        flowLayout1.setAlignOnBaseline(true);
+        jPanel1.setLayout(flowLayout1);
 
         titleLabel.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         titleLabel.setText("Library");

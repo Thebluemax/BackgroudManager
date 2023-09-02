@@ -21,16 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.max.backgroundlinuxmanager.views.components;
+package com.max.backgroundlinuxmanager.components.XmlWallpaperComponent;
 
-import com.max.backgroundlinuxmanager.components.XmlWallpaperComponent.XmlWallpaperListener;
+import com.max.backgroundlinuxmanager.components.XmlWallpaperComponent.WallpaperPanel;
 import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
 import com.max.backgroundlinuxmanager.models.entities.WallpaperXML;
 import com.max.backgroundlinuxmanager.threads.ImageLoader;
 import java.awt.GridLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -42,6 +39,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 /**
  *
@@ -54,22 +52,28 @@ public class WallpaperView extends javax.swing.JPanel {
      */
     protected JPanel container;
     private WallpaperXML wallpaperXml;
+    private javax.swing.JScrollPane scrollPane1;
+     private javax.swing.JPanel wallpaperHolder;
     private List<Wallpaper> wList;
 
     public WallpaperView(List<Wallpaper> wList, WallpaperXML wallpaper) {
         wallpaperXml = wallpaper;
         this.wList = wList;
-
+        wallpaperHolder = new JPanel();
+        container = new JPanel();
+        scrollPane1 = new JScrollPane();
+        GridLayout layout = new GridLayout(1, 10);
+        container.setLayout(layout);
         initComponents();
-        jScrollPane1.setBounds(0, 0, getWidth(), 80);
+       // scrollPane1.setBounds(0, 0, getWidth(), 80);
 
     }
 
     public void buildList() {
-        container = new JPanel();
-        GridLayout layout = new GridLayout(1, 10);
-        container.setLayout(layout);
-        jScrollPane1.setViewportView(container);
+        add(scrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, getWidth(), 120));
+        add( wallpaperHolder, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, getWidth(), getHeight() - 60));
+
+        scrollPane1.setViewportView(container);
         System.out.println(getWidth() + "()" + getHeight());
         int width = getWidth() + 100;
         int height = getHeight() + 60;
@@ -81,33 +85,7 @@ public class WallpaperView extends javax.swing.JPanel {
             holder.setPreferredSize(new java.awt.Dimension(150, 80));
             container.add(holder);
             loadImage(fWallpaper, holder);
-            holder.addMouseListener(new MouseListener() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }
-
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }
-
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }
-                
-            } );
+            holder.addMouseListener(new XmlWallpaperMouseListener(this));
         }
     }
 
@@ -119,7 +97,7 @@ public class WallpaperView extends javax.swing.JPanel {
             file = new File("src/assets/no-image.png");
         }
 
-        ImageLoader iLoad = new ImageLoader(holder.getWidth(), holder.getHeight(), file, true, true);
+        ImageLoader iLoad = new ImageLoader(200, 170, file, true, true);
         future = executor.submit(() -> {
             return iLoad.call(); //To change body of generated lambdas, choose Tools | Templates.
         });
@@ -140,13 +118,9 @@ public class WallpaperView extends javax.swing.JPanel {
     public void showWallpaper(JLabel label) {
         int index = container.getComponentZOrder(label);
         Wallpaper wp = wList.get(index);
-        System.out.println(wp.getFilename());
-
         WallpaperPanel view = new WallpaperPanel(wp);
-        wallpaperHolder.add(view, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, getWidth()-10, getHeight()));
-
+        wallpaperHolder.add(view, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, getWidth(), getHeight() - 60));
         view.loadImage();
-
     }
 
     /**
@@ -157,11 +131,8 @@ public class WallpaperView extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        wallpaperHolder = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         saveBtn = new javax.swing.JButton();
         editBtn = new javax.swing.JButton();
@@ -178,19 +149,7 @@ public class WallpaperView extends javax.swing.JPanel {
         );
 
         setBackground(new java.awt.Color(51, 51, 255));
-        setLayout(new java.awt.GridBagLayout());
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        add(jScrollPane1, gridBagConstraints);
-
-        wallpaperHolder.setForeground(new java.awt.Color(2, 222, 222));
-        wallpaperHolder.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridheight = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        add(wallpaperHolder, gridBagConstraints);
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
@@ -206,14 +165,7 @@ public class WallpaperView extends javax.swing.JPanel {
         cancelBtn.setText("CANCEL");
         jPanel2.add(cancelBtn);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_END;
-        gridBagConstraints.weightx = 0.1;
-        gridBagConstraints.weighty = 0.1;
-        add(jPanel2, gridBagConstraints);
+        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 533, 936, -1));
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -223,8 +175,6 @@ public class WallpaperView extends javax.swing.JPanel {
     private javax.swing.JButton editBtn;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton saveBtn;
-    private javax.swing.JPanel wallpaperHolder;
     // End of variables declaration//GEN-END:variables
 }

@@ -35,7 +35,7 @@ public class BackgroundManager  {
 
 
     private ConfigurationManager configManager;
-    private MainFrameController frame;
+    private MainFrameController mainFrame;
     private AppConfiguration appConfig;
 
     /**
@@ -49,8 +49,8 @@ public class BackgroundManager  {
  * Inicio del componente principal
  */
     private void initComponents() {
-        frame = new MainFrameController(appConfig);
-        frame.setVisible(true);
+        mainFrame = new MainFrameController(appConfig);
+        mainFrame.setVisible(true);
     }
 
     /**

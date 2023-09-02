@@ -41,27 +41,26 @@ public class MainJFrame extends javax.swing.JFrame {
     private static String ADD_TO_LIBRARY = "addToLibrary";
     private static String GET_WALLPAPER = "getWallPaper";
     private static String LIBRARY_TAG = "Libreria";
-    
-    
-/**
- *  contructor 
- */
+
+    /**
+     * contructor
+     */
     public MainJFrame() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.getContentPane().setBackground( new AppColors().generalColor());
+        this.getContentPane().setBackground(new AppColors().generalColor());
         initComponents();
         pack();
     }
-  
-    public void addToMain(JPanel panel,int x, int y, int width, int heigth){
+
+    public void addToMain(JPanel panel, int x, int y, int width, int heigth) {
         panel.setBorder(BorderFactory.createLineBorder(
-                                    Color.ORANGE, 1, true));
-         panel.setBounds(x, y, width, heigth);
-        getContentPane().add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints( x, y, width, heigth));
-       
+                Color.ORANGE, 1, true));
+        panel.setBounds(x, y, width, heigth);
+        getContentPane().add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width, heigth));
+
         pack();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -90,13 +89,13 @@ public class MainJFrame extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-  //*  public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+    //*  public static void main(String args[]) {
+    /* Set the Nimbus look and feel */
+    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-   /*    try {
+     */
+ /*    try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -114,13 +113,13 @@ public class MainJFrame extends javax.swing.JFrame {
         }
         //</editor-fold>/*/
 
-        /* Create and display the form */
+ /* Create and display the form */
     //    java.awt.EventQueue.invokeLater(new Runnable() {
-      //      public void run() {
-      //          new MainJFrame().setVisible(true);
-      //      }
-      //  });
- //   }
+    //      public void run() {
+    //          new MainJFrame().setVisible(true);
+    //      }
+    //  });
+    //   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

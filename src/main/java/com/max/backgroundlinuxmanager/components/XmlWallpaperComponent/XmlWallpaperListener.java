@@ -40,8 +40,8 @@ public class XmlWallpaperListener implements ActionListener{
     public static final String NEW_XML_WALLPAPER = "NEW_XML_WALLPAPER";
 
     
-    private XmlWallpaperController controller;
-    public XmlWallpaperListener(XmlWallpaperController controller) {
+    private XmlWallpaperComponent controller;
+    public XmlWallpaperListener(XmlWallpaperComponent controller) {
         this.controller = controller;
     }
     

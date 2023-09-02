@@ -24,32 +24,20 @@
 package com.max.backgroundlinuxmanager.components.MainFrame;
 
 import com.max.backgroundlinuxmanager.components.Library.LibraryComponent;
-import com.max.backgroundlinuxmanager.components.XmlWallpaperComponent.XmlWallpaperController;
+import com.max.backgroundlinuxmanager.components.XmlWallpaperComponent.XmlWallpaperComponent;
 import com.max.backgroundlinuxmanager.exceptions.BackgroundException;
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
 import com.max.backgroundlinuxmanager.views.components.NavComponent;
-import java.awt.event.MouseAdapter;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.DefaultListModel;
-import javax.swing.JPanel;
-
 /**
  *
  * @author max
  */
 public class MainFrameController extends MainJFrame {
 
-   
-//    private File[] fileList;
-//    private DefaultListModel collectionName;
-    //   private DefaultListModel wallpaperName;
     private LibraryComponent library;
-    private XmlWallpaperController xmlWallpaper;
+    private XmlWallpaperComponent xmlWallpaper;
     private NavComponent nav;
     private AppConfiguration appConfig;
-   
 
     public MainFrameController(AppConfiguration appConfig) {
         super();
@@ -59,9 +47,9 @@ public class MainFrameController extends MainJFrame {
 
     private void init() {
         library = new LibraryComponent(appConfig);
-        xmlWallpaper = new XmlWallpaperController(appConfig,  getWidth(), getHeight());
+        xmlWallpaper = new XmlWallpaperComponent(appConfig, getWidth(), getHeight());
         nav = new NavComponent();
-           System.out.println( getHeight() +"++"+ getWidth());
+        System.out.println(getHeight() + "++" + getWidth());
         addToMain(library, 0, 0, getWidth(), getHeight() - 120);
         addToMain(nav, 0, getHeight() - 120, getWidth(), 50);
         addToMain(xmlWallpaper, 0, 0, getWidth(), getHeight() - 120);
@@ -103,7 +91,6 @@ public class MainFrameController extends MainJFrame {
             library.setVisible(false);
             xmlWallpaper.setVisible(true);
             xmlWallpaper.newWallpaper(selected);
-            // xmlWallpaper.setListener(this);
         }
 
     }
@@ -113,58 +100,14 @@ public class MainFrameController extends MainJFrame {
         library.setVisible(true);
         xmlWallpaper.setVisible(false);
     }
-    public void showXmlWallpaper(){
-    library.setVisible(false);
-            xmlWallpaper.setVisible(true);
+
+    public void showXmlWallpaper() {
+        library.setVisible(false);
+        xmlWallpaper.setVisible(true);
     }
-    public void showActiveXmlWallpaper(){
+
+    public void showActiveXmlWallpaper() {
         showXmlWallpaper();
         xmlWallpaper.showWallpaper();
     }
-    /**
-     *
-     * @param visibility
-     */
-    /**
-     * public void setLibraryView(boolean visibility) {
-     *
-     * if (visibility) { setViewPortContainer(container); } else { //
-     * scrollContent.setViewportView(null); }
-    }*
-     */
-    /**
-     * return the path from the seledted item
-     *
-     * @return
-     */
-    /**
-     * public String getSelected() { String r = ""; for (int i = 0; i <
-     * imageList.size(); i++) { if (imageList.get(i).isChecked()) { r =
-     * imageList.get(i).getFilePath(); } } return r;
-    }*
-     */
-
-    /*public List<ImageBlockPane> getAllImgeBlock() {
-        return imageList;
-    }*/
-    /**
-     * agrega un nuevo elemento a la lista secundaria
-     *
-     * @param nameWallpaper
-     */
-    /**
-     * public void setWallpaperList(String[] nameWallpaper) {
-     * sideBar.setChildLidt(nameWallpaper);
-     *
-     * }
-     *
-     * public void setList(String wallpaperXML, String[] listFile) {
-     * sideBar.setListFather(listFile);
-     *
-     * }
-     *
-     * public void addSideBarEvents(MouseAdapter mouseAdapter) {
-     * sideBar.addListMouseEvents(mouseAdapter);
-    }*
-     */
-}
+  }

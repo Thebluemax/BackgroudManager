@@ -25,7 +25,7 @@ package com.max.backgroundlinuxmanager.controllers.events;
 
 import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
 import com.max.backgroundlinuxmanager.utils.ColorManager;
-import com.max.backgroundlinuxmanager.views.components.WallpaperPanel;
+import com.max.backgroundlinuxmanager.components.XmlWallpaperComponent.WallpaperPanel;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
