@@ -30,8 +30,6 @@ import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
 import com.max.backgroundlinuxmanager.models.entities.WallpaperXML;
 import com.max.backgroundlinuxmanager.utils.ManagerFiles;
 import com.max.backgroundlinuxmanager.utils.XMLparse;
-import com.max.backgroundlinuxmanager.views.components.WallpaperPanel;
-import com.max.backgroundlinuxmanager.views.components.WallpaperView;
 import com.max.backgroundlinuxmanager.components.XmlWallpaperComponent.XmlWallpaperPanel;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -119,7 +117,7 @@ public class XmlWallpaperComponent extends XmlWallpaperPanel {
         System.out.println(getWidth() + "--" + getHeight());
         Wallpaper newWallpaper = Wallpaper.factory(selected);
         wPanel = new WallpaperPanel(newWallpaper);
-        addToPanel( wPanel, 0, 0, getWidth(), getHeight());
+        addToPanel( wPanel, 0, 40, getWidth(), getHeight() - 100);
         WallpaperPanel p = (WallpaperPanel) wPanel;
         p.loadImage();
         p.setListeners(new XmlWallpaperListener(this));
@@ -139,7 +137,7 @@ public class XmlWallpaperComponent extends XmlWallpaperPanel {
         }
         XMLparse xmlParse = new XMLparse();
         int status = xmlParse.saveXML(wallpaperXMLFIle, XMLparse.WALLPAPER_XML, wallpaperXML);
-        this.panel.removeAll();
+       //this.panel.removeAll();
         //panel = null;
         if (status == 0) {
 
@@ -153,7 +151,7 @@ public class XmlWallpaperComponent extends XmlWallpaperPanel {
     public void showWallpaper() {
         wPanel = new WallpaperView(wpaperList, wallpaperXML);
         System.out.println(getWidth() + "-" + (getHeight()));
-        addToPanel(wPanel, 0, 0, getWidth(), getHeight());
+        addToPanel(wPanel, 0, 30, getWidth(), getHeight() - 100);
         WallpaperView p = (WallpaperView) wPanel;
         p.buildList();
     }

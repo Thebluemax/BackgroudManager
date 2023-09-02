@@ -50,7 +50,6 @@ public class XmlPanelNav extends javax.swing.JPanel implements ItemListener {
             wallpaperCombo.addItem(filemane);
         }
         return (String) wallpaperCombo.getItemAt(0);
-        //   buildWallpapers(activeWallpaperName);
     }
     
     public void setCloseListener(MainFrameListener listener){

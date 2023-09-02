@@ -23,6 +23,7 @@
  */
 package com.max.backgroundlinuxmanager.views.components;
 
+import com.max.backgroundlinuxmanager.components.XmlWallpaperComponent.WallpaperPanel;
 import com.max.backgroundlinuxmanager.components.Library.LibraryListener;
 import java.io.File;
 import com.max.backgroundlinuxmanager.threads.ImageLoader;

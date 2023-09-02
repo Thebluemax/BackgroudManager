@@ -23,9 +23,7 @@
  */
 package com.max.backgroundlinuxmanager.components.XmlWallpaperComponent;
 
-import java.awt.Panel;
 import javax.swing.JPanel;
-import org.jdesktop.swingx.auth.JAASLoginService;
 
 /**
  *
@@ -42,15 +40,11 @@ public class XmlWallpaperPanel extends javax.swing.JPanel {
         setBounds(0, 0, width, heigth);
         initComponents();
         System.out.println(getWidth() + "//" + getHeight());
-        panel = new JPanel();
-        add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, getWidth(), getHeight()));
-        //navPanel.setBounds(0, 0, getWidth(), 50);
 
     }
 
     public void addToPanel(JPanel panel, int x, int y, int width, int heigth) {
-        //panel.setBounds(x, y, width, heigth);
-        this.panel.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, width, heigth));
+       add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, width, heigth));
 
     }
 
