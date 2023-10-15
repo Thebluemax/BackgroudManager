@@ -65,14 +65,22 @@ public class WallpaperView extends javax.swing.JPanel {
         GridLayout layout = new GridLayout(1, 10);
         container.setLayout(layout);
         initComponents();
-       // scrollPane1.setBounds(0, 0, getWidth(), 80);
-
+        scrollPane1.setBounds(0, 0, getWidth(), getHeight());
+       int navH = jPanel2.getHeight();
+       
     }
 
     public void buildList() {
-        add(scrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, getWidth(), 120));
-        add( wallpaperHolder, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, getWidth(), getHeight() - 60));
-
+       java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+ 
+        
+        gridBagConstraints.gridheight = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_START;
+        gridBagConstraints.weightx = 0.2;
+        add(scrollPane1,gridBagConstraints);
+        add( wallpaperHolder);
+        
         scrollPane1.setViewportView(container);
         System.out.println(getWidth() + "()" + getHeight());
         int width = getWidth() + 100;
@@ -131,6 +139,7 @@ public class WallpaperView extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -148,8 +157,8 @@ public class WallpaperView extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         );
 
-        setBackground(new java.awt.Color(51, 51, 255));
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setBackground(new java.awt.Color(31, 51, 25));
+        setLayout(new java.awt.GridBagLayout());
 
         jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
@@ -165,7 +174,13 @@ public class WallpaperView extends javax.swing.JPanel {
         cancelBtn.setText("CANCEL");
         jPanel2.add(cancelBtn);
 
-        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 533, 936, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_END;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.weighty = 0.1;
+        add(jPanel2, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
 

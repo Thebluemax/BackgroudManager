@@ -43,10 +43,13 @@ public class XmlWallpaperPanel extends javax.swing.JPanel {
 
     }
 
-    public void addToPanel(JPanel panel, int x, int y, int width, int heigth) {
-       add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, width, heigth));
+    public void addToPanel(JPanel panel, int x, int y, int width, int height) {
+        panel.setBounds(x, y, width, height);
+       add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, width, height));
 
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

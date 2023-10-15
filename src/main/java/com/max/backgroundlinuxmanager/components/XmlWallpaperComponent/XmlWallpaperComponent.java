@@ -23,6 +23,7 @@
  */
 package com.max.backgroundlinuxmanager.components.XmlWallpaperComponent;
 
+import com.max.backgroundlinuxmanager.components.MainFrame.MainFrameController;
 import com.max.backgroundlinuxmanager.components.MainFrame.MainFrameListener;
 import com.max.backgroundlinuxmanager.exceptions.BackgroundException;
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
@@ -30,7 +31,6 @@ import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
 import com.max.backgroundlinuxmanager.models.entities.WallpaperXML;
 import com.max.backgroundlinuxmanager.utils.ManagerFiles;
 import com.max.backgroundlinuxmanager.utils.XMLparse;
-import com.max.backgroundlinuxmanager.components.XmlWallpaperComponent.XmlWallpaperPanel;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -52,6 +52,7 @@ public class XmlWallpaperComponent extends XmlWallpaperPanel {
     private AppConfiguration appConf;
     public static String EMPTY_STRING = "";
     private XmlPanelNav navComponent;
+    private MainFrameController mainController;
 
     public XmlWallpaperComponent(AppConfiguration appConf, int width, int heigth) {
         super(width, heigth);
@@ -61,6 +62,7 @@ public class XmlWallpaperComponent extends XmlWallpaperPanel {
         checkWallpapersXML();
         add(navComponent, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, width, 30));
         navComponent.setAddListener(new XmlWallpaperListener(this));
+        navComponent.setVisible(false);
 
     }
 
@@ -113,11 +115,13 @@ public class XmlWallpaperComponent extends XmlWallpaperPanel {
      * @param selected String
      * @return void
      */
-    public void newWallpaper(String selected) {
+    public void newWallpaper(String selected, MainFrameController mainController) {
+        this.mainController = mainController;
         System.out.println(getWidth() + "--" + getHeight());
         Wallpaper newWallpaper = Wallpaper.factory(selected);
         wPanel = new WallpaperPanel(newWallpaper);
-        addToPanel( wPanel, 0, 40, getWidth(), getHeight() - 100);
+        
+        addToPanel( wPanel, 0, 30, getWidth(), getHeight() - 30);
         WallpaperPanel p = (WallpaperPanel) wPanel;
         p.loadImage();
         p.setListeners(new XmlWallpaperListener(this));
@@ -137,11 +141,10 @@ public class XmlWallpaperComponent extends XmlWallpaperPanel {
         }
         XMLparse xmlParse = new XMLparse();
         int status = xmlParse.saveXML(wallpaperXMLFIle, XMLparse.WALLPAPER_XML, wallpaperXML);
-       //this.panel.removeAll();
-        //panel = null;
         if (status == 0) {
-
+            
         }
+        clear();
         return false;
     }
 
@@ -149,9 +152,10 @@ public class XmlWallpaperComponent extends XmlWallpaperPanel {
      * @return void
      */
     public void showWallpaper() {
+        navComponent.setVisible(true);
         wPanel = new WallpaperView(wpaperList, wallpaperXML);
         System.out.println(getWidth() + "-" + (getHeight()));
-        addToPanel(wPanel, 0, 30, getWidth(), getHeight() - 100);
+        addToPanel(wPanel, 0, 30, getWidth(), getHeight() - 30);
         WallpaperView p = (WallpaperView) wPanel;
         p.buildList();
     }
@@ -161,9 +165,13 @@ public class XmlWallpaperComponent extends XmlWallpaperPanel {
      */
     public void clear() {
         if (wPanel != null) {
-            panel.remove(wPanel);
+            remove(wPanel);
             wPanel = null;
         }
+        invalidate();
+        validate();
+        repaint();
+        this.mainController.closeXmlWallpaper();
     }
 
     /**
@@ -171,7 +179,7 @@ public class XmlWallpaperComponent extends XmlWallpaperPanel {
      * @param listener
      */
     public void setCloseListener(MainFrameListener listener) {
-         navComponent.setCloseListener(listener);
+     navComponent.setCloseListener(listener);
     }
     /**
      *
