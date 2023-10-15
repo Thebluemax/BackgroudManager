@@ -31,7 +31,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="cancellWallpaperBtn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="CLOSE"/>
+        <Property name="text" type="java.lang.String" value="jjjjj"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancellWallpaperBtnActionPerformed"/>

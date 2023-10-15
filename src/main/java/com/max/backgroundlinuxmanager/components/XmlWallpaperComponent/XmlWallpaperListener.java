@@ -44,7 +44,6 @@ public class XmlWallpaperListener implements ActionListener{
     public XmlWallpaperListener(XmlWallpaperComponent controller) {
         this.controller = controller;
     }
-    
   
 
     @Override
@@ -65,8 +64,10 @@ public class XmlWallpaperListener implements ActionListener{
                 }
                 break;
             case SAVE:
-                
                 controller.saveCurrent();
+                break;
+            case CANCEL:
+                controller.clear();
                 break;
         }
     }

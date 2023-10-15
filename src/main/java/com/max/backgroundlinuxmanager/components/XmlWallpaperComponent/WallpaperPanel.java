@@ -139,6 +139,8 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
     public void setListeners(XmlWallpaperListener listener) {
        saveBtn.setActionCommand(XmlWallpaperListener.SAVE);
         saveBtn.addActionListener(listener);
+        cancelBtn.setActionCommand(XmlWallpaperListener.CANCEL);
+        cancelBtn.addActionListener(listener);
     }
 
     /**
@@ -202,6 +204,7 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
         saveBtn = new javax.swing.JButton();
         cancelBtn = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(51, 151, 55));
         setForeground(new java.awt.Color(236, 236, 226));
         setToolTipText("");
         setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N

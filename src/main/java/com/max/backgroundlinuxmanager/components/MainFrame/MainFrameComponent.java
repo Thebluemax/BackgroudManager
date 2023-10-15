@@ -28,6 +28,7 @@ import com.max.backgroundlinuxmanager.components.XmlWallpaperComponent.XmlWallpa
 import com.max.backgroundlinuxmanager.exceptions.BackgroundException;
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
 import com.max.backgroundlinuxmanager.views.components.NavComponent;
+
 /**
  *
  * @author max
@@ -51,11 +52,13 @@ public class MainFrameComponent extends MainJFrame {
         xmlWallpaper = new XmlWallpaperComponent(appConfig, getWidth(), getHeight());
         nav = new NavComponent();
         System.out.println(getHeight() + "++" + getWidth());
-        addToMain(library, 0, 0, getWidth(), getHeight() - 120);
-        addToMain(nav, 0, getHeight() - 120, getWidth(), 50);
-        addToMain(xmlWallpaper, 0, 0, getWidth(), getHeight() - 120);
+        addToMain(library, 0, 0, getWidth(), getHeight() - 90);
+        addToMain(xmlWallpaper, 0, 0, getWidth(), getHeight());
+
+        addToMain(nav, 0, getHeight() - 90, getWidth(), 50);
         nav.addActionListener(new MainFrameListener(this));
         xmlWallpaper.setCloseListener(new MainFrameListener(this));
+        showLibrary(true);
     }
 
     /**
@@ -65,6 +68,7 @@ public class MainFrameComponent extends MainJFrame {
      */
     public void showLibrary(boolean status) {
         library.setVisible(status);
+        nav.setVisibility(status);
     }
 
     public void showXmlWallpaper(boolean status) {
@@ -91,24 +95,26 @@ public class MainFrameComponent extends MainJFrame {
         } else {
             library.setVisible(false);
             xmlWallpaper.setVisible(true);
-            xmlWallpaper.newWallpaper(selected);
+            xmlWallpaper.newWallpaper(selected, this);
         }
 
     }
 
     public void closeXmlWallpaper() {
-        xmlWallpaper.clear();
-        library.setVisible(true);
+        
         xmlWallpaper.setVisible(false);
+        showLibrary(true);
     }
 
     public void showXmlWallpaper() {
         library.setVisible(false);
+        nav.setVisibility(false);
         xmlWallpaper.setVisible(true);
+        xmlWallpaper.showWallpaper();
     }
 
     public void showActiveXmlWallpaper() {
         showXmlWallpaper();
-        xmlWallpaper.showWallpaper();
+       // xmlWallpaper.showWallpaper();
     }
-  }
+}

@@ -100,7 +100,7 @@ public class XmlPanelNav extends javax.swing.JPanel implements ItemListener {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         add(newXmlWallpaperBtn, gridBagConstraints);
 
-        cancellWallpaperBtn.setText("CLOSE");
+        cancellWallpaperBtn.setText("jjjjj");
         cancellWallpaperBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancellWallpaperBtnActionPerformed(evt);
