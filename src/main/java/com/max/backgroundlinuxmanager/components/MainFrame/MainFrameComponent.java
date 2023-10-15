@@ -58,6 +58,7 @@ public class MainFrameComponent extends MainJFrame {
         addToMain(nav, 0, getHeight() - 90, getWidth(), 50);
         nav.addActionListener(new MainFrameListener(this));
         xmlWallpaper.setCloseListener(new MainFrameListener(this));
+        showXmlWallpaper(false);
         showLibrary(true);
     }
 

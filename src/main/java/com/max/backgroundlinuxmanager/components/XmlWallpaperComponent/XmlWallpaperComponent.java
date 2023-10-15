@@ -23,7 +23,7 @@
  */
 package com.max.backgroundlinuxmanager.components.XmlWallpaperComponent;
 
-import com.max.backgroundlinuxmanager.components.MainFrame.MainFrameController;
+import com.max.backgroundlinuxmanager.components.MainFrame.MainFrameComponent;
 import com.max.backgroundlinuxmanager.components.MainFrame.MainFrameListener;
 import com.max.backgroundlinuxmanager.exceptions.BackgroundException;
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
@@ -52,7 +52,7 @@ public class XmlWallpaperComponent extends XmlWallpaperPanel {
     private AppConfiguration appConf;
     public static String EMPTY_STRING = "";
     private XmlPanelNav navComponent;
-    private MainFrameController mainController;
+    private MainFrameComponent mainController;
 
     public XmlWallpaperComponent(AppConfiguration appConf, int width, int heigth) {
         super(width, heigth);
@@ -112,10 +112,10 @@ public class XmlWallpaperComponent extends XmlWallpaperPanel {
 
     /**
      *
-     * @param selected String
-     * @return void
+     * @param selected String    
+     * @param mainController MainFrameComponent
      */
-    public void newWallpaper(String selected, MainFrameController mainController) {
+    public void newWallpaper(String selected, MainFrameComponent mainController) {
         this.mainController = mainController;
         System.out.println(getWidth() + "--" + getHeight());
         Wallpaper newWallpaper = Wallpaper.factory(selected);
