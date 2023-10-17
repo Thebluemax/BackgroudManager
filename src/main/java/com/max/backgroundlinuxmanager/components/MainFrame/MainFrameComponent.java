@@ -49,15 +49,15 @@ public class MainFrameComponent extends MainJFrame {
     private void init() {
         library = new LibraryComponent(appConfig);
         xmlWallpaper = new XmlWallpaperComponent(appConfig,  getWidth(), getHeight());
-        xmlWallpaper = new XmlWallpaperComponent(appConfig, getWidth(), getHeight());
         nav = new NavComponent();
-        System.out.println(getHeight() + "++" + getWidth());
+        //System.out.println(getHeight() + "++" + getWidth());
         addToMain(library, 0, 0, getWidth(), getHeight() - 90);
         addToMain(xmlWallpaper, 0, 0, getWidth(), getHeight());
-
         addToMain(nav, 0, getHeight() - 90, getWidth(), 50);
+        
         nav.addActionListener(new MainFrameListener(this));
         xmlWallpaper.setCloseListener(new MainFrameListener(this));
+        
         showXmlWallpaper(false);
         showLibrary(true);
     }
@@ -90,12 +90,12 @@ public class MainFrameComponent extends MainJFrame {
      * library
      */
     public void newWallpaper() {
-        String selected = library.getSelected();
+        String selected = getSelected();
         if (selected == "") {
             new BackgroundException(new Exception(), "Se ha seleccionar al menos una imagen");
         } else {
-            library.setVisible(false);
-            xmlWallpaper.setVisible(true);
+            showLibrary(false);
+            showXmlWallpaper(true);
             xmlWallpaper.newWallpaper(selected, this);
         }
 
@@ -104,18 +104,24 @@ public class MainFrameComponent extends MainJFrame {
     public void closeXmlWallpaper() {
         
         xmlWallpaper.setVisible(false);
+        xmlWallpaper.clear();
         showLibrary(true);
     }
 
     public void showXmlWallpaper() {
-        library.setVisible(false);
-        nav.setVisibility(false);
-        xmlWallpaper.setVisible(true);
+        showLibrary(false);
+        showXmlWallpaper(true);
         xmlWallpaper.showWallpaper();
     }
 
     public void showActiveXmlWallpaper() {
         showXmlWallpaper();
        // xmlWallpaper.showWallpaper();
+    }
+    
+     public void showSlideXmlWallpaper() {
+        showLibrary(false);
+        showXmlWallpaper(true);
+        xmlWallpaper.showSlideWallpaper(library.getSelectedBlocks());
     }
 }

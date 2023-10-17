@@ -59,6 +59,7 @@ public class MainFrameListener implements ActionListener{
                 mainFrame.newWallpaper();
                 break;
             case NEW_XML_SLIDE:
+                mainFrame.showSlideXmlWallpaper();
                 break;
             case CLOSE_XML_WALLPAPER:
                 mainFrame.closeXmlWallpaper();
