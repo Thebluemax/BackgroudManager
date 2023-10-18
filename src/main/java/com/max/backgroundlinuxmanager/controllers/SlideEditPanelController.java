@@ -27,7 +27,7 @@ import com.max.backgroundlinuxmanager.models.XMLDOMBackground;
 import com.max.backgroundlinuxmanager.models.entities.FrameBackground;
 import com.max.backgroundlinuxmanager.views.components.ImageBlockPane;
 import com.max.backgroundlinuxmanager.views.components.ListAndButtons;
-import com.max.backgroundlinuxmanager.views.components.SlideEditPanel;
+import com.max.backgroundlinuxmanager.components.XmlWallpaperComponent.SlideEditPanel;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

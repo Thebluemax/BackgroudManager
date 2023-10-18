@@ -150,7 +150,6 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
      * @return void
      */
     public void loadImage() {
-        System.out.println(wp.getFilename());
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<ImageIcon> future;
         File image = new File(wp.getFilename());

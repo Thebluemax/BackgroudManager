@@ -45,7 +45,7 @@ public class XmlWallpaperPanel extends javax.swing.JPanel {
 
     public void addToPanel(JPanel panel, int x, int y, int width, int height) {
         panel.setBounds(x, y, width, height);
-       add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, width, height));
+       add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width, height));
 
     }
     

@@ -23,13 +23,25 @@
  */
 package com.max.backgroundlinuxmanager.models.entities;
 
+import com.max.backgroundlinuxmanager.views.components.ImageBlockPane;
+
 /**
  *
  * @author Maximiliano Fernández thebluemax13 at gmail.com
  */
 public class FrameBackground {
+
     private String filePath;
-    private int duration;
+    private int durationImage;
+    private int durationTransition;
+
+    public int getDurationTransition() {
+        return durationTransition;
+    }
+
+    public void setDurationTransition(int durationTransition) {
+        this.durationTransition = durationTransition;
+    }
     private String pathTo;
 
     /**
@@ -56,14 +68,14 @@ public class FrameBackground {
      * @return the duration
      */
     public int getDuration() {
-        return duration;
+        return durationImage;
     }
 
     /**
      * @param Duration the duration to set
      */
     public void setDuration(int Duration) {
-        this.duration = Duration;
+        this.durationImage = Duration;
     }
 
     /**
@@ -79,6 +91,12 @@ public class FrameBackground {
     public void setPathTo(String pathTo) {
         this.pathTo = pathTo;
     }
-    
-    
+
+    public static FrameBackground factory(ImageBlockPane imageBlock, int $duration) {
+        FrameBackground frame = new FrameBackground();
+        frame.setFilePath(imageBlock.getFilePath());
+        frame.setDurationTransition($duration);
+        return frame;
+    }
+
 }

@@ -31,6 +31,8 @@ import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
 import com.max.backgroundlinuxmanager.models.entities.WallpaperXML;
 import com.max.backgroundlinuxmanager.utils.ManagerFiles;
 import com.max.backgroundlinuxmanager.utils.XMLparse;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -53,6 +55,7 @@ public class XmlWallpaperComponent extends XmlWallpaperPanel {
     public static String EMPTY_STRING = "";
     private XmlPanelNav navComponent;
     private MainFrameComponent mainController;
+    private SlideEditPanel slideComponent;
 
     public XmlWallpaperComponent(AppConfiguration appConf, int width, int heigth) {
         super(width, heigth);
@@ -168,10 +171,15 @@ public class XmlWallpaperComponent extends XmlWallpaperPanel {
             remove(wPanel);
             wPanel = null;
         }
+        if(slideComponent.isVisible()){
+            System.out.println("jjjjjjj");
+            slideComponent.clear();
+            remove(slideComponent);
+        }
         invalidate();
         validate();
         repaint();
-        this.mainController.closeXmlWallpaper();
+        //this.mainController.closeXmlWallpaper();
     }
 
     /**
@@ -180,6 +188,26 @@ public class XmlWallpaperComponent extends XmlWallpaperPanel {
      */
     public void setCloseListener(MainFrameListener listener) {
      navComponent.setCloseListener(listener);
+    }
+    /**
+     * 
+     */
+    public void showSlideWallpaper(List imageslist) {
+        slideComponent = new SlideEditPanel(new Dimension(getWidth(), getHeight() - 80));
+        System.out.println(getWidth() + "-" + (getHeight()));
+        addToPanel(slideComponent, 0, 30, getWidth(), getHeight() - 80);
+        for (int i = 0; i < imageslist.size(); i++) {
+            slideComponent.addToPanel((Component)imageslist.get(i));
+            
+        }
+       // WallpaperView p = (WallpaperView) wPanel;
+       list();
+       navComponent.setVisible(true);
+    }
+    
+    public void closeSlide()
+    {
+        
     }
     /**
      *

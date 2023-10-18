@@ -74,7 +74,7 @@ public class ImageBlockPane extends javax.swing.JPanel {
         erraseBtn.setIcon(IconFontManager.createIcon(FontAwesome.TRASH, 12, Color.BLACK));
 
         setIcon(f.getName());
-        setButton();
+        erraseBtnVisible(true);
     }
 
     public void setListener(ActionListener event) {
@@ -96,7 +96,7 @@ public class ImageBlockPane extends javax.swing.JPanel {
  * 
  */
     public void loadImage() {
-        System.out.println(filename);
+        //System.out.println(filename);
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<ImageIcon> future;
         if(thumb.exists()){
@@ -113,19 +113,15 @@ public class ImageBlockPane extends javax.swing.JPanel {
 
         try {
             imageHolder.setIcon(future.get());
-        } catch (InterruptedException ex) {
-            Logger.getLogger(WallpaperPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ExecutionException ex) {
+        } catch (InterruptedException | ExecutionException ex) {
             Logger.getLogger(WallpaperPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         executor.shutdown();
-        executor = null;
-
     }
 
-    private void setButton() {
-
+    public void erraseBtnVisible(boolean show) {
+        erraseBtn.setVisible(show);
     }
     /**
      * Setter para la etiqueta del bloque
@@ -154,6 +150,32 @@ public class ImageBlockPane extends javax.swing.JPanel {
 
     public File getImage() {
         return image;
+    }
+
+    public void setImage(File image) {
+        this.image = image;
+    }
+
+    public void setThumb(File thumb) {
+        this.thumb = thumb;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public void setPathThumb(String pathThumb) {
+        this.pathThumb = pathThumb;
+    }
+
+    public void setPathReal(String pathReal) {
+        this.pathReal = pathReal;
+    }
+    
+    public ImageBlockPane clone() {
+        
+    ImageBlockPane newlock = new ImageBlockPane(this.image, this.getWidth(), this.getHeight());
+    return newlock;
     }
      /**
      * Check if the background file is a xml document

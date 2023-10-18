@@ -50,7 +50,7 @@ public class MainFrameComponent extends MainJFrame {
         library = new LibraryComponent(appConfig);
         xmlWallpaper = new XmlWallpaperComponent(appConfig,  getWidth(), getHeight());
         nav = new NavComponent();
-        //System.out.println(getHeight() + "++" + getWidth());
+        System.out.println(getHeight() + "++" + getWidth());
         addToMain(library, 0, 0, getWidth(), getHeight() - 90);
         addToMain(xmlWallpaper, 0, 0, getWidth(), getHeight());
         addToMain(nav, 0, getHeight() - 90, getWidth(), 50);

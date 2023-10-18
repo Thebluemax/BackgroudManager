@@ -24,7 +24,8 @@
 package com.max.backgroundlinuxmanager.components.MainFrame;
 
 import com.max.backgroundlinuxmanager.views.components.AppColors.AppColors;
-import java.awt.Color;
+
+import java.awt.*;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -50,12 +51,15 @@ public class MainJFrame extends javax.swing.JFrame {
         this.getContentPane().setBackground(new AppColors().generalColor());
         initComponents();
         pack();
+
     }
 
     public void addToMain(JPanel panel, int x, int y, int width, int heigth) {
         panel.setBorder(BorderFactory.createLineBorder(
                 Color.ORANGE, 1, true));
         panel.setBounds(x, y, width, heigth);
+        panel.setPreferredSize(new Dimension(width,heigth));
+        System.out.println(panel.getWidth());
         getContentPane().add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, width, heigth));
 
         pack();

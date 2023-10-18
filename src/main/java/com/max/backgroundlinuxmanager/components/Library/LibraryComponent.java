@@ -30,8 +30,8 @@ import com.max.backgroundlinuxmanager.utils.ManagerFiles;
 import com.max.backgroundlinuxmanager.views.components.AddingToLibraryDialog;
 import com.max.backgroundlinuxmanager.views.components.AppColors.AppColors;
 import com.max.backgroundlinuxmanager.views.components.ImageBlockPane;
-import java.awt.Color;
-import java.awt.GridLayout;
+
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,14 +61,19 @@ public class LibraryComponent extends LibrayPanel {
         init();
         setListeners();
         getBackgroundLibrary();
+        width = getWidth();
+        heigth = getHeight();
+        System.out.println(width+"____-___"+heigth);
     }
 
     public void init() {
         width = getWidth();
         heigth = getHeight();
+        System.out.println(width+"____-___"+heigth);
         GridLayout layout = new GridLayout(rows, column, 3, 3);
         container.setLayout(layout);
         container.setBackground(new AppColors().generalColor());
+        container.setPreferredSize(new Dimension(width,heigth));
         scrollContent.setSize(width, heigth);
         scrollContent.setLocation(0, 50);
         scrollContent.setBackground(Color.red);
@@ -101,6 +106,20 @@ public class LibraryComponent extends LibrayPanel {
         container.revalidate();
         container.repaint();
 
+    }
+    /**
+     * 
+     * @return 
+     */
+    public List getSelectedBlocks() {
+        List <ImageBlockPane> selectedItems = new ArrayList<>();
+        for (int i = 0; i < container.getComponentCount(); i++) {
+            ImageBlockPane block = (ImageBlockPane) container.getComponent(i);
+            if (block.isChecked()) {
+                selectedItems.add(block.clone());
+            }
+        }
+        return selectedItems;
     }
 
     /**

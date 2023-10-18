@@ -46,7 +46,6 @@ public class LibraryListener implements ActionListener{
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println(e.getActionCommand());
         switch (e.getActionCommand()) {
             case ADD_TO_LIBRARY:
                  library.addToLibrary();

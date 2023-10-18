@@ -31,14 +31,13 @@ import java.util.Map;
  *
  * @author Maximiliano Fernández thebluemax13 at gmail.com
  */
-public class SlideBackground extends Wallpaper{
+public class SlideBackground {
 
-   
     private String name;
     private int transitionDuration;
     private int imageDuration;
     private Map<String, Integer> startTime;
-private List<FrameBackground> frames;
+    private final List<FrameBackground> frames;
 
     /**
      *
@@ -53,32 +52,39 @@ private List<FrameBackground> frames;
      *
      * @param timestamp
      */
-    public void setStartTime(Map<String, Integer> timestamp){
+    public void setStartTime(Map<String, Integer> timestamp) {
         startTime = timestamp;
     }
-    public void setTransition(int duration){
-    transitionDuration = duration;
+
+    public void setTransition(int duration) {
+        transitionDuration = duration;
     }
-    
-    public int getTransitionDuration(){
+
+    public int getTransitionDuration() {
         return transitionDuration;
     }
-    
-     public void setImageduration(int duration){
-    imageDuration = duration;
+
+    public void setImageduration(int duration) {
+        imageDuration = duration;
     }
-    
-    public int getImageDuration(){
+
+    public int getImageDuration() {
         return imageDuration;
     }
+
     /**
      *
      * @param fBG
      */
     public void addFrame(FrameBackground fBG) {
-   frames.add(fBG);
-   }
- /**
+        
+        if(!frames.isEmpty()){
+            
+        } 
+        frames.add(fBG);
+    }
+
+    /**
      * @return the name
      */
     public String getName() {
@@ -91,17 +97,22 @@ private List<FrameBackground> frames;
     public void setName(String name) {
         this.name = name;
     }
+
     /**
      *
      * @return
      */
-    public List<FrameBackground> getFrames(){
-   return frames;
-   } 
-    
-    public Map<String, Integer> getTime(){
+    public List<FrameBackground> getFrames() {
+        return frames;
+    }
+
+    public Map<String, Integer> getTime() {
         return startTime;
     }
     
+    public void clear () {
+        frames.clear();
+    }
     
+
 }

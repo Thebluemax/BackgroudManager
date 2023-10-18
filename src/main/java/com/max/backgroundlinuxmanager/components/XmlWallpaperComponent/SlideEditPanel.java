@@ -21,21 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.max.backgroundlinuxmanager.views.components;
+package com.max.backgroundlinuxmanager.components.XmlWallpaperComponent;
 
 import com.max.backgroundlinuxmanager.models.XMLDOMBackground;
+import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
+import com.max.backgroundlinuxmanager.models.entities.FrameBackground;
 import com.max.backgroundlinuxmanager.models.entities.SlideBackground;
+import com.max.backgroundlinuxmanager.views.components.ImageBlockPane;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.Calendar;
-import java.util.Date;
-import javax.swing.ComboBoxModel;
 import javax.swing.JPanel;
-import org.jdesktop.swingx.JXDatePicker;
-
 
 /**
  *
@@ -46,83 +44,100 @@ public class SlideEditPanel extends javax.swing.JPanel {
     /**
      * Creates new form SlideEditPanel
      */
-    private JPanel container;
-    
+    private final JPanel container;
+    private final SlideBackground slideBackground;
+
     public SlideEditPanel(Dimension dimension) {
         initComponents();
+        buildCombos();
+        slideBackground = new SlideBackground();
         container = new JPanel(new GridLayout(0, 6));
         jScrollPane1.setPreferredSize(dimension);
-         jScrollPane1.setViewportView(container);
-        buildCombos();
-        
-       
-        
+        jScrollPane1.setViewportView(container);
+        duratonSlide.setPaintTicks(true);
+        duratonSlide.setSnapToTicks(true);
+        duratonSlide.setMajorTickSpacing(20);
+        duratonSlide.setMinorTickSpacing(5);
+        duratonSlide.setValue(AppConfiguration.DEFAULT_INTERVAL_CHANGE);
+        transitionSlide.setValue(AppConfiguration.DEFAULT_TRANSITION_DURATION);
+
     }
-    private void buildCombos(){
-        
+
+    private void buildCombos() {
+
         Calendar date = Calendar.getInstance();
-        
+
         int year = date.get(Calendar.YEAR);
-        
-        
+
         int refYear = year - 10;
-        
+
         for (int y = 0; y < 20; y++) {
             yearCombo.addItem(Integer.toString(refYear + y));
-            
+
         }
-        
+
         yearCombo.setSelectedItem(Integer.toString(year));
-    
+
         for (int r = 0; r < 31; r++) {
             dayCombo.addItem(Integer.toString(r + 1));
-            
+
         }
         for (int d = 0; d < 24; d++) {
             monthCombo.addItem(Integer.toString(d + 1));
-            
+
         }
         for (int a = 0; a < 24; a++) {
             hourCombo.addItem(Integer.toString(a + 1));
-            
+
         }
-       
+
         for (int i = 0; i < 60; i++) {
-            
-             secondCombo.addItem(Integer.toString(i + 1));
-             minuteCombo.addItem(Integer.toString(i + 1));
+
+            secondCombo.addItem(Integer.toString(i + 1));
+            minuteCombo.addItem(Integer.toString(i + 1));
         }
     }
-    
-    protected void setValues(XMLDOMBackground slidemodel){
+
+    public void getTimes() {
+
+    }
+
+    protected void setValues(XMLDOMBackground slidemodel) {
         SlideBackground back = slidemodel.getSlideBackground();
-        
-        System.err.println(back.getTime().get("year").toString());
+
         yearCombo.setSelectedItem(back.getTime().get("year").toString());
         monthCombo.setSelectedItem(back.getTime().get("month").toString());
         dayCombo.setSelectedItem(back.getTime().get("day").toString());
         hourCombo.setSelectedItem(back.getTime().get("hour").toString());
         minuteCombo.setSelectedItem(back.getTime().get("minute").toString());
-         secondCombo.setSelectedItem(back.getTime().get("second").toString());
-     //    float durationS = Float.parse(back.getImageDuration());
-         duratonSlide.setValue(back.getImageDuration());
-         transitionSlide.setValue(back.getTransitionDuration());
-         
-         slideName.setText(back.getName());
-         slideName.setEditable(false);
+        secondCombo.setSelectedItem(back.getTime().get("second").toString());
+        duratonSlide.setValue(back.getImageDuration());
+        transitionSlide.setValue(back.getTransitionDuration());
+
+        slideName.setText(back.getName());
+        slideName.setEditable(false);
     }
-    
-    protected void setMouseAdapter(MouseAdapter adapter){
+
+    protected void setMouseAdapter(MouseAdapter adapter) {
         slideName.addMouseListener(adapter);
     }
-    
-    protected Dimension getContainerBounds(){
-        return new Dimension(jScrollPane1.getWidth(),jScrollPane1.getHeight());
+
+    protected Dimension getContainerBounds() {
+        return new Dimension(jScrollPane1.getWidth(), jScrollPane1.getHeight());
     }
-    
-    protected void addToPanel(Component comp){
+
+    protected void addToPanel(Component comp) {
+        ImageBlockPane imageBlock = (ImageBlockPane) comp;
+        imageBlock.erraseBtnVisible(false);
+        imageBlock.loadImage();
+        slideBackground.addFrame(FrameBackground.factory(imageBlock, 30));
         container.add(comp);
-    };
+    }
+
+    public void clear() {
+        container.removeAll();
+        slideBackground.clear();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -156,6 +171,9 @@ public class SlideEditPanel extends javax.swing.JPanel {
         minuteCombo = new javax.swing.JComboBox<>();
         secondCombo = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel5 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -168,10 +186,9 @@ public class SlideEditPanel extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 535;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
+        gridBagConstraints.ipadx = 518;
+        gridBagConstraints.ipady = 7;
+        gridBagConstraints.insets = new java.awt.Insets(12, 31, 12, 31);
         add(slideName, gridBagConstraints);
 
         jPanel3.setLayout(new java.awt.GridLayout(2, 1));
@@ -205,7 +222,6 @@ public class SlideEditPanel extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 23;
         gridBagConstraints.ipady = 4;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
@@ -252,22 +268,29 @@ public class SlideEditPanel extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 33;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
         add(jPanel1, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridheight = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipady = 118;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        gridBagConstraints.weightx = 0.7;
+        gridBagConstraints.weighty = 1.2;
         add(jScrollPane1, gridBagConstraints);
+
+        jButton1.setText("jButton1");
+        jPanel5.add(jButton1);
+
+        jButton2.setText("jButton2");
+        jPanel5.add(jButton2);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        add(jPanel5, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void slideNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_slideNameActionPerformed
@@ -279,6 +302,8 @@ public class SlideEditPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> dayCombo;
     private javax.swing.JSlider duratonSlide;
     private javax.swing.JComboBox<String> hourCombo;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
@@ -291,6 +316,7 @@ public class SlideEditPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> minuteCombo;
     private javax.swing.JComboBox<String> monthCombo;
