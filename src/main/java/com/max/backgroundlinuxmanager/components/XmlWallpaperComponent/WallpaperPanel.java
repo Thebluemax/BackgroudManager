@@ -58,7 +58,6 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
     public static final String SCOLOR = "scolor";
 
     public WallpaperPanel(Wallpaper wp) {
-
         this.wp = wp;
         initComponents();
         nameLabel.setText(this.wp.getName());
