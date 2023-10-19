@@ -31,7 +31,8 @@ import com.max.backgroundlinuxmanager.models.entities.WallpaperXML;
 import com.max.backgroundlinuxmanager.utils.ColorManager;
 import com.max.backgroundlinuxmanager.views.components.AppColors.AppColors;
 import com.max.backgroundlinuxmanager.threads.ImageLoader;
-import java.awt.Color;
+
+import java.awt.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,6 +44,7 @@ import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.border.LineBorder;
 
 /**
  *
@@ -157,8 +159,8 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
             image = new File("src/assets/no-image.png");
         }
         //System.out.println(getPreferredSize().width + "--" + getHeight());
-        double cosntRatio = 0.45 * (float) getWidth();
-        ImageLoader iLoad = new ImageLoader(getWidth() - 20, Math.round((float)cosntRatio), image, true, true);
+        double cosntRatio = 0.30 * (float) getWidth();
+        ImageLoader iLoad = new ImageLoader(getWidth() - 300, Math.round((float)cosntRatio), image, true, true);
         future = executor.submit(() -> {
             return iLoad.call(); //To change body of generated lambdas, choose Tools | Templates.
         });
@@ -210,21 +212,31 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
         setLayout(new java.awt.GridBagLayout());
 
         nameLabel.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        nameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        nameLabel.setLabelFor(imageHolder);
+       // nameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+       // nameLabel.setLabelFor(imageHolder);
         nameLabel.setText("jLabel6");
         nameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         nameLabel.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        add(nameLabel, new java.awt.GridBagConstraints());
+        nameLabel.setBorder(new LineBorder(new Color(244,66,99)));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridheight = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.weightx = 0;
+        gridBagConstraints.weighty = .25;
+        add(nameLabel, gridBagConstraints);
 
         imageHolder.setText("jLabel1");
-        imageHolder.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        imageHolder.setMaximumSize(new java.awt.Dimension(3000, 1400));
-        imageHolder.setMinimumSize(new java.awt.Dimension(3000, 1400));
+       // imageHolder.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+       // imageHolder.setMaximumSize(new java.awt.Dimension(3000, 1400));
+       // imageHolder.setMinimumSize(new java.awt.Dimension(3000, 1400));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.insets = new java.awt.Insets(7, 2, 8, 3);
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridwidth = 3;
+       // gridBagConstraints.weighty = 2;
+       // gridBagConstraints.insets = new java.awt.Insets(7, 2, 8, 3);
         add(imageHolder, gridBagConstraints);
 
         controlPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -269,30 +281,32 @@ public class WallpaperPanel extends javax.swing.JPanel implements ActionListener
         scolor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         scolor.setText("jLabel4");
         controlPanel.add(scolor);
-
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 1;
+        gridBagConstraints.gridheight = 2;
         add(controlPanel, gridBagConstraints);
 
         actionsPanel.setLayout(new java.awt.GridBagLayout());
 
         saveBtn.setText("Save");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        //gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         actionsPanel.add(saveBtn, gridBagConstraints);
 
         cancelBtn.setText("Cancel");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+       // gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE_TRAILING;
         actionsPanel.add(cancelBtn, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.weighty = .25;
+       // gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         add(actionsPanel, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 

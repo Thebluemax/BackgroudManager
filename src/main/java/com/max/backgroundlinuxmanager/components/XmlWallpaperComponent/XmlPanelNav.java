@@ -24,6 +24,9 @@
 package com.max.backgroundlinuxmanager.components.XmlWallpaperComponent;
 
 import com.max.backgroundlinuxmanager.components.MainFrame.MainFrameListener;
+
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -86,30 +89,23 @@ public class XmlPanelNav extends javax.swing.JPanel implements ItemListener {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
-
+        setBackground(new Color(44,124,7));
         newXmlWallpaperBtn = new javax.swing.JButton();
         cancellWallpaperBtn = new javax.swing.JButton();
-
+        setBorder(new LineBorder(new Color(33,33,33)));
         setLayout(new java.awt.GridBagLayout());
 
         newXmlWallpaperBtn.setText("ADD NEW");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        add(newXmlWallpaperBtn, gridBagConstraints);
 
-        cancellWallpaperBtn.setText("jjjjj");
+        cancellWallpaperBtn.setText("CLOSE");
         cancellWallpaperBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancellWallpaperBtnActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
         add(cancellWallpaperBtn, gridBagConstraints);
 
         wallpaperCombo.addActionListener(new java.awt.event.ActionListener() {
@@ -118,10 +114,17 @@ public class XmlPanelNav extends javax.swing.JPanel implements ItemListener {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
+
         gridBagConstraints.ipadx = 198;
+        gridBagConstraints.anchor = GridBagConstraints.CENTER;
+
         add(wallpaperCombo, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+
+        // gridBagConstraints.fill = GridBagConstraints.VERTICAL;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHEAST;
+        add(newXmlWallpaperBtn, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancellWallpaperBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancellWallpaperBtnActionPerformed

@@ -65,8 +65,7 @@ public class XmlWallpaperComponent extends XmlWallpaperPanel {
         checkWallpapersXML();
         add(navComponent, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, width, 30));
         navComponent.setAddListener(new XmlWallpaperListener(this));
-        navComponent.setVisible(false);
-
+        navComponent.setVisible(true);
     }
 
     /**
@@ -86,8 +85,7 @@ public class XmlWallpaperComponent extends XmlWallpaperPanel {
             poblateCombo(filenames);
         } else {
             filenames = new String[1];
-            System.out.println("Error no directorio");
-            new BackgroundException(new FileNotFoundException(), "El directorio de wallpaper del usurio no existe");
+            new BackgroundException(new FileNotFoundException(), "El directorio de wallpaper del usuario no existe");
         }
     }
 
@@ -171,15 +169,14 @@ public class XmlWallpaperComponent extends XmlWallpaperPanel {
             remove(wPanel);
             wPanel = null;
         }
-        if(slideComponent.isVisible()){
-            System.out.println("jjjjjjj");
+        if(slideComponent != null){
             slideComponent.clear();
             remove(slideComponent);
+            slideComponent = null;
         }
         invalidate();
         validate();
         repaint();
-        //this.mainController.closeXmlWallpaper();
     }
 
     /**
@@ -198,7 +195,6 @@ public class XmlWallpaperComponent extends XmlWallpaperPanel {
         addToPanel(slideComponent, 0, 30, getWidth(), getHeight() - 80);
         for (int i = 0; i < imageslist.size(); i++) {
             slideComponent.addToPanel((Component)imageslist.get(i));
-            
         }
        // WallpaperView p = (WallpaperView) wPanel;
        list();
@@ -209,18 +205,4 @@ public class XmlWallpaperComponent extends XmlWallpaperPanel {
     {
         
     }
-    /**
-     *
-     * @param e ItemEvent
-     *
-     * @Override public void itemStateChanged(ItemEvent e) {
-     * System.out.println("Selected" + e.getStateChange()); if (e.getSource() ==
-     * wallpaperCombo && e.getStateChange() == 1) { buildWallpapers((String)
-     * wallpaperCombo.getSelectedItem()); clear(); seeWallpaper();
-     * System.out.println((String) wallpaperCombo.getSelectedItem()); //
-     * buildWallpapers(String filename) }
-     *
-     * }
-     */
-
 }

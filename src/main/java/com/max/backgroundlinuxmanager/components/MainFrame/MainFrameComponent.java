@@ -120,8 +120,14 @@ public class MainFrameComponent extends MainJFrame {
     }
     
      public void showSlideXmlWallpaper() {
-        showLibrary(false);
-        showXmlWallpaper(true);
-        xmlWallpaper.showSlideWallpaper(library.getSelectedBlocks());
+        System.out.println(library.getSelectedBlocks().size());
+         if (library.getSelectedBlocks().size() < 2) {
+             new BackgroundException(new Exception(), "Se ha seleccionar al menos dos imagenes");
+         } else {
+             showLibrary(false);
+             showXmlWallpaper(true);
+             xmlWallpaper.showSlideWallpaper(library.getSelectedBlocks());
+         }
+
     }
 }

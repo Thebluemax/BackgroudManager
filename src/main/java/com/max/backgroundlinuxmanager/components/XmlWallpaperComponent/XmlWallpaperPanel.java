@@ -39,8 +39,6 @@ public class XmlWallpaperPanel extends javax.swing.JPanel {
     public XmlWallpaperPanel(int width, int heigth) {
         setBounds(0, 0, width, heigth);
         initComponents();
-        System.out.println(getWidth() + "//" + getHeight());
-
     }
 
     public void addToPanel(JPanel panel, int x, int y, int width, int height) {
