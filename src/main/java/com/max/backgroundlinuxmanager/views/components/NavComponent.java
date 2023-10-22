@@ -25,6 +25,7 @@ package com.max.backgroundlinuxmanager.views.components;
 
 import com.max.backgroundlinuxmanager.components.MainFrame.MainFrameListener;
 import com.max.backgroundlinuxmanager.BackgroundManager;
+
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,15 +33,16 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 /**
- *
  * @author Maximiliano Fernández thebluemax13 at gmail.com
  */
 public class NavComponent extends JPanel {
 
     private String[] labelList = {"Save to Wallpaper", "Save to Slide", "Show XmlWallpaper"};
-    private String[] bottonRef = {MainFrameListener.SAVE_TO_NEW_WALLPAPER,
-        MainFrameListener.NEW_XML_SLIDE,
-        MainFrameListener.SHOW_XML_WALLPAPER};
+    private String[] bottonRef = {
+            MainFrameListener.SAVE_TO_NEW_WALLPAPER,
+            MainFrameListener.NEW_XML_SLIDE,
+            MainFrameListener.SHOW_XML_WALLPAPER
+    };
     private List<JButton> buttonList;
 
     /**
@@ -54,7 +56,7 @@ public class NavComponent extends JPanel {
         setMaximumSize(new java.awt.Dimension(1750, 50));
         setMinimumSize(new java.awt.Dimension(450, 50));
         setOpaque(false);
-        
+
         java.awt.GridLayout flowLayout1 = new java.awt.GridLayout(1, 2);
         setLayout(flowLayout1);
         buttonList = new ArrayList<>();
@@ -71,14 +73,14 @@ public class NavComponent extends JPanel {
             add(b);
         }
     }
-    public void setDisabledNav(boolean status){
-        for(int i= 0; i < buttonList.size(); i++){
+
+    public void setDisabledNav(boolean status) {
+        for (int i = 0; i < buttonList.size(); i++) {
             buttonList.get(i).setEnabled(status);
         }
     }
 
     /**
-     *
      * @param flag
      */
     public void setVisibility(boolean flag) {
@@ -92,18 +94,17 @@ public class NavComponent extends JPanel {
             }
         }
     }
-    
+
     public void setEnabled(boolean flag) {
 
         for (int i = 0; i < buttonList.size(); i++) {
-           
-          buttonList.get(i).setEnabled(flag);
-           
+
+            buttonList.get(i).setEnabled(flag);
+
         }
     }
 
     /**
-     *
      * @param actionListener
      */
     public void addActionListener(ActionListener actionListener) {

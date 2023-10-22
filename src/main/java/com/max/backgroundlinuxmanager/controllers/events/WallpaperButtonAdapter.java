@@ -58,7 +58,7 @@ public class WallpaperButtonAdapter extends MouseAdapter{
                
                 javax.swing.JLabel jl =(javax.swing.JLabel)e.getSource();
                 jl.setBackground(color);
-                System.out.println(color.toString());
+               // System.out.println(color.toString());
                 jl.setText(ColorManager.getColorHexa(color));
                 switch(jl.getName()){
                     case WallpaperPanel.PCOLOR:

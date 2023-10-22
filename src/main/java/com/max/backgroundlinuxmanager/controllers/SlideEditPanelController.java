@@ -23,6 +23,7 @@
  */
 package com.max.backgroundlinuxmanager.controllers;
 
+import com.max.backgroundlinuxmanager.components.XmlWallpaperComponent.XmlWallpaperComponent;
 import com.max.backgroundlinuxmanager.models.XMLDOMBackground;
 import com.max.backgroundlinuxmanager.models.entities.FrameBackground;
 import com.max.backgroundlinuxmanager.views.components.ImageBlockPane;
@@ -60,8 +61,8 @@ public class SlideEditPanelController extends SlideEditPanel{
 
    
    
-    public SlideEditPanelController(XMLDOMBackground slidemodel) {
-        super (new Dimension(400, 200));
+    public SlideEditPanelController(XMLDOMBackground slidemodel, XmlWallpaperComponent wpc) {
+        super (new Dimension(400, 200), wpc);
         this.slidemodel = slidemodel;
         
         setMouseAdapter(new MouseAdapter(){

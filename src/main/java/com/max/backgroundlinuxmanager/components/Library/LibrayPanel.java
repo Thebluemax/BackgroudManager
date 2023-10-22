@@ -27,7 +27,6 @@ import javax.swing.plaf.synth.SynthTabbedPaneUI;
 import java.awt.*;
 
 /**
- *
  * @author max
  */
 public class LibrayPanel extends javax.swing.JPanel {
@@ -59,8 +58,8 @@ public class LibrayPanel extends javax.swing.JPanel {
         mainConstraint.weightx = 4;
         mainConstraint.weighty = 3;
         mainConstraint.fill = GridBagConstraints.BOTH;
-    mainConstraint.gridy =1;
-    mainConstraint.gridx =0;
+        mainConstraint.gridy = 1;
+        mainConstraint.gridx = 0;
         mainConstraint.ipady = 40;
 
         scrollContent.setBorder(null);
@@ -94,7 +93,7 @@ public class LibrayPanel extends javax.swing.JPanel {
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
         navHolder.add(addButton, gridBagConstraints);
-        System.out.println(getWidth()+"hh");
+        System.out.println(getWidth() + "hh");
         mainConstraint.weighty = .5;
         mainConstraint.weightx = 4;
         mainConstraint.gridy = 0;
@@ -106,7 +105,7 @@ public class LibrayPanel extends javax.swing.JPanel {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_addButtonActionPerformed
 
 

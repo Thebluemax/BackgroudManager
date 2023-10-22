@@ -99,4 +99,15 @@ public class FrameBackground {
         return frame;
     }
 
+    public String toString() {
+        return "<static>\n" +
+                "<duration>" + getDuration() + "</duration>\n" +
+                "<file>" + getFilePath() + "</file>\n" +
+                "</static>\n" +
+                "<transition>\n" +
+                "<duration>" + getDurationTransition() + "</duration>\n" +
+                "<from>" + getFilePath() + "</from>\n" +
+                "<to>" + getPathTo() + "</to>\n</transition>";
+    }
+
 }

@@ -74,7 +74,7 @@ public class XmlPanelNav extends javax.swing.JPanel implements ItemListener {
             //  buildWallpapers((String) wallpaperCombo.getSelectedItem());
             // clear();
             //   seeWallpaper();
-            System.out.println((String) wallpaperCombo.getSelectedItem());
+      //      System.out.println((String) wallpaperCombo.getSelectedItem());
             // buildWallpapers(String filename)
         }
 

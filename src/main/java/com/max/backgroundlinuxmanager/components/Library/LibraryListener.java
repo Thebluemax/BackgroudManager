@@ -53,15 +53,11 @@ public class LibraryListener implements ActionListener{
             case DELETE_OF_LIBRARY:
                 JButton block = (JButton) e.getSource();
                 ImageBlockPane blockImage = (ImageBlockPane) block.getParent();
-
-                System.out.println(blockImage.getImage().getName());
                 DeleteOption option = new DeleteOption(blockImage);
-
                 if (option.getResult()) {
                     ManagerFiles.deleteFile(blockImage.getImage());
                     library.remove(blockImage);
                 }
-                System.out.println("delete to library");
                 break;
         }
        

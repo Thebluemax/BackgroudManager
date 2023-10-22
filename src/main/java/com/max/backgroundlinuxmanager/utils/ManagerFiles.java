@@ -24,16 +24,9 @@
 package com.max.backgroundlinuxmanager.utils;
 
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.InputStream;
 
-import java.io.OutputStream;
+import java.io.*;
+
 import java.nio.file.Files;
 import java.util.List;
 import java.util.logging.Level;
@@ -55,6 +48,7 @@ public class ManagerFiles {
      */
     public static String BG_FOLDER = "/backgrounds";
     public static String WP_FOLDER = "/wallpapers";
+    public static String SLIDE_FOLDER = "/contest";
 
     /**
      *
@@ -144,6 +138,10 @@ public class ManagerFiles {
         return  getUserFolder() + LOCAL_SHARED + BG_FOLDER + WP_FOLDER;
                 
     }
+    public static String getBackgroundsSlidePath() {
+        return  getUserFolder() + LOCAL_SHARED + BG_FOLDER + SLIDE_FOLDER;
+
+    }
      /**
      *
      * @return
@@ -223,6 +221,14 @@ public class ManagerFiles {
             os.close();
         }
         return length;
+    }
+
+    public static void writeFile(String content, String path) throws IOException {
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+        writer.write(content);
+
+        writer.close();
     }
 
     public static boolean deleteFile(File file) {

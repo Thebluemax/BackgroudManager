@@ -118,7 +118,7 @@ public class XmlWallpaperComponent extends XmlWallpaperPanel {
      */
     public void newWallpaper(String selected, MainFrameComponent mainController) {
         this.mainController = mainController;
-        System.out.println(getWidth() + "--" + getHeight());
+      //  System.out.println(getWidth() + "--" + getHeight());
         Wallpaper newWallpaper = Wallpaper.factory(selected);
         wPanel = new WallpaperPanel(newWallpaper);
         
@@ -149,13 +149,28 @@ public class XmlWallpaperComponent extends XmlWallpaperPanel {
         return false;
     }
 
+    public boolean saveSlideInCurrent(Wallpaper wp) {
+        try {
+            wallpaperXML.add(wp);
+        } catch (Exception e) {
+            new BackgroundException(e, "No se ha seleccionado un walpaper");
+        }
+        XMLparse xmlParse = new XMLparse();
+        int status = xmlParse.saveXML(wallpaperXMLFIle, XMLparse.WALLPAPER_XML, wallpaperXML);
+        if (status == 0) {
+
+        }
+       // clear();
+        return false;
+    }
+
     /**
      * @return void
      */
     public void showWallpaper() {
         navComponent.setVisible(true);
         wPanel = new WallpaperView(wpaperList, wallpaperXML);
-        System.out.println(getWidth() + "-" + (getHeight()));
+     //   System.out.println(getWidth() + "-" + (getHeight()));
         addToPanel(wPanel, 0, 30, getWidth(), getHeight() - 30);
         WallpaperView p = (WallpaperView) wPanel;
         p.buildList();
@@ -190,8 +205,8 @@ public class XmlWallpaperComponent extends XmlWallpaperPanel {
      * 
      */
     public void showSlideWallpaper(List imageslist) {
-        slideComponent = new SlideEditPanel(new Dimension(getWidth(), getHeight() - 80));
-        System.out.println(getWidth() + "-" + (getHeight()));
+        slideComponent = new SlideEditPanel(new Dimension(getWidth(), getHeight() - 80), this);
+       // System.out.println(getWidth() + "-" + (getHeight()));
         addToPanel(slideComponent, 0, 30, getWidth(), getHeight() - 80);
         for (int i = 0; i < imageslist.size(); i++) {
             slideComponent.addToPanel((Component)imageslist.get(i));

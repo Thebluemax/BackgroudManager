@@ -63,13 +63,11 @@ public class LibraryComponent extends LibrayPanel {
         getBackgroundLibrary();
         width = getWidth();
         heigth = getHeight();
-        System.out.println(width+"____-___"+heigth);
     }
 
     public void init() {
         width = getWidth();
         heigth = getHeight();
-        System.out.println(width+"____-___"+heigth);
         GridLayout layout = new GridLayout(rows, column, 3, 3);
         container.setLayout(layout);
         container.setBackground(new AppColors().generalColor());

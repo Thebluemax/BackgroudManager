@@ -50,7 +50,6 @@ public class XmlWallpaperListener implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()){
             case NEW_XML_WALLPAPER:
-              System.out.println("add");
                 WallpaperXML newWallPaper = new WallpaperXML();
                 File folder = ManagerFiles.getWallpapersXMLFolder();
                 if (!folder.exists()) {

@@ -23,20 +23,24 @@
  */
 package com.max.backgroundlinuxmanager.components.XmlWallpaperComponent;
 
+import com.max.backgroundlinuxmanager.exceptions.BackgroundException;
 import com.max.backgroundlinuxmanager.models.XMLDOMBackground;
 import com.max.backgroundlinuxmanager.models.entities.AppConfiguration;
 import com.max.backgroundlinuxmanager.models.entities.FrameBackground;
 import com.max.backgroundlinuxmanager.models.entities.SlideBackground;
+import com.max.backgroundlinuxmanager.models.entities.Wallpaper;
+import com.max.backgroundlinuxmanager.utils.ManagerFiles;
 import com.max.backgroundlinuxmanager.views.components.ImageBlockPane;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridLayout;
+
+import java.awt.*;
 import java.awt.event.MouseAdapter;
+import java.io.IOException;
 import java.util.Calendar;
-import javax.swing.JPanel;
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
- *
  * @author Maximiliano Fernández thebluemax13 at gmail.com
  */
 public class SlideEditPanel extends javax.swing.JPanel {
@@ -46,13 +50,16 @@ public class SlideEditPanel extends javax.swing.JPanel {
      */
     private final JPanel container;
     private final SlideBackground slideBackground;
+    private final XmlWallpaperComponent wpc;
 
-    public SlideEditPanel(Dimension dimension) {
+    public SlideEditPanel(Dimension dimension, XmlWallpaperComponent wpc) {
         initComponents();
         buildCombos();
+        this.wpc = wpc;
+        jScrollPane1.setBackground(new Color(33,44,120));
         slideBackground = new SlideBackground();
         container = new JPanel(new GridLayout(0, 6));
-        jScrollPane1.setPreferredSize(dimension);
+        //jScrollPane1.setPreferredSize(new Dimension(1000,100));
         jScrollPane1.setViewportView(container);
         duratonSlide.setPaintTicks(true);
         duratonSlide.setSnapToTicks(true);
@@ -73,26 +80,20 @@ public class SlideEditPanel extends javax.swing.JPanel {
 
         for (int y = 0; y < 20; y++) {
             yearCombo.addItem(Integer.toString(refYear + y));
-
         }
-
         yearCombo.setSelectedItem(Integer.toString(year));
 
         for (int r = 0; r < 31; r++) {
             dayCombo.addItem(Integer.toString(r + 1));
-
         }
         for (int d = 0; d < 24; d++) {
             monthCombo.addItem(Integer.toString(d + 1));
-
         }
         for (int a = 0; a < 24; a++) {
             hourCombo.addItem(Integer.toString(a + 1));
-
         }
 
         for (int i = 0; i < 60; i++) {
-
             secondCombo.addItem(Integer.toString(i + 1));
             minuteCombo.addItem(Integer.toString(i + 1));
         }
@@ -100,6 +101,24 @@ public class SlideEditPanel extends javax.swing.JPanel {
 
     public void getTimes() {
 
+    }
+
+    public void save() throws BackgroundException {
+        slideBackground.setName("test_44");
+        slideBackground.setYear(2023);
+        slideBackground.setMonth(10);
+        slideBackground.setDay(2);
+        slideBackground.setTransition(5);
+        slideBackground.setImageduration(1000);
+        String path = ManagerFiles.getBackgroundsSlidePath() + "/" + slideBackground.getFilename();
+        Wallpaper wp = Wallpaper.factory(path);
+        try {
+            ManagerFiles.writeFile(slideBackground.toString(), path);
+        } catch (IOException e) {
+            throw new BackgroundException(e,"sdsdfdsd");
+        }
+        System.out.println(slideBackground.toString());
+        wpc.saveSlideInCurrent(wp);
     }
 
     protected void setValues(XMLDOMBackground slidemodel) {
@@ -147,33 +166,41 @@ public class SlideEditPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
+        setLayout(new GridBagLayout());
+        java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
 
         slideName = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        duratonSlide = new javax.swing.JSlider();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        transitionSlide = new javax.swing.JSlider();
-        jPanel1 = new javax.swing.JPanel();
+
+        slideDurationHolder = new javax.swing.JPanel();
+        durationLabel = new javax.swing.JLabel();
+        duratonSlide = new javax.swing.JSlider(0, 2000, 1500);
+
+        slideTransitionFrame = new javax.swing.JPanel();
+        transitionSlideLabel = new javax.swing.JLabel();
+        transitionSlide = new javax.swing.JSlider(0, 15, 3);
+
+        dateFrame = new javax.swing.JPanel();
+
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+
         yearCombo = new javax.swing.JComboBox<>();
         monthCombo = new javax.swing.JComboBox<>();
         dayCombo = new javax.swing.JComboBox<>();
         hourCombo = new javax.swing.JComboBox<>();
         minuteCombo = new javax.swing.JComboBox<>();
         secondCombo = new javax.swing.JComboBox<>();
+
         jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel5 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+
+        btnSave = new javax.swing.JButton();
+        btnSave.setText("Save");
+        btnSave.addMouseListener(new SlideEventsListeners(this));
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -183,114 +210,133 @@ public class SlideEditPanel extends javax.swing.JPanel {
                 slideNameActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 518;
-        gridBagConstraints.ipady = 7;
-        gridBagConstraints.insets = new java.awt.Insets(12, 31, 12, 31);
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         add(slideName, gridBagConstraints);
-
-        jPanel3.setLayout(new java.awt.GridLayout(2, 1));
-
-        jPanel2.setLayout(new java.awt.GridLayout(2, 1));
-
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Duration Slide image");
-        jPanel2.add(jLabel1);
-
-        duratonSlide.setMaximum(2000);
-        duratonSlide.setMinimum(6);
-        duratonSlide.setPaintLabels(true);
-        duratonSlide.setToolTipText("");
-        jPanel2.add(duratonSlide);
-
-        jPanel3.add(jPanel2);
-
-        jPanel4.setLayout(new java.awt.GridLayout(2, 1));
-
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Duration Transition");
-        jPanel4.add(jLabel3);
-
-        transitionSlide.setMaximum(10);
-        transitionSlide.setMinimum(1);
-        jPanel4.add(transitionSlide);
-
-        jPanel3.add(jPanel4);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 23;
-        gridBagConstraints.ipady = 4;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        add(jPanel3, gridBagConstraints);
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        durationLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        durationLabel.setText("Duration Slide image");
+        add(durationLabel, gridBagConstraints);
+       // gridBagConstraints.insets = new java.awt.Insets(12, 31, 12, 31);
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        add(slideDurationHolder, gridBagConstraints);
+        slideDurationHolder.setLayout(new BorderLayout());
 
-        jPanel1.setLayout(new java.awt.GridLayout(2, 5));
+        jPanel3.setLayout(new java.awt.GridLayout(2, 1));
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+       // add(durationLabel, gridBagConstraints);
+
+        duratonSlide.setPaintTicks(true);
+        duratonSlide.setPaintLabels(true);
+        duratonSlide.setMajorTickSpacing(100);
+        duratonSlide.setMinorTickSpacing(10);
+        //duratonSlide.setBounds(new Rectangle(600,20));
+        duratonSlide.setValue(1500);
+        slideDurationHolder.add(duratonSlide);
+        duratonSlide.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                JSlider source = (JSlider) e.getSource();
+                int value = source.getValue();
+                System.out.println("Valor seleccionado: " + value);
+            }
+        });
+         gridBagConstraints.gridx = 0;
+          gridBagConstraints.gridy = 3;
+        //  gridBagConstraints.ipadx = 518;
+        //  gridBagConstraints.ipady = 7;
+          gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+
+       // jPanel3.add(slideDurationHolder);
+
+        slideTransitionFrame.setLayout(new java.awt.BorderLayout());
+
+        transitionSlideLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        transitionSlideLabel.setText("Duration Transition");
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.weightx = 3;
+        add(transitionSlideLabel, gridBagConstraints);
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.weightx = 3;
+        //  gridBagConstraints.ipadx = 518;
+        //  gridBagConstraints.ipady = 7;
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        add(slideTransitionFrame, gridBagConstraints);
+
+        transitionSlide.setPaintTicks(true);
+        transitionSlide.setPaintLabels(true);
+        transitionSlide.setMajorTickSpacing(1);
+        transitionSlide.setMinorTickSpacing(10);
+        slideTransitionFrame.add(transitionSlide);
+
+     //   slideTransitionFrame.add(slideTransitionFrame);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+
+        dateFrame.setLayout(new java.awt.GridLayout(2, 5));
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Year");
-        jPanel1.add(jLabel5);
+        dateFrame.add(jLabel5);
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Month");
-        jPanel1.add(jLabel6);
+        dateFrame.add(jLabel6);
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Day");
-        jPanel1.add(jLabel7);
+        dateFrame.add(jLabel7);
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Hour");
-        jPanel1.add(jLabel8);
+        dateFrame.add(jLabel8);
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Minute");
-        jPanel1.add(jLabel9);
+        dateFrame.add(jLabel9);
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("Seconds");
-        jPanel1.add(jLabel10);
+        dateFrame.add(jLabel10);
 
-        jPanel1.add(yearCombo);
+        dateFrame.add(yearCombo);
 
-        jPanel1.add(monthCombo);
+        dateFrame.add(monthCombo);
 
-        jPanel1.add(dayCombo);
+        dateFrame.add(dayCombo);
 
-        jPanel1.add(hourCombo);
+        dateFrame.add(hourCombo);
 
-        jPanel1.add(minuteCombo);
+        dateFrame.add(minuteCombo);
 
-        jPanel1.add(secondCombo);
+        dateFrame.add(secondCombo);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.ipadx = 33;
-        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
-        add(jPanel1, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
-        gridBagConstraints.weightx = 0.7;
-        gridBagConstraints.weighty = 1.2;
-        add(jScrollPane1, gridBagConstraints);
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 
-        jButton1.setText("jButton1");
-        jPanel5.add(jButton1);
-
-        jButton2.setText("jButton2");
-        jPanel5.add(jButton2);
-
+        add(dateFrame, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
-        add(jPanel5, gridBagConstraints);
+        gridBagConstraints.weighty = 2;
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        add(jScrollPane1, gridBagConstraints);
+
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        add(btnSave, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void slideNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_slideNameActionPerformed
@@ -302,21 +348,19 @@ public class SlideEditPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> dayCombo;
     private javax.swing.JSlider duratonSlide;
     private javax.swing.JComboBox<String> hourCombo;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JLabel durationLabel;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel transitionSlideLabel;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel dateFrame;
+    private javax.swing.JPanel slideDurationHolder;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel slideTransitionFrame;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> minuteCombo;
     private javax.swing.JComboBox<String> monthCombo;

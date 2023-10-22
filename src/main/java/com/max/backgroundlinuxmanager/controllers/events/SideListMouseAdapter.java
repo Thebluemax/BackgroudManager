@@ -51,7 +51,5 @@ public class SideListMouseAdapter extends MouseAdapter {
         this.wallpapers = wallpapers;
         this.frame = frame;
     }
-
-   
 }
 
